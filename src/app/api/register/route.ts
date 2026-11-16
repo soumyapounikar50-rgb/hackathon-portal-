@@ -2,77 +2,132 @@ import { NextRequest, NextResponse } from 'next/server';
 import { saveRegistration, getAllRegistrations, getRegistrationById } from '@/lib/storage';
 import { generateRegistrationId } from '@/lib/utils';
 import { CompetitionRegistration } from '@/types';
+import { 
+  checkRateLimit, recordRateLimitAttempt, sanitizeInput, 
+  sanitizeStudent, isDuplicateTransactionId 
+} from '@/lib/security';
 
 export const dynamic = 'force-dynamic';
 
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get('x-forwarded-for');
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.headers.get('x-real-ip') || '127.0.0.1';
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[0-9+\s\-()]{7,20}$/;
+
 export async function POST(req: NextRequest) {
   try {
+    const clientIp = getClientIp(req);
+
+    // 1. Anti-Bot / Anti-Spam Rate Limiting: Max 8 submissions per 10 minutes per IP
+    const rate = checkRateLimit(clientIp, 'registration_submission', 8, 10 * 60 * 1000, 15 * 60 * 1000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: `Too many registration attempts from this device. Please wait ${rate.retryAfterSec} seconds before trying again.` },
+        { status: 429 }
+      );
+    }
+
     const body = await req.json();
 
+    // 2. Mandatory Fields Check
     if (!body.competitionId || !body.teamName || !body.leader) {
       return NextResponse.json(
-        { error: 'Missing required fields: Competition, Team Name, and Member details are required.' },
+        { error: 'Missing required fields: Competition, Team Name, and Student details are required.' },
         { status: 400 }
       );
     }
 
-    const leader = body.leader;
-    if (!leader.name || !leader.email || !leader.phone || !leader.branchAndYear || !leader.college) {
+    const rawLeader = body.leader;
+    if (!rawLeader.name || !rawLeader.email || !rawLeader.phone || !rawLeader.branchAndYear || !rawLeader.college) {
       return NextResponse.json(
         { error: 'Please fill in all details for Member #1 (Name, Email, Phone, Branch/Yr, College).' },
         { status: 400 }
       );
     }
 
-    if (!body.payment?.transactionId) {
+    // 3. Format Validation (Email & Phone)
+    if (!EMAIL_REGEX.test(rawLeader.email)) {
+      return NextResponse.json({ error: 'Invalid email address provided for Team Leader.' }, { status: 400 });
+    }
+    if (!PHONE_REGEX.test(rawLeader.phone)) {
+      return NextResponse.json({ error: 'Invalid phone number provided for Team Leader.' }, { status: 400 });
+    }
+
+    // 4. Payment UTR & Anti-Duplicate Fraud Check
+    const rawUtr = body.payment?.transactionId?.trim();
+    if (!rawUtr || rawUtr.length < 6) {
       return NextResponse.json(
-        { error: 'Payment Transaction ID / UTR is required.' },
+        { error: 'Please enter a valid 12-digit UPI Transaction ID / UTR.' },
         { status: 400 }
       );
     }
 
+    if (isDuplicateTransactionId(rawUtr)) {
+      return NextResponse.json(
+        { error: `This UPI Transaction ID (${rawUtr}) has already been used by another team. Duplicate payment submissions are rejected.` },
+        { status: 409 }
+      );
+    }
+
+    // 5. Screenshot Payload Verification (Max 4MB, Valid Data URI)
+    let sanitizedScreenshot: string | undefined = undefined;
+    if (body.payment?.screenshotUrl) {
+      const screenshot = String(body.payment.screenshotUrl);
+      if (screenshot.length > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: 'Screenshot file size exceeds the 4MB limit.' }, { status: 413 });
+      }
+      if (!screenshot.startsWith('data:image/')) {
+        return NextResponse.json({ error: 'Invalid screenshot file format. Only images are allowed.' }, { status: 400 });
+      }
+      sanitizedScreenshot = screenshot;
+    }
+
+    // 6. Sanitize All Inputs
+    const cleanLeader = sanitizeStudent(rawLeader);
+    const cleanMembers = Array.isArray(body.members)
+      ? body.members.map((m: any) => sanitizeStudent(m))
+      : [];
+
     const newRegistration: CompetitionRegistration = {
       id: generateRegistrationId(body.competitionId),
-      competitionId: body.competitionId,
-      competitionName: body.competitionName || body.competitionId,
-      teamName: body.teamName.trim(),
+      competitionId: sanitizeInput(body.competitionId, 30) as any,
+      competitionName: sanitizeInput(body.competitionName, 50),
+      teamName: sanitizeInput(body.teamName, 80),
       fee: Number(body.fee) || 0,
-      leader: {
-        name: leader.name.trim(),
-        email: leader.email.trim().toLowerCase(),
-        phone: leader.phone.trim(),
-        branchAndYear: leader.branchAndYear.trim(),
-        college: leader.college.trim()
-      },
-      members: Array.isArray(body.members) ? body.members.map((m: any) => ({
-        name: m.name?.trim() || '',
-        email: m.email?.trim()?.toLowerCase() || '',
-        phone: m.phone?.trim() || '',
-        branchAndYear: m.branchAndYear?.trim() || '',
-        college: m.college?.trim() || ''
-      })) : [],
+      leader: cleanLeader,
+      members: cleanMembers,
       payment: {
-        method: body.payment.method || 'upi',
-        transactionId: body.payment.transactionId.trim(),
-        screenshotUrl: body.payment.screenshotUrl || undefined,
-        amount: Number(body.payment.amount) || Number(body.fee) || 0
+        method: 'upi',
+        transactionId: sanitizeInput(rawUtr, 50),
+        screenshotUrl: sanitizedScreenshot,
+        amount: Number(body.payment?.amount) || Number(body.fee) || 0
       },
       status: 'confirmed',
       createdAt: new Date().toISOString()
     };
 
+    // 7. Save to Storage
     const saved = await saveRegistration(newRegistration);
+
+    // Track rate limit attempt
+    recordRateLimitAttempt(clientIp, 'registration_submission');
 
     return NextResponse.json({
       success: true,
-      message: 'Registration successful!',
+      message: 'Registration successfully secured and recorded!',
       registration: saved
     }, { status: 201 });
 
   } catch (error: any) {
     console.error('Registration API error:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to process registration' },
+      { error: 'An error occurred while securing your registration. Please try again.' },
       { status: 500 }
     );
   }
@@ -84,7 +139,8 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get('id');
 
     if (id) {
-      const found = getRegistrationById(id);
+      const sanitizedId = sanitizeInput(id, 40);
+      const found = getRegistrationById(sanitizedId);
       if (!found) {
         return NextResponse.json({ error: 'Registration not found' }, { status: 404 });
       }
@@ -102,6 +158,6 @@ export async function GET(req: NextRequest) {
       }
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Request failed' }, { status: 500 });
   }
 }
