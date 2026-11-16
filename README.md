@@ -30,7 +30,7 @@ A modern, high-conversion online registration portal and management system for h
 
 ### 1. Install Dependencies
 ```bash
-cd C:\Users\HP\.gemini\antigravity\scratch\hackathon-portal
+cd "C:\Users\HP\OneDrive\Documents\GitHub\hackathon-portal"
 npm install
 ```
 
