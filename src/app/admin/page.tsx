@@ -235,62 +235,14 @@ export default function AdminPage() {
               <span>{copiedLink ? "✓ Link Copied for Friends!" : "Share Admin Link"}</span>
             </button>
 
-            {/* MULTI-EVENT CSV EXPORT DROPDOWN */}
-            <div className="relative">
-              <button
-                onClick={() => setShowExportMenu(prev => !prev)}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:opacity-95 transition-all shadow-md flex items-center gap-1.5"
-                title="Download event spreadsheets for Google Sheets / Excel"
-              >
-                <Download className="w-4 h-4" />
-                <span>Export CSV</span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-              </button>
-
-              {showExportMenu && (
-                <div className="absolute right-0 mt-2 w-64 rounded-xl bg-[#0b1319] border border-white/10 shadow-2xl z-50 overflow-hidden py-1.5 text-xs">
-                  <div className="px-3 py-1.5 text-[10px] uppercase font-mono text-gray-400 border-b border-white/5">
-                    Download Spreadsheets
-                  </div>
-                  <button
-                    onClick={() => handleExportCSV('all')}
-                    className="w-full text-left px-3.5 py-2.5 hover:bg-white/5 text-emerald-300 font-semibold flex items-center justify-between transition-colors"
-                  >
-                    <span>📊 All Events Master Sheet</span>
-                    <span className="text-[10px] text-gray-400 font-mono">Total</span>
-                  </button>
-                  <div className="border-t border-white/5 my-1" />
-                  <button
-                    onClick={() => handleExportCSV('hackathon')}
-                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
-                  >
-                    <span>💻 Hackathon (₹300)</span>
-                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.hackathon || 0}</span>
-                  </button>
-                  <button
-                    onClick={() => handleExportCSV('ideathon')}
-                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
-                  >
-                    <span>💡 Ideathon (₹200)</span>
-                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.ideathon || 0}</span>
-                  </button>
-                  <button
-                    onClick={() => handleExportCSV('reel-making')}
-                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
-                  >
-                    <span>🎬 Reel Making (₹150)</span>
-                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.['reel-making'] || 0}</span>
-                  </button>
-                  <button
-                    onClick={() => handleExportCSV('science-exhibition')}
-                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
-                  >
-                    <span>🔬 Science Exhibition (₹150)</span>
-                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.['science-exhibition'] || 0}</span>
-                  </button>
-                </div>
-              )}
-            </div>
+            <button
+              onClick={() => handleExportCSV('all')}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:opacity-95 transition-all shadow-md flex items-center gap-1.5"
+              title="Download complete Master Sheet (All 4 competitions)"
+            >
+              <Download className="w-4 h-4" />
+              <span>Export Master CSV</span>
+            </button>
           </div>
         </div>
 
@@ -326,6 +278,71 @@ export default function AdminPage() {
             </div>
           </div>
         )}
+
+        {/* DEDICATED SEPARATE CSV BUTTONS FOR EACH EVENT */}
+        <div className="p-4 rounded-2xl glass-panel border border-white/10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Download className="w-4 h-4 text-emerald-400" />
+            <div>
+              <p className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                Download Event CSV Sheets
+              </p>
+              <p className="text-[11px] text-gray-400">
+                Direct individual spreadsheets ready for Excel / Google Sheets
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+            {/* HACKATHON BUTTON */}
+            <button
+              onClick={() => handleExportCSV('hackathon')}
+              className="px-3.5 py-2 rounded-xl bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-500/50 text-indigo-200 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
+              title="Download Hackathon participants CSV"
+            >
+              <span>💻 Hackathon (₹300)</span>
+              <span className="bg-indigo-500/20 px-1.5 py-0.5 rounded text-[10px] font-mono text-indigo-300">
+                {metrics?.byCompetition?.hackathon || 0}
+              </span>
+            </button>
+
+            {/* IDEATHON BUTTON */}
+            <button
+              onClick={() => handleExportCSV('ideathon')}
+              className="px-3.5 py-2 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 border border-cyan-500/50 text-cyan-200 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
+              title="Download Ideathon participants CSV"
+            >
+              <span>💡 Ideathon (₹200)</span>
+              <span className="bg-cyan-500/20 px-1.5 py-0.5 rounded text-[10px] font-mono text-cyan-300">
+                {metrics?.byCompetition?.ideathon || 0}
+              </span>
+            </button>
+
+            {/* REEL MAKING BUTTON */}
+            <button
+              onClick={() => handleExportCSV('reel-making')}
+              className="px-3.5 py-2 rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-500/50 text-purple-200 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
+              title="Download Reel Making participants CSV"
+            >
+              <span>🎬 Reel Making (₹150)</span>
+              <span className="bg-purple-500/20 px-1.5 py-0.5 rounded text-[10px] font-mono text-purple-300">
+                {metrics?.byCompetition?.['reel-making'] || 0}
+              </span>
+            </button>
+
+            {/* SCIENCE EXHIBITION BUTTON */}
+            <button
+              onClick={() => handleExportCSV('science-exhibition')}
+              className="px-3.5 py-2 rounded-xl bg-amber-950/70 hover:bg-amber-900 border border-amber-500/50 text-amber-200 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
+              title="Download Science Exhibition participants CSV"
+            >
+              <span>🔬 Science Exhibition (₹150)</span>
+              <span className="bg-amber-500/20 px-1.5 py-0.5 rounded text-[10px] font-mono text-amber-300">
+                {metrics?.byCompetition?.['science-exhibition'] || 0}
+              </span>
+            </button>
+          </div>
+        </div>
 
         {/* COMPETITION SELECTOR FILTER & SEARCH */}
         <div className="flex flex-col sm:flex-row gap-3">
