@@ -606,15 +606,36 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
           {/* QR Code and UPI ID box */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div className="p-4 rounded-xl bg-black/50 border border-white/10 flex items-center gap-4">
-              <div className="w-24 h-24 rounded-lg bg-white p-2 shrink-0 flex items-center justify-center shadow-lg">
-                <QrCode className="w-full h-full text-black" />
+            <div className="p-4 rounded-xl bg-black/50 border border-emerald-500/20 flex items-center gap-4">
+              <div className="w-28 h-28 rounded-xl bg-white p-2 shrink-0 flex items-center justify-center shadow-lg overflow-hidden relative group">
+                <img
+                  src="/qr-code.png"
+                  alt="UPI Payment QR Code"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    // Try .svg or .jpg before showing icon fallback
+                    const target = e.target as HTMLImageElement;
+                    if (target.src.endsWith('/qr-code.png')) {
+                      target.src = '/qr-code.svg';
+                    } else if (target.src.endsWith('/qr-code.svg')) {
+                      target.src = '/qr-code.jpg';
+                    } else {
+                      target.style.display = 'none';
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }
+                  }}
+                />
+                <div className="w-full h-full items-center justify-center hidden">
+                  <QrCode className="w-full h-full text-black" />
+                </div>
               </div>
               <div className="text-xs space-y-1">
-                <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest block">Official UPI ID</span>
+                <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Official UPI Payment QR</span>
                 <span className="font-mono font-bold text-white text-sm block select-all">{EVENT_CONFIG.upiDetails.upiId}</span>
                 <span className="text-gray-300 block text-[11px]">Payee: {EVENT_CONFIG.upiDetails.payeeName}</span>
-                <span className="text-emerald-400 font-mono text-[10px] block">GPay • PhonePe • Paytm</span>
+                <span className="text-emerald-300 font-mono text-[10px] block">GPay • PhonePe • Paytm • BHIM</span>
+                <span className="text-gray-400 text-[10px] block mt-1">Scan or tap to pay fee</span>
               </div>
             </div>
 
