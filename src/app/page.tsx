@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import ElNinoSection from '@/components/ElNinoSection';
 import CompetitionsSection from '@/components/CompetitionsSection';
 import ScheduleSection from '@/components/ScheduleSection';
+import CoordinatorsSection from '@/components/CoordinatorsSection';
 import FAQSection from '@/components/FAQSection';
 import RegistrationForm from '@/components/RegistrationForm';
 import Footer from '@/components/Footer';
@@ -137,6 +138,9 @@ export default function Home() {
           <RegistrationForm />
         </div>
       </section>
+
+      {/* STUDENT COORDINATORS & HELPDESK WITH DIRECT CALL */}
+      <CoordinatorsSection />
 
       {/* FAQ SECTION */}
       <FAQSection />

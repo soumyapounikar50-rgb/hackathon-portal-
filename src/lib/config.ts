@@ -9,9 +9,29 @@ export const EVENT_CONFIG = {
   upiDetails: {
     upiId: "elnino.synapse@okaxis",
     payeeName: "El Nino Synapse Fest",
-    phone: "+91 98765 43210",
+    phone: "+91 95185 62840",
     note: "Please mention Team Name in UPI payment note"
   },
+  coordinators: [
+    {
+      name: "Yash Jadhav",
+      phone: "95185 62840",
+      rawPhone: "+919518562840",
+      role: "Lead Event Coordinator"
+    },
+    {
+      name: "Arpit Dambhare",
+      phone: "94219 34932",
+      rawPhone: "+919421934932",
+      role: "Technical Coordinator"
+    },
+    {
+      name: "Yash Yadav",
+      phone: "82754 67373",
+      rawPhone: "+918275467373",
+      role: "Registration & Queries Coordinator"
+    }
+  ],
   competitions: [
     {
       id: "hackathon",
@@ -129,6 +149,10 @@ export const EVENT_CONFIG = {
     {
       q: "Is cross-college or cross-branch team formation allowed?",
       a: "Yes! Students from different branches, years, or colleges can form a team together."
+    },
+    {
+      q: "Who can I contact for queries or registration assistance?",
+      a: "You can directly call our Student Coordinators: Yash Jadhav (95185 62840), Arpit Dambhare (94219 34932), or Yash Yadav (82754 67373) anytime!"
     },
     {
       q: "When will the Hackathon problem statement be released?",

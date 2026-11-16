@@ -626,6 +626,22 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                 <li>Copy the <strong>12-digit UTR / Transaction ID</strong> and paste below.</li>
                 <li>Take a screenshot of the successful payment and upload it.</li>
               </ol>
+
+              {/* Quick Coordinator Help */}
+              <div className="mt-2 pt-2 border-t border-emerald-500/20 text-[11px] text-gray-300">
+                <span className="text-emerald-400 font-semibold block mb-1">Payment Helpdesk:</span>
+                <div className="flex flex-wrap gap-2">
+                  {EVENT_CONFIG.coordinators.map((c, i) => (
+                    <a
+                      key={i}
+                      href={`tel:${c.rawPhone}`}
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-[10px] font-mono text-emerald-300 hover:text-white transition-colors"
+                    >
+                      <span>📞 {c.name}: {c.phone}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 

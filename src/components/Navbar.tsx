@@ -40,6 +40,9 @@ export default function Navbar() {
             <Link href="#schedule" className="hover:text-emerald-400 transition-colors">
               Timeline (2 & 3 Dec)
             </Link>
+            <Link href="#coordinators" className="hover:text-emerald-400 transition-colors">
+              Coordinators
+            </Link>
             <Link href="#faq" className="hover:text-emerald-400 transition-colors">
               FAQ
             </Link>
@@ -96,6 +99,13 @@ export default function Navbar() {
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-emerald-300 hover:bg-emerald-950/30"
           >
             Schedule
+          </Link>
+          <Link
+            href="#coordinators"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-md text-base font-medium text-emerald-300 hover:text-white hover:bg-emerald-950/30 font-semibold"
+          >
+            📞 Contact Coordinators
           </Link>
           <Link
             href="#faq"
