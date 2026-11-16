@@ -326,8 +326,14 @@ export default function AdminPage() {
               <tbody className="divide-y divide-white/5">
                 {filteredRegistrations.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="py-12 text-center text-gray-400">
-                      No registrations match your search criteria.
+                    <td colSpan={8} className="py-16 text-center text-gray-400">
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <Users className="w-8 h-8 text-gray-600 mb-1" />
+                        <p className="text-sm font-semibold text-gray-300">No registrations yet</p>
+                        <p className="text-xs text-gray-500 max-w-sm">
+                          When students submit registrations on the website, their details and payment UTRs will appear here in real time.
+                        </p>
+                      </div>
                     </td>
                   </tr>
                 ) : (
