@@ -148,6 +148,10 @@ function getDataFilePath(): string {
   return path.join(process.cwd(), 'data', 'el_nino_registrations.json');
 }
 
+/**
+ * Load all registrations.
+ * Reads from disk (/tmp on Vercel) or memory cache.
+ */
 export function getAllRegistrations(): CompetitionRegistration[] {
   try {
     const filePath = getDataFilePath();
@@ -165,11 +169,16 @@ export function getAllRegistrations(): CompetitionRegistration[] {
   return memoryRegistrations;
 }
 
+/**
+ * Save new registration.
+ * Persists to disk/tmp and triggers optional Webhooks (Google Sheets / Discord).
+ */
 export async function saveRegistration(registration: CompetitionRegistration): Promise<CompetitionRegistration> {
   const current = getAllRegistrations();
   const updated = [registration, ...current.filter(r => r.id !== registration.id)];
   memoryRegistrations = updated;
 
+  // 1. Persist to disk / /tmp
   try {
     const filePath = getDataFilePath();
     const dir = path.dirname(filePath);
@@ -179,6 +188,48 @@ export async function saveRegistration(registration: CompetitionRegistration): P
     fs.writeFileSync(filePath, JSON.stringify(updated, null, 2), 'utf-8');
   } catch (err) {
     console.warn("Could not write registration to disk (running in read-only environment):", err);
+  }
+
+  // 2. Vercel KV / Upstash Redis support (If KV is added via Vercel Dashboard Storage)
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    try {
+      fetch(`${process.env.KV_REST_API_URL}/set/registrations`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updated)
+      }).catch(e => console.error("KV save error:", e));
+    } catch (e) {
+      // Non-blocking
+    }
+  }
+
+  // 3. Permanent Cloud Webhook (Google Sheets / Discord / Telegram / Zapier)
+  // If REGISTRATION_WEBHOOK_URL is set in Vercel Environment Variables, this safely backs up every entry!
+  if (process.env.REGISTRATION_WEBHOOK_URL) {
+    try {
+      fetch(process.env.REGISTRATION_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'new_registration',
+          registration: {
+            id: registration.id,
+            competition: registration.competitionName,
+            teamName: registration.teamName,
+            fee: registration.fee,
+            leader: registration.leader,
+            members: registration.members,
+            utr: registration.payment.transactionId,
+            registeredAt: registration.createdAt
+          }
+        })
+      }).catch(err => console.error("Webhook trigger error:", err));
+    } catch (e) {
+      // Non-blocking
+    }
   }
 
   return registration;
