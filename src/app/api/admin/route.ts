@@ -76,12 +76,13 @@ export async function GET(req: NextRequest) {
   }
 
   if (format === 'csv') {
+    const compSlug = compFilter && compFilter !== 'all' ? compFilter : 'all-competitions';
     const csvContent = convertRegistrationsToCSV(registrations);
     return new NextResponse(csvContent, {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="el-nino-synapse-registrations-${new Date().toISOString().slice(0, 10)}.csv"`
+        'Content-Disposition': `attachment; filename="el-nino-${compSlug}-${new Date().toISOString().slice(0, 10)}.csv"`
       }
     });
   }

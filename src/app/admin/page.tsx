@@ -6,7 +6,7 @@ import { EVENT_CONFIG } from '@/lib/config';
 import { 
   Shield, KeyRound, Download, Search, Users, User, 
   ExternalLink, ArrowLeft, RefreshCw, Eye, CheckCircle2, 
-  IndianRupee, Image as ImageIcon, Filter, Share2
+  IndianRupee, Image as ImageIcon, Filter, Share2, ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -27,6 +27,7 @@ export default function AdminPage() {
   const [selectedReg, setSelectedReg] = useState<CompetitionRegistration | null>(null);
   const [viewScreenshot, setViewScreenshot] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
 
   const fetchAdminData = async (key: string, comp = competitionFilter) => {
     setLoading(true);
@@ -85,9 +86,11 @@ export default function AdminPage() {
     fetchAdminData(passkey);
   };
 
-  const handleExportCSV = () => {
-    const url = `/api/admin?key=${encodeURIComponent(passkey)}&format=csv${competitionFilter !== 'all' ? `&competition=${competitionFilter}` : ''}`;
+  const handleExportCSV = (specificComp?: string) => {
+    const comp = specificComp !== undefined ? specificComp : competitionFilter;
+    const url = `/api/admin?key=${encodeURIComponent(passkey)}&format=csv${comp !== 'all' ? `&competition=${comp}` : ''}`;
     window.open(url, '_blank');
+    setShowExportMenu(false);
   };
 
   const handleStatusChange = async (id: string, newStatus: 'confirmed' | 'pending_verification' | 'rejected') => {
@@ -232,13 +235,62 @@ export default function AdminPage() {
               <span>{copiedLink ? "✓ Link Copied for Friends!" : "Share Admin Link"}</span>
             </button>
 
-            <button
-              onClick={handleExportCSV}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:opacity-90 transition-all shadow-md flex items-center gap-1.5"
-            >
-              <Download className="w-4 h-4" />
-              <span>Export CSV for Sheets</span>
-            </button>
+            {/* MULTI-EVENT CSV EXPORT DROPDOWN */}
+            <div className="relative">
+              <button
+                onClick={() => setShowExportMenu(prev => !prev)}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:opacity-95 transition-all shadow-md flex items-center gap-1.5"
+                title="Download event spreadsheets for Google Sheets / Excel"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export CSV</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-80" />
+              </button>
+
+              {showExportMenu && (
+                <div className="absolute right-0 mt-2 w-64 rounded-xl bg-[#0b1319] border border-white/10 shadow-2xl z-50 overflow-hidden py-1.5 text-xs">
+                  <div className="px-3 py-1.5 text-[10px] uppercase font-mono text-gray-400 border-b border-white/5">
+                    Download Spreadsheets
+                  </div>
+                  <button
+                    onClick={() => handleExportCSV('all')}
+                    className="w-full text-left px-3.5 py-2.5 hover:bg-white/5 text-emerald-300 font-semibold flex items-center justify-between transition-colors"
+                  >
+                    <span>📊 All Events Master Sheet</span>
+                    <span className="text-[10px] text-gray-400 font-mono">Total</span>
+                  </button>
+                  <div className="border-t border-white/5 my-1" />
+                  <button
+                    onClick={() => handleExportCSV('hackathon')}
+                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
+                  >
+                    <span>💻 Hackathon (₹300)</span>
+                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.hackathon || 0}</span>
+                  </button>
+                  <button
+                    onClick={() => handleExportCSV('ideathon')}
+                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
+                  >
+                    <span>💡 Ideathon (₹200)</span>
+                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.ideathon || 0}</span>
+                  </button>
+                  <button
+                    onClick={() => handleExportCSV('reel-making')}
+                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
+                  >
+                    <span>🎬 Reel Making (₹150)</span>
+                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.['reel-making'] || 0}</span>
+                  </button>
+                  <button
+                    onClick={() => handleExportCSV('science-exhibition')}
+                    className="w-full text-left px-3.5 py-2 hover:bg-white/5 text-gray-200 flex items-center justify-between transition-colors"
+                  >
+                    <span>🔬 Science Exhibition (₹150)</span>
+                    <span className="text-[10px] text-gray-400 font-mono">{metrics?.byCompetition?.['science-exhibition'] || 0}</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
