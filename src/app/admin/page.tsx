@@ -73,7 +73,7 @@ export default function AdminPage() {
 
   const handleShareAdminLink = () => {
     if (typeof window !== 'undefined') {
-      const shareUrl = `${window.location.origin}/admin?key=${encodeURIComponent(passkey || 'admin123')}`;
+      const shareUrl = `${window.location.origin}/admin?key=${encodeURIComponent(passkey || 'Synapse#Fest2026')}`;
       navigator.clipboard.writeText(shareUrl);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2500);
@@ -162,13 +162,13 @@ export default function AdminPage() {
                   required
                   value={passkey}
                   onChange={(e) => setPasskey(e.target.value)}
-                  placeholder="Enter secret (Default: admin123)"
-                  className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500"
+                  placeholder="Enter secret key (e.g. Synapse#Fest2026)"
+                  className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-500"
                 />
                 <KeyRound className="w-4 h-4 text-gray-500 absolute right-3.5 top-3" />
               </div>
               <p className="text-[11px] text-gray-500 mt-1">
-                Default local passkey is <code className="text-indigo-300">admin123</code>
+                Organizer security passkey: <code className="text-emerald-400">Synapse#Fest2026</code>
               </p>
             </div>
 

@@ -5,7 +5,7 @@ import { timingSafeCompare, checkRateLimit, recordRateLimitAttempt, resetRateLim
 
 export const dynamic = 'force-dynamic';
 
-const ADMIN_PASSKEY = process.env.ADMIN_SECRET || 'admin123';
+const ADMIN_PASSKEY = process.env.ADMIN_SECRET || 'Synapse#Fest2026';
 
 function getClientIp(req: NextRequest): string {
   const forwarded = req.headers.get('x-forwarded-for');
