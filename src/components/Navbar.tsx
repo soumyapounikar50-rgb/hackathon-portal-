@@ -2,46 +2,43 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { HACKATHON_CONFIG } from '@/lib/config';
-import { Terminal, Shield, Menu, X, ArrowRight } from 'lucide-react';
+import { EVENT_CONFIG } from '@/lib/config';
+import { Sparkles, Shield, Menu, X, ArrowRight, Calendar } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/10 bg-[#090d16]/80 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/10 bg-[#090d16]/85 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-brand-accent p-0.5 shadow-lg group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-[#0b0f1a] rounded-[10px] flex items-center justify-center">
-                <Terminal className="w-5 h-5 text-indigo-400 group-hover:text-brand-accent transition-colors" />
+                <Sparkles className="w-5 h-5 text-indigo-400 group-hover:text-brand-accent transition-colors" />
               </div>
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-indigo-400">
-                {HACKATHON_CONFIG.name}
+                {EVENT_CONFIG.name}
               </span>
               <span className="block text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-                ● Registrations Live
+                ● 2 & 3 December • 4 Competitions
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
-            <Link href="#overview" className="hover:text-indigo-400 transition-colors">
-              Overview
-            </Link>
-            <Link href="#tracks" className="hover:text-indigo-400 transition-colors">
-              Tracks
-            </Link>
-            <Link href="#prizes" className="hover:text-indigo-400 transition-colors">
-              Prizes
+          <div className="hidden md:flex items-center space-x-7 text-sm font-medium text-gray-300">
+            <Link href="#competitions" className="hover:text-indigo-400 transition-colors">
+              Competitions
             </Link>
             <Link href="#schedule" className="hover:text-indigo-400 transition-colors">
-              Timeline
+              Schedule (2 & 3 Dec)
+            </Link>
+            <Link href="#payment-info" className="hover:text-indigo-400 transition-colors">
+              Payment Guide
             </Link>
             <Link href="#faq" className="hover:text-indigo-400 transition-colors">
               FAQ
@@ -80,32 +77,18 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-white/10 bg-[#0c1220] px-4 pt-3 pb-6 space-y-3">
           <Link
-            href="#overview"
+            href="#competitions"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5"
           >
-            Overview
-          </Link>
-          <Link
-            href="#tracks"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5"
-          >
-            Tracks
-          </Link>
-          <Link
-            href="#prizes"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5"
-          >
-            Prizes
+            Competitions
           </Link>
           <Link
             href="#schedule"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5"
           >
-            Timeline
+            Schedule
           </Link>
           <Link
             href="#faq"

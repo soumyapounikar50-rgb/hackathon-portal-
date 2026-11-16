@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { HACKATHON_CONFIG } from '@/lib/config';
+import { EVENT_CONFIG } from '@/lib/config';
 
 export const metadata: Metadata = {
-  title: `${HACKATHON_CONFIG.name} — ${HACKATHON_CONFIG.tagline}`,
-  description: HACKATHON_CONFIG.description,
-  keywords: ['hackathon', 'hackathon registration', 'AI agents', 'coding contest', 'developer prizes', 'Vercel'],
+  title: `${EVENT_CONFIG.name} (2 & 3 Dec) — ${EVENT_CONFIG.tagline}`,
+  description: EVENT_CONFIG.description,
+  keywords: ['El Nino Synapse', 'Hackathon', 'Ideathon', 'Reel Making', 'Science Exhibition', 'college fest registration', 'Vercel'],
   openGraph: {
-    title: HACKATHON_CONFIG.name,
-    description: HACKATHON_CONFIG.description,
+    title: EVENT_CONFIG.name,
+    description: EVENT_CONFIG.description,
     type: 'website',
   },
 };

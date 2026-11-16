@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { HACKATHON_CONFIG } from '@/lib/config';
 
 interface TimeLeft {
   days: number;
@@ -23,7 +22,8 @@ export default function Countdown() {
 
   useEffect(() => {
     setMounted(true);
-    const target = new Date(HACKATHON_CONFIG.registrationDeadline).getTime();
+    // Target: 2 December 2026 09:00 AM
+    const target = new Date("2026-12-02T09:00:00").getTime();
 
     const calculateTime = () => {
       const now = new Date().getTime();
@@ -68,7 +68,7 @@ export default function Countdown() {
     <div className="flex flex-col items-center">
       <div className="text-xs uppercase font-mono tracking-wider text-indigo-300 mb-3 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-        {timeLeft.isExpired ? "Registrations have officially closed!" : "Registration Deadline Countdown"}
+        {timeLeft.isExpired ? "Event is LIVE!" : "Countdown to El Nino Synapse (2 Dec)"}
       </div>
 
       <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-lg w-full">

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveRegistration, getAllRegistrations, getRegistrationById } from '@/lib/storage';
 import { generateRegistrationId } from '@/lib/utils';
-import { Registration } from '@/types';
+import { CompetitionRegistration } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,41 +9,54 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Required fields check
-    if (!body.leaderName || !body.leaderEmail || !body.collegeOrCompany) {
+    if (!body.competitionId || !body.teamName || !body.leader) {
       return NextResponse.json(
-        { error: 'Missing required fields: Name, Email, and Organization/College are required.' },
+        { error: 'Missing required fields: Competition, Team Name, and Member details are required.' },
         { status: 400 }
       );
     }
 
-    if (body.registrationType === 'team' && !body.teamName) {
+    const leader = body.leader;
+    if (!leader.name || !leader.email || !leader.phone || !leader.branchAndYear || !leader.college) {
       return NextResponse.json(
-        { error: 'Team name is required for team registrations.' },
+        { error: 'Please fill in all details for Member #1 (Name, Email, Phone, Branch/Yr, College).' },
         { status: 400 }
       );
     }
 
-    const newRegistration: Registration = {
-      id: generateRegistrationId(),
-      registrationType: body.registrationType || 'solo',
-      teamName: body.teamName || undefined,
-      leaderName: body.leaderName.trim(),
-      leaderEmail: body.leaderEmail.trim().toLowerCase(),
-      leaderPhone: body.leaderPhone?.trim() || '',
-      collegeOrCompany: body.collegeOrCompany.trim(),
-      graduationYear: body.graduationYear || '2026',
-      experienceLevel: body.experienceLevel || 'intermediate',
-      primaryTrack: body.primaryTrack || 'ai-agents',
-      skills: Array.isArray(body.skills) ? body.skills : [],
-      githubUrl: body.githubUrl?.trim() || undefined,
-      linkedinUrl: body.linkedinUrl?.trim() || undefined,
-      portfolioUrl: body.portfolioUrl?.trim() || undefined,
-      projectPitch: body.projectPitch?.trim() || undefined,
-      members: Array.isArray(body.members) ? body.members : [],
-      tshirtSize: body.tshirtSize || 'L',
-      dietaryRestrictions: body.dietaryRestrictions || 'None',
-      agreedToTerms: Boolean(body.agreedToTerms),
+    if (!body.payment?.transactionId) {
+      return NextResponse.json(
+        { error: 'Payment Transaction ID / UTR is required.' },
+        { status: 400 }
+      );
+    }
+
+    const newRegistration: CompetitionRegistration = {
+      id: generateRegistrationId(body.competitionId),
+      competitionId: body.competitionId,
+      competitionName: body.competitionName || body.competitionId,
+      teamName: body.teamName.trim(),
+      fee: Number(body.fee) || 0,
+      leader: {
+        name: leader.name.trim(),
+        email: leader.email.trim().toLowerCase(),
+        phone: leader.phone.trim(),
+        branchAndYear: leader.branchAndYear.trim(),
+        college: leader.college.trim()
+      },
+      members: Array.isArray(body.members) ? body.members.map((m: any) => ({
+        name: m.name?.trim() || '',
+        email: m.email?.trim()?.toLowerCase() || '',
+        phone: m.phone?.trim() || '',
+        branchAndYear: m.branchAndYear?.trim() || '',
+        college: m.college?.trim() || ''
+      })) : [],
+      payment: {
+        method: body.payment.method || 'upi',
+        transactionId: body.payment.transactionId.trim(),
+        screenshotUrl: body.payment.screenshotUrl || undefined,
+        amount: Number(body.payment.amount) || Number(body.fee) || 0
+      },
       status: 'confirmed',
       createdAt: new Date().toISOString()
     };
@@ -81,7 +94,12 @@ export async function GET(req: NextRequest) {
     const all = getAllRegistrations();
     return NextResponse.json({
       totalCount: all.length,
-      recentCount: all.length
+      competitions: {
+        hackathon: all.filter(r => r.competitionId === 'hackathon').length,
+        ideathon: all.filter(r => r.competitionId === 'ideathon').length,
+        'reel-making': all.filter(r => r.competitionId === 'reel-making').length,
+        'science-exhibition': all.filter(r => r.competitionId === 'science-exhibition').length
+      }
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

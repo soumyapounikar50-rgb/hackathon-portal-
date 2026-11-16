@@ -1,98 +1,159 @@
 import fs from 'fs';
 import path from 'path';
-import { Registration } from '../types';
+import { CompetitionRegistration } from '../types';
 
-// Initial demo seed data so organizers immediately see how the portal & admin dashboard function
-const SEED_REGISTRATIONS: Registration[] = [
+const SEED_REGISTRATIONS: CompetitionRegistration[] = [
   {
-    id: "HACK-2026-1001",
-    registrationType: "team",
-    teamName: "NeuralWeavers",
-    leaderName: "Alex Rivera",
-    leaderEmail: "alex.rivera@example.com",
-    leaderPhone: "+1 (555) 234-5678",
-    collegeOrCompany: "UC Berkeley",
-    graduationYear: "2026",
-    experienceLevel: "advanced",
-    primaryTrack: "ai-agents",
-    skills: ["Python", "PyTorch", "Next.js", "LangChain"],
-    githubUrl: "https://github.com/alexrivera-dev",
-    linkedinUrl: "https://linkedin.com/in/alexrivera",
-    projectPitch: "An autonomous multi-agent system for disaster response resource routing and situational mapping.",
+    id: "ENS-HACK-1001",
+    competitionId: "hackathon",
+    competitionName: "Hackathon",
+    teamName: "CodeCrafters",
+    fee: 300,
+    leader: {
+      name: "Rohan Sharma",
+      email: "rohan.sharma@example.com",
+      phone: "+91 98765 12345",
+      branchAndYear: "CSE / 3rd Year",
+      college: "Institute of Technology"
+    },
     members: [
-      { name: "Priya Patel", email: "priya@example.com", role: "AI Research", github: "https://github.com/priyapatel" },
-      { name: "Liam Chen", email: "liam@example.com", role: "Frontend & UI", github: "https://github.com/liamc" }
+      {
+        name: "Ananya Deshmukh",
+        email: "ananya.d@example.com",
+        phone: "+91 98765 54321",
+        branchAndYear: "IT / 3rd Year",
+        college: "Institute of Technology"
+      },
+      {
+        name: "Kabir Verma",
+        email: "kabir.v@example.com",
+        phone: "+91 98765 67890",
+        branchAndYear: "AI & DS / 2nd Year",
+        college: "Institute of Technology"
+      }
     ],
-    tshirtSize: "L",
-    dietaryRestrictions: "Vegetarian",
-    agreedToTerms: true,
+    payment: {
+      method: "upi",
+      transactionId: "UPI412984920192",
+      amount: 300
+    },
     status: "confirmed",
-    createdAt: "2026-11-15T10:30:00.000Z"
+    createdAt: "2026-11-16T09:00:00.000Z"
   },
   {
-    id: "HACK-2026-1002",
-    registrationType: "solo",
-    leaderName: "Elena Rostova",
-    leaderEmail: "elena.rostova@example.com",
-    leaderPhone: "+1 (555) 987-6543",
-    collegeOrCompany: "MIT Media Lab",
-    graduationYear: "2025",
-    experienceLevel: "intermediate",
-    primaryTrack: "climate-tech",
-    skills: ["TypeScript", "Solidity", "Rust", "TailwindCSS"],
-    githubUrl: "https://github.com/elena-dev",
-    linkedinUrl: "https://linkedin.com/in/elenarostova",
-    projectPitch: "Verifiable micro-grid energy accounting on a decentralized ledger.",
-    members: [],
-    tshirtSize: "M",
-    dietaryRestrictions: "None",
-    agreedToTerms: true,
+    id: "ENS-IDEA-2001",
+    competitionId: "ideathon",
+    competitionName: "Ideathon",
+    teamName: "EcoVanguard",
+    fee: 200,
+    leader: {
+      name: "Sneha Nair",
+      email: "sneha.nair@example.com",
+      phone: "+91 98123 45678",
+      branchAndYear: "Mechanical / 4th Year",
+      college: "Engineering College Pune"
+    },
+    members: [
+      {
+        name: "Aditya Joshi",
+        email: "aditya.j@example.com",
+        phone: "+91 98234 56789",
+        branchAndYear: "Electrical / 4th Year",
+        college: "Engineering College Pune"
+      },
+      {
+        name: "Riddhi Kapoor",
+        email: "riddhi.k@example.com",
+        phone: "+91 98345 67890",
+        branchAndYear: "Civil / 3rd Year",
+        college: "Engineering College Pune"
+      }
+    ],
+    payment: {
+      method: "upi",
+      transactionId: "UPI412984923301",
+      amount: 200
+    },
     status: "confirmed",
-    createdAt: "2026-11-15T14:45:00.000Z"
+    createdAt: "2026-11-16T10:15:00.000Z"
   },
   {
-    id: "HACK-2026-1003",
-    registrationType: "team",
-    teamName: "BioSynth AI",
-    leaderName: "Marcus Vance",
-    leaderEmail: "marcus.vance@example.com",
-    leaderPhone: "+1 (555) 432-1098",
-    collegeOrCompany: "Stanford University",
-    graduationYear: "2027",
-    experienceLevel: "advanced",
-    primaryTrack: "health-tech",
-    skills: ["FastAPI", "React", "BioPython", "Docker"],
-    githubUrl: "https://github.com/marcusvance",
-    projectPitch: "Real-time acoustic analysis for early pulmonary congestion detection via mobile microphones.",
+    id: "ENS-REEL-3001",
+    competitionId: "reel-making",
+    competitionName: "Reel Making Competition",
+    teamName: "Cinematic Duo",
+    fee: 150,
+    leader: {
+      name: "Varun Malhotra",
+      email: "varun.m@example.com",
+      phone: "+91 99887 76655",
+      branchAndYear: "ECE / 2nd Year",
+      college: "National Tech Institute"
+    },
     members: [
-      { name: "Sarah Zhao", email: "szhao@example.com", role: "Biomedical Engineer" }
+      {
+        name: "Tanvi Saxena",
+        email: "tanvi.s@example.com",
+        phone: "+91 99887 11223",
+        branchAndYear: "ECE / 2nd Year",
+        college: "National Tech Institute"
+      }
     ],
-    tshirtSize: "XL",
-    dietaryRestrictions: "Halal",
-    agreedToTerms: true,
+    payment: {
+      method: "upi",
+      transactionId: "UPI412984999882",
+      amount: 150
+    },
+    status: "pending_verification",
+    createdAt: "2026-11-16T11:45:00.000Z"
+  },
+  {
+    id: "ENS-SCI-4001",
+    competitionId: "science-exhibition",
+    competitionName: "Science Exhibition",
+    teamName: "Quantum Innovators",
+    fee: 150,
+    leader: {
+      name: "Deepak Choudhary",
+      email: "deepak.c@example.com",
+      phone: "+91 97654 32109",
+      branchAndYear: "Physics / 3rd Year",
+      college: "Science & Arts College"
+    },
+    members: [
+      {
+        name: "Meera Kulkarni",
+        email: "meera.k@example.com",
+        phone: "+91 97654 88990",
+        branchAndYear: "Applied Electronics / 3rd Year",
+        college: "Science & Arts College"
+      }
+    ],
+    payment: {
+      method: "upi",
+      transactionId: "UPI412985001122",
+      amount: 150
+    },
     status: "confirmed",
-    createdAt: "2026-11-16T08:15:00.000Z"
+    createdAt: "2026-11-16T12:30:00.000Z"
   }
 ];
 
-// In-memory cache for serverless invocation reuse
-let memoryRegistrations: Registration[] = [...SEED_REGISTRATIONS];
+let memoryRegistrations: CompetitionRegistration[] = [...SEED_REGISTRATIONS];
 
-// Determine data file path (supports /tmp in serverless environments like Vercel)
 function getDataFilePath(): string {
   if (process.env.VERCEL) {
-    return path.join('/tmp', 'registrations.json');
+    return path.join('/tmp', 'el_nino_registrations.json');
   }
-  return path.join(process.cwd(), 'data', 'registrations.json');
+  return path.join(process.cwd(), 'data', 'el_nino_registrations.json');
 }
 
-// Load registrations from disk or return memory cache
-export function getAllRegistrations(): Registration[] {
+export function getAllRegistrations(): CompetitionRegistration[] {
   try {
     const filePath = getDataFilePath();
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf-8');
-      const parsed = JSON.parse(data) as Registration[];
+      const parsed = JSON.parse(data) as CompetitionRegistration[];
       if (Array.isArray(parsed) && parsed.length > 0) {
         memoryRegistrations = parsed;
         return parsed;
@@ -104,14 +165,11 @@ export function getAllRegistrations(): Registration[] {
   return memoryRegistrations;
 }
 
-// Save a new registration
-export async function saveRegistration(registration: Registration): Promise<Registration> {
-  // Prepend to registrations list
+export async function saveRegistration(registration: CompetitionRegistration): Promise<CompetitionRegistration> {
   const current = getAllRegistrations();
   const updated = [registration, ...current.filter(r => r.id !== registration.id)];
   memoryRegistrations = updated;
 
-  // Persist to file if possible
   try {
     const filePath = getDataFilePath();
     const dir = path.dirname(filePath);
@@ -123,33 +181,15 @@ export async function saveRegistration(registration: Registration): Promise<Regi
     console.warn("Could not write registration to disk (running in read-only environment):", err);
   }
 
-  // If a Webhook is configured (e.g. Google Sheets / Discord / Slack / Zapier), notify it asynchronously
-  if (process.env.REGISTRATION_WEBHOOK_URL) {
-    try {
-      fetch(process.env.REGISTRATION_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'new_registration',
-          registration
-        })
-      }).catch(err => console.error("Webhook trigger error:", err));
-    } catch (e) {
-      // Non-blocking
-    }
-  }
-
   return registration;
 }
 
-// Get registration by ID
-export function getRegistrationById(id: string): Registration | null {
+export function getRegistrationById(id: string): CompetitionRegistration | null {
   const all = getAllRegistrations();
   return all.find(r => r.id.toLowerCase() === id.toLowerCase()) || null;
 }
 
-// Update registration status
-export function updateRegistrationStatus(id: string, status: 'confirmed' | 'pending' | 'waitlisted'): boolean {
+export function updateRegistrationStatus(id: string, status: 'confirmed' | 'pending_verification' | 'rejected'): boolean {
   const all = getAllRegistrations();
   const index = all.findIndex(r => r.id.toLowerCase() === id.toLowerCase());
   if (index === -1) return false;

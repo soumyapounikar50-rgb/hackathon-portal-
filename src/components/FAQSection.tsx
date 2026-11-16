@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { HACKATHON_CONFIG } from '@/lib/config';
+import { EVENT_CONFIG } from '@/lib/config';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 
 export default function FAQSection() {
@@ -23,12 +23,12 @@ export default function FAQSection() {
             Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-brand-accent">Questions</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-gray-400">
-            Everything you need to know about participating in {HACKATHON_CONFIG.name}.
+            Rules, registration payments, and participation details for {EVENT_CONFIG.name}.
           </p>
         </div>
 
         <div className="space-y-4">
-          {HACKATHON_CONFIG.faqs.map((faq, idx) => {
+          {EVENT_CONFIG.faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -55,14 +55,6 @@ export default function FAQSection() {
               </div>
             );
           })}
-        </div>
-
-        <div className="mt-12 text-center text-sm text-gray-400">
-          Have an unanswered question? Reach out to our organizing team at{" "}
-          <a href="mailto:organizers@hackspark.org" className="text-indigo-400 hover:underline">
-            organizers@hackspark.org
-          </a>{" "}
-          or ask in our Discord community.
         </div>
       </div>
     </section>

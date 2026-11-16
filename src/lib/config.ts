@@ -1,150 +1,142 @@
-export const HACKATHON_CONFIG = {
-  name: "HACKSPARK 2026",
-  tagline: "Build the Future with AI, Code & Open Innovation",
-  description: "Join 500+ builders, designers, and visionaries for a 36-hour sprint to prototype breakthrough applications. Compete for $30,000+ in prizes, get mentorship from top tech leaders, and turn your bold ideas into reality.",
-  startDate: "2026-12-05T09:00:00Z",
-  endDate: "2026-12-07T18:00:00Z",
-  registrationDeadline: "2026-12-01T23:59:59Z",
-  location: "Hybrid (Online Global + San Francisco Hub)",
-  prizePool: "$30,000+",
-  stats: [
-    { label: "Prize Pool", value: "$30,000+" },
-    { label: "Hacking Duration", value: "36 Hours" },
-    { label: "Global Hackers", value: "500+" },
-    { label: "Mentors & Judges", value: "30+" },
-  ],
-  tracks: [
+import { CompetitionInfo } from '@/types';
+
+export const EVENT_CONFIG = {
+  name: "El Nino Synapse",
+  tagline: "Unleash Innovation, Creativity & Engineering",
+  dates: "2 & 3 December",
+  location: "College Campus / Auditorium & Tech Labs",
+  description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest featuring 4 power-packed competitions: Hackathon, Ideathon, Reel Making, and Science Exhibition. Compete with top minds, showcase your skills, and take home exciting prizes and trophies!",
+  upiDetails: {
+    upiId: "elnino.synapse@okaxis",
+    payeeName: "El Nino Synapse Fest",
+    phone: "+91 98765 43210",
+    note: "Please mention Team Name in UPI payment note"
+  },
+  competitions: [
     {
-      id: "ai-agents",
-      name: "AI & Autonomous Agents",
-      icon: "Bot",
-      color: "from-blue-500 to-indigo-500",
-      description: "Build autonomous multi-agent workflows, multimodal assistants, or novel LLM-powered systems solving real-world friction."
+      id: "hackathon",
+      name: "Hackathon",
+      tagline: "6 Hours Hackathon • Problem Statement on Time",
+      fee: 300,
+      feeLabel: "₹300 / team",
+      minMembers: 2,
+      maxMembers: 4,
+      icon: "Terminal",
+      accentColor: "from-blue-600 to-indigo-600",
+      badge: "6-Hour Coding Sprint",
+      rules: [
+        "Problem statement will be revealed ON TIME at the kickoff of the hackathon",
+        "Duration: Strictly 6 Hours of non-stop building and coding",
+        "Team size: 2 to 4 members per team",
+        "All code must be written during the event duration",
+        "Bring your own laptops, chargers, and extension cords",
+        "Judging based on originality, technical complexity, completion, and live demo"
+      ],
+      description: "A fast-paced 6-hour hackathon where the problem statement is unveiled live on the spot. Build a functional prototype under the clock and pitch to industry judges!"
     },
     {
-      id: "web3-defi",
-      name: "Web3 & Decentralized Tech",
-      icon: "Cpu",
-      color: "from-purple-500 to-pink-500",
-      description: "Innovate on smart contracts, zero-knowledge proofs, DeFi protocols, or decentralized physical infrastructure (DePIN)."
+      id: "ideathon",
+      name: "Ideathon",
+      tagline: "5-7 Min Presentation • 7-8 Slides Limit • 3 Members",
+      fee: 200,
+      feeLabel: "₹200 / team",
+      minMembers: 3,
+      maxMembers: 3,
+      icon: "Lightbulb",
+      accentColor: "from-purple-600 to-pink-600",
+      badge: "3 Members Team",
+      rules: [
+        "Team size: Strictly 3 members total",
+        "Presentation duration: 5 to 7 minutes per team",
+        "Slide limit: Strictly 7 to 8 slides in presentation deck",
+        "Followed by 2 to 3 minutes of Jury Q&A",
+        "Focus on problem clarity, proposed solution, market feasibility & impact",
+        "Submit presentation deck in PDF / PPT format prior to the round"
+      ],
+      description: "Pitch your revolutionary startup or tech idea in front of esteemed panelists. Hone your pitch, respect the 7-8 slides limit, and captivate the jury within 7 minutes!"
     },
     {
-      id: "climate-tech",
-      name: "Climate & Sustainability",
-      icon: "Leaf",
-      color: "from-emerald-500 to-teal-500",
-      description: "Tackle carbon footprints, circular economy, renewable energy allocation, or green supply chain transparency."
+      id: "reel-making",
+      name: "Reel Making Competition",
+      tagline: "60 Seconds Reel • 2 Members Total",
+      fee: 150,
+      feeLabel: "₹150 / entry",
+      minMembers: 2,
+      maxMembers: 2,
+      icon: "Video",
+      accentColor: "from-rose-600 to-amber-600",
+      badge: "2 Members Total",
+      rules: [
+        "Team size: 2 members total",
+        "Duration: Strictly up to 60 seconds (Reel format 9:16)",
+        "Must be original content shot during the fest or adhering to the theme",
+        "Judged on creativity, cinematography, editing pacing, audio sync, and storytelling",
+        "No plagiarized footage or copyrighted watermark templates allowed"
+      ],
+      description: "Show off your cinematic flair, visual storytelling, and viral video creation skills. 60 seconds to impress the judges and grab the audience's attention!"
     },
     {
-      id: "health-tech",
-      name: "HealthTech & BioInnovation",
-      icon: "Activity",
-      color: "from-rose-500 to-orange-500",
-      description: "Empower patient outcomes, remote diagnostics, mental well-being, or biomedical data discovery."
-    },
-    {
-      id: "open-innovation",
-      name: "Open Innovation & Developer Tools",
-      icon: "Sparkles",
-      color: "from-amber-500 to-yellow-500",
-      description: "Anything out-of-the-box! Developer productivity tools, games, creative hardware hacks, or quirky utilities."
+      id: "science-exhibition",
+      name: "Science Exhibition",
+      tagline: "Working Models • Live Demonstration • Scientific Innovation",
+      fee: 150,
+      feeLabel: "₹150 / entry",
+      minMembers: 1,
+      maxMembers: 3,
+      icon: "Atom",
+      accentColor: "from-emerald-600 to-teal-600",
+      badge: "1-3 Members",
+      rules: [
+        "Team size: 1 to 3 members per exhibit",
+        "Must showcase a working physical model, experimental demo, or prototype",
+        "Setup table and power connection will be provided on campus",
+        "Every team will present their project to visiting judges and delegates",
+        "Evaluation criteria: Scientific principle, innovation, working capability, and explanation"
+      ],
+      description: "Demonstrate working science models, hardware innovations, and experimental exhibits. Inspire curiosity and bring scientific concepts to life!"
     }
-  ],
-  prizes: [
-    {
-      rank: "1st Place",
-      title: "Grand Champion",
-      amount: "$12,000",
-      perks: ["Direct VC pitch meeting", "Cloud credits ($10,000)", "Winner trophies & swag boxes", "Fast-track accelerator interview"]
-    },
-    {
-      rank: "2nd Place",
-      title: "First Runner-Up",
-      amount: "$7,000",
-      perks: ["Cloud credits ($5,000)", "Mentorship package", "Winner trophies & swag"]
-    },
-    {
-      rank: "3rd Place",
-      title: "Second Runner-Up",
-      amount: "$4,000",
-      perks: ["Cloud credits ($2,500)", "Winner medals & swag"]
-    },
-    {
-      rank: "Category Awards",
-      title: "5x Track Winners",
-      amount: "$1,000 each",
-      perks: ["Dedicated track trophy", "Sponsor sponsor swag", "Spotlight feature"]
-    },
-    {
-      rank: "Special Awards",
-      title: "Best Beginner Hack & Best UI",
-      amount: "$1,000 each",
-      perks: ["Recognition certificate", "Hardware gadget kits", "Developer gear"]
-    }
-  ],
+  ] as CompetitionInfo[],
   schedule: [
     {
-      time: "Nov 15, 2026",
-      title: "Registrations Open",
-      description: "Sign up as a solo hacker or team of up to 4 members."
+      day: "Day 1 — 2 December",
+      events: [
+        { time: "09:00 AM", title: "Inauguration & Welcome Address", venue: "Main Auditorium" },
+        { time: "10:00 AM", title: "Hackathon Problem Statement Reveal & Kickoff (6 Hours)", venue: "Computing Labs" },
+        { time: "10:30 AM", title: "Science Exhibition Setup & Public Display", venue: "Exhibition Hall" },
+        { time: "04:00 PM", title: "Hackathon Code Freeze & Final Project Demos", venue: "Lab 1 & 2" },
+        { time: "05:00 PM", title: "Reel Making Competition: Submissions Deadline", venue: "Media Desk" }
+      ]
     },
     {
-      time: "Dec 01, 2026",
-      title: "Registration Closes",
-      description: "Final team confirmations and team matchmaking assistance."
-    },
-    {
-      time: "Dec 05, 09:00 AM",
-      title: "Opening Ceremony & Hacking Begins",
-      description: "Keynote, challenge reveals, and 36-hour countdown starts."
-    },
-    {
-      time: "Dec 06, 02:00 PM",
-      title: "Mentor Checkpoints & Workshops",
-      description: "Get 1-on-1 code reviews and pitch feedback from industry veterans."
-    },
-    {
-      time: "Dec 06, 09:00 PM",
-      title: "Hacking Deadline & Submissions",
-      description: "Push repository links, demo video, and project summaries to Devpost."
-    },
-    {
-      time: "Dec 07, 04:00 PM",
-      title: "Live Demo & Awards Ceremony",
-      description: "Top 10 finalists present live on stage/stream. Winners announced!"
+      day: "Day 2 — 3 December",
+      events: [
+        { time: "09:30 AM", title: "Ideathon Round: 5-7 Min Presentations", venue: "Seminar Hall" },
+        { time: "11:00 AM", title: "Science Exhibition Final Jury Evaluation", venue: "Exhibition Hall" },
+        { time: "02:00 PM", title: "Reel Screening & Audience Choice Voting", venue: "Auditorium" },
+        { time: "04:30 PM", title: "Grand Valedictory & Awards Distribution", venue: "Main Stage" }
+      ]
     }
   ],
   faqs: [
     {
-      q: "Who can participate?",
-      a: "Anyone with a passion for building! Students, professionals, designers, and self-taught developers of all skill levels are welcome."
+      q: "Can a student participate in multiple competitions?",
+      a: "Yes! As long as the event schedules do not overlap (e.g. Science Exhibition on Day 1 and Ideathon on Day 2), participants may register for more than one event."
     },
     {
-      q: "Is there any registration fee?",
-      a: "No! HACKSPARK 2026 is 100% free for all accepted participants, including meals/swag (in-person) and digital credits/mentorship (virtual)."
+      q: "How do we pay the registration fee?",
+      a: "You can pay via any UPI app (GPay, PhonePe, Paytm) using the official QR code or UPI ID provided on the registration form. Upload your payment screenshot and enter the 12-digit UTR/Transaction ID during registration."
     },
     {
-      q: "Can I participate alone or do I need a team?",
-      a: "Both! You can register as a solo hacker or with a team of up to 4 people. We will also host a team formation session before the event if you're looking for teammates."
+      q: "Is cross-college or cross-branch team formation allowed?",
+      a: "Yes! Students from different branches, years, or colleges can form a team together."
     },
     {
-      q: "What if I've never attended a hackathon before?",
-      a: "First-timers are especially welcome! We have dedicated Beginner Mentors, beginner-friendly workshops, and a dedicated 'Best Beginner Hack' prize."
+      q: "When will the Hackathon problem statement be released?",
+      a: "The problem statement will be announced live on time at the opening of the 6-hour hackathon sprint on 2 December."
     },
     {
-      q: "Can I work on an existing project?",
-      a: "All code must be written during the 36-hour hackathon period. You may use open-source libraries, APIs, and pre-existing design systems, but the core implementation must be fresh."
-    },
-    {
-      q: "How will projects be judged?",
-      a: "Projects are evaluated on 4 criteria: Innovation & Creativity (25%), Technical Execution (25%), Practical Impact & Usability (25%), and Presentation (25%)."
+      q: "Will certificates be provided to all participants?",
+      a: "Yes! Every registered student who participates will receive an official Certificate of Participation from El Nino Synapse, and winners will receive cash prizes, trophies, and Certificates of Excellence."
     }
-  ],
-  sponsors: [
-    { name: "Vercel", tier: "Title Partner" },
-    { name: "Google Cloud", tier: "Cloud Partner" },
-    { name: "GitHub", tier: "Developer Partner" },
-    { name: "Supabase", tier: "Database Partner" },
-    { name: "OpenAI", tier: "AI Partner" }
   ]
 };

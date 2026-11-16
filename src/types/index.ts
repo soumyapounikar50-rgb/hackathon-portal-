@@ -1,59 +1,48 @@
-export type HackathonTrack = 
-  | 'ai-agents'
-  | 'web3-defi'
-  | 'climate-tech'
-  | 'health-tech'
-  | 'open-innovation';
+export type CompetitionId = 
+  | 'hackathon'
+  | 'ideathon'
+  | 'reel-making'
+  | 'science-exhibition';
 
-export interface TeamMember {
+export interface StudentMember {
   name: string;
   email: string;
-  role: string;
-  github?: string;
-  linkedin?: string;
+  phone: string;
+  branchAndYear: string;
+  college: string;
 }
 
-export interface Registration {
-  id: string; // e.g. HACK-2026-8921
-  registrationType: 'solo' | 'team';
-  teamName?: string;
-  leaderName: string;
-  leaderEmail: string;
-  leaderPhone: string;
-  collegeOrCompany: string;
-  graduationYear?: string;
-  experienceLevel: 'beginner' | 'intermediate' | 'advanced';
-  primaryTrack: HackathonTrack;
-  skills: string[];
-  githubUrl?: string;
-  linkedinUrl?: string;
-  portfolioUrl?: string;
-  projectPitch?: string;
-  members: TeamMember[];
-  tshirtSize?: string;
-  dietaryRestrictions?: string;
-  agreedToTerms: boolean;
-  status: 'confirmed' | 'pending' | 'waitlisted';
+export interface PaymentDetails {
+  method: 'upi' | 'cash';
+  transactionId: string; // UTR or Reference number
+  screenshotUrl?: string; // Base64 data URL or uploaded URL
+  amount: number;
+}
+
+export interface CompetitionRegistration {
+  id: string; // e.g. ENS-HACK-1042
+  competitionId: CompetitionId;
+  competitionName: string;
+  teamName: string;
+  fee: number;
+  leader: StudentMember;
+  members: StudentMember[]; // Additional members
+  payment: PaymentDetails;
+  status: 'confirmed' | 'pending_verification' | 'rejected';
   createdAt: string;
 }
 
-export interface RegistrationFormData {
-  registrationType: 'solo' | 'team';
-  teamName: string;
-  leaderName: string;
-  leaderEmail: string;
-  leaderPhone: string;
-  collegeOrCompany: string;
-  graduationYear: string;
-  experienceLevel: 'beginner' | 'intermediate' | 'advanced';
-  primaryTrack: HackathonTrack;
-  skills: string;
-  githubUrl: string;
-  linkedinUrl: string;
-  portfolioUrl: string;
-  projectPitch: string;
-  members: TeamMember[];
-  tshirtSize: string;
-  dietaryRestrictions: string;
-  agreedToTerms: boolean;
+export interface CompetitionInfo {
+  id: CompetitionId;
+  name: string;
+  tagline: string;
+  fee: number; // in INR (₹)
+  feeLabel: string;
+  minMembers: number; // Total including leader
+  maxMembers: number;
+  icon: string;
+  accentColor: string;
+  badge: string;
+  rules: string[];
+  description: string;
 }

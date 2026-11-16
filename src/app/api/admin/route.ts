@@ -25,7 +25,13 @@ export async function GET(req: NextRequest) {
 
   const { searchParams } = new URL(req.url);
   const format = searchParams.get('format');
-  const registrations = getAllRegistrations();
+  const compFilter = searchParams.get('competition');
+  
+  let registrations = getAllRegistrations();
+
+  if (compFilter && compFilter !== 'all') {
+    registrations = registrations.filter(r => r.competitionId === compFilter);
+  }
 
   if (format === 'csv') {
     const csvContent = convertRegistrationsToCSV(registrations);
@@ -33,24 +39,25 @@ export async function GET(req: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'text/csv; charset=utf-8',
-        'Content-Disposition': `attachment; filename="hackspark-registrations-${new Date().toISOString().slice(0, 10)}.csv"`
+        'Content-Disposition': `attachment; filename="el-nino-synapse-registrations-${new Date().toISOString().slice(0, 10)}.csv"`
       }
     });
   }
+
+  const totalFeeCollected = registrations.reduce((acc, r) => acc + (r.fee || 0), 0);
+  const totalStudents = registrations.reduce((acc, r) => acc + 1 + (r.members ? r.members.length : 0), 0);
 
   return NextResponse.json({
     registrations,
     metrics: {
       totalRegistrations: registrations.length,
-      totalParticipants: registrations.reduce((acc, r) => acc + 1 + (r.members ? r.members.length : 0), 0),
-      teamsCount: registrations.filter(r => r.registrationType === 'team').length,
-      solosCount: registrations.filter(r => r.registrationType === 'solo').length,
-      tracks: {
-        'ai-agents': registrations.filter(r => r.primaryTrack === 'ai-agents').length,
-        'web3-defi': registrations.filter(r => r.primaryTrack === 'web3-defi').length,
-        'climate-tech': registrations.filter(r => r.primaryTrack === 'climate-tech').length,
-        'health-tech': registrations.filter(r => r.primaryTrack === 'health-tech').length,
-        'open-innovation': registrations.filter(r => r.primaryTrack === 'open-innovation').length,
+      totalStudents,
+      totalFeeCollected,
+      byCompetition: {
+        hackathon: registrations.filter(r => r.competitionId === 'hackathon').length,
+        ideathon: registrations.filter(r => r.competitionId === 'ideathon').length,
+        'reel-making': registrations.filter(r => r.competitionId === 'reel-making').length,
+        'science-exhibition': registrations.filter(r => r.competitionId === 'science-exhibition').length,
       }
     }
   });
@@ -65,7 +72,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { id, status } = body;
 
-    if (!id || !['confirmed', 'pending', 'waitlisted'].includes(status)) {
+    if (!id || !['confirmed', 'pending_verification', 'rejected'].includes(status)) {
       return NextResponse.json({ error: 'Invalid parameters' }, { status: 400 });
     }
 

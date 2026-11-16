@@ -1,15 +1,13 @@
 import Navbar from '@/components/Navbar';
-import Countdown from '@/components/Countdown';
-import TracksSection from '@/components/TracksSection';
-import PrizesSection from '@/components/PrizesSection';
+import CompetitionsSection from '@/components/CompetitionsSection';
 import ScheduleSection from '@/components/ScheduleSection';
 import FAQSection from '@/components/FAQSection';
 import RegistrationForm from '@/components/RegistrationForm';
 import Footer from '@/components/Footer';
-import { HACKATHON_CONFIG } from '@/lib/config';
+import { EVENT_CONFIG } from '@/lib/config';
 import { 
-  ArrowRight, Sparkles, Terminal, Flame, Shield, 
-  MapPin, Calendar, Users, Trophy 
+  ArrowRight, Sparkles, Flame, Calendar, MapPin, 
+  Trophy, CheckCircle2, QrCode, Shield 
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -31,39 +29,55 @@ export default function Home() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="text-white font-medium">{HACKATHON_CONFIG.name}</span>
+            <span className="text-white font-medium">{EVENT_CONFIG.name}</span>
             <span className="text-gray-500">•</span>
-            <span className="text-brand-accent">Official 2026 Edition</span>
+            <span className="text-emerald-400 font-mono font-bold">{EVENT_CONFIG.dates}</span>
             <ArrowRight className="w-3.5 h-3.5 text-gray-400" />
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
-            Build the Future with{" "}
+            Welcome to{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-indigo-300 to-indigo-500">
-              Code, AI & Innovation
+              {EVENT_CONFIG.name}
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 text-base sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            {HACKATHON_CONFIG.description}
+          <p className="mt-5 text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            The grand inter-college tech & creativity fest featuring 4 power-packed competitions. 
+            Test your problem solving, innovative pitching, cinematography, and scientific models!
           </p>
 
-          {/* Key Quick Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-6 text-xs text-gray-300 font-mono">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
+          {/* Event Dates & Info Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 text-xs text-gray-200 font-mono">
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10">
               <Calendar className="w-4 h-4 text-indigo-400" />
-              <span>Dec 05 – Dec 07, 2026</span>
+              <span>Event Date: <strong>2 & 3 December</strong></span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10">
               <MapPin className="w-4 h-4 text-emerald-400" />
-              <span>{HACKATHON_CONFIG.location}</span>
+              <span>{EVENT_CONFIG.location}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10">
               <Trophy className="w-4 h-4 text-amber-400" />
-              <span>{HACKATHON_CONFIG.prizePool} Prizes</span>
+              <span>Cash Prizes & Trophies</span>
             </div>
+          </div>
+
+          {/* 4 Competitions Quick Glance */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mt-10">
+            {EVENT_CONFIG.competitions.map((c) => (
+              <a
+                key={c.id}
+                href="#register"
+                className="p-4 rounded-2xl glass-panel border border-white/10 hover:border-indigo-500/50 hover:scale-[1.02] transition-all text-center block group"
+              >
+                <span className="text-xs font-mono font-bold text-emerald-400 block">{c.feeLabel}</span>
+                <span className="font-bold text-sm text-white group-hover:text-indigo-300 block mt-1">{c.name}</span>
+                <span className="text-[10px] text-gray-400 block mt-0.5">{c.badge}</span>
+              </a>
+            ))}
           </div>
 
           {/* CTA Buttons */}
@@ -73,44 +87,22 @@ export default function Home() {
               className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-purple hover:scale-105 active:scale-95 shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2"
             >
               <Flame className="w-5 h-5 text-amber-300 animate-pulse" />
-              <span>Register Your Spot</span>
+              <span>Register for Competitions</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
 
             <Link
-              href="#tracks"
+              href="#competitions"
               className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-semibold text-gray-300 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors flex items-center justify-center gap-2"
             >
-              <span>Explore Challenges</span>
+              <span>Explore 4 Competitions</span>
             </Link>
-          </div>
-
-          {/* Live Countdown Clock */}
-          <div className="mt-14 pt-8 border-t border-white/5 max-w-xl mx-auto">
-            <Countdown />
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-4xl mx-auto">
-            {HACKATHON_CONFIG.stats.map((stat, idx) => (
-              <div key={idx} className="p-4 rounded-2xl glass-panel text-center">
-                <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white block">
-                  {stat.value}
-                </span>
-                <span className="text-xs text-gray-400 font-medium tracking-wider uppercase mt-1 block">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* TRACKS SECTION */}
-      <TracksSection />
-
-      {/* PRIZES SECTION */}
-      <PrizesSection />
+      {/* 4 COMPETITIONS SECTION */}
+      <CompetitionsSection />
 
       {/* SCHEDULE & ROADMAP SECTION */}
       <ScheduleSection />
@@ -121,13 +113,13 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Free Registration • Global & Hybrid</span>
+              <span>Online Registration Portal</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Apply for <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand-accent to-indigo-400">{HACKATHON_CONFIG.name}</span>
+              Register for <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-brand-accent to-indigo-400">{EVENT_CONFIG.name}</span>
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-gray-400">
-              Submit your team or register solo. Instant confirmation and printable digital pass upon submission.
+            <p className="mt-4 text-base sm:text-lg text-gray-300">
+              Select your competition, fill member details (Name, Email, Phone, Branch/Yr, College), and submit your UPI payment receipt.
             </p>
           </div>
 
