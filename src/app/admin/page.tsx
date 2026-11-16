@@ -6,7 +6,7 @@ import { EVENT_CONFIG } from '@/lib/config';
 import { 
   Shield, KeyRound, Download, Search, Users, User, 
   ExternalLink, ArrowLeft, RefreshCw, Eye, CheckCircle2, 
-  IndianRupee, Image as ImageIcon, Filter
+  IndianRupee, Image as ImageIcon, Filter, Share2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -26,6 +26,7 @@ export default function AdminPage() {
   // Selected Detail Modal
   const [selectedReg, setSelectedReg] = useState<CompetitionRegistration | null>(null);
   const [viewScreenshot, setViewScreenshot] = useState<string | null>(null);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const fetchAdminData = async (key: string, comp = competitionFilter) => {
     setLoading(true);
@@ -58,13 +59,26 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlKey = urlParams.get('key');
       const savedKey = sessionStorage.getItem('hack_admin_key');
-      if (savedKey) {
-        setPasskey(savedKey);
-        fetchAdminData(savedKey);
+
+      const activeKey = urlKey || savedKey;
+      if (activeKey) {
+        setPasskey(activeKey);
+        fetchAdminData(activeKey);
       }
     }
   }, []);
+
+  const handleShareAdminLink = () => {
+    if (typeof window !== 'undefined') {
+      const shareUrl = `${window.location.origin}/admin?key=${encodeURIComponent(passkey || 'admin123')}`;
+      navigator.clipboard.writeText(shareUrl);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    }
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -208,6 +222,14 @@ export default function AdminPage() {
               title="Refresh Data"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-indigo-400' : ''}`} />
+            </button>
+
+            <button
+              onClick={handleShareAdminLink}
+              className="px-3.5 py-2 rounded-xl bg-indigo-600/30 border border-indigo-500/50 text-indigo-200 text-xs font-semibold hover:bg-indigo-600/50 transition-all flex items-center gap-1.5"
+            >
+              <Share2 className="w-3.5 h-3.5 text-indigo-300" />
+              <span>{copiedLink ? "✓ Link Copied for Friends!" : "Share Admin Link"}</span>
             </button>
 
             <button
