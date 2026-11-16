@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (isDuplicateTransactionId(rawUtr)) {
+    if (await isDuplicateTransactionId(rawUtr)) {
       return NextResponse.json(
         { error: `This UPI Transaction ID (${rawUtr}) has already been used by another team. Duplicate payment submissions are rejected.` },
         { status: 409 }
@@ -147,14 +147,14 @@ export async function GET(req: NextRequest) {
 
     if (id) {
       const sanitizedId = sanitizeInput(id, 40);
-      const found = getRegistrationById(sanitizedId);
+      const found = await getRegistrationById(sanitizedId);
       if (!found) {
         return NextResponse.json({ error: 'Registration not found' }, { status: 404 });
       }
       return NextResponse.json({ registration: found });
     }
 
-    const all = getAllRegistrations();
+    const all = await getAllRegistrations();
     return NextResponse.json({
       totalCount: all.length,
       competitions: {

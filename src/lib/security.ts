@@ -144,13 +144,13 @@ export function sanitizeStudent(member: StudentMember): StudentMember {
  * Anti-Fraud: Detect duplicate UTR / Transaction IDs
  * Prevents dishonest teams from submitting the same UPI receipt multiple times.
  */
-export function isDuplicateTransactionId(transactionId: string): boolean {
+export async function isDuplicateTransactionId(transactionId: string): Promise<boolean> {
   if (!transactionId || typeof transactionId !== 'string') return true;
   
   const normalized = transactionId.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
   if (normalized.length < 6) return true; // Invalid format
 
-  const all = getAllRegistrations();
+  const all = await getAllRegistrations();
   return all.some(r => {
     const existing = r.payment?.transactionId?.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
     return existing === normalized;

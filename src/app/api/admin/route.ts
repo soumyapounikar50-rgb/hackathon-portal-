@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
   const format = searchParams.get('format');
   const compFilter = searchParams.get('competition');
   
-  let registrations = getAllRegistrations();
+  let registrations = await getAllRegistrations();
 
   if (compFilter && compFilter !== 'all') {
     registrations = registrations.filter(r => r.competitionId === compFilter);
@@ -122,7 +122,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid parameters' }, { status: 400 });
     }
 
-    const success = updateRegistrationStatus(id, status);
+    const success = await updateRegistrationStatus(id, status);
     if (!success) {
       return NextResponse.json({ error: 'Registration not found' }, { status: 404 });
     }
