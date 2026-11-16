@@ -8,43 +8,43 @@ import Footer from '@/components/Footer';
 import { EVENT_CONFIG } from '@/lib/config';
 import { 
   ArrowRight, Sparkles, Flame, Calendar, MapPin, 
-  Trophy, Waves, Sun, Globe, Compass 
+  Trophy, Waves, Leaf, Compass 
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#030712] relative overflow-hidden selection:bg-cyan-500 selection:text-white">
-      {/* Background Ambient Oceanic-Thermal Mesh */}
+    <div className="min-h-screen flex flex-col bg-[#02130c] relative overflow-hidden selection:bg-emerald-500 selection:text-black">
+      {/* Background Ambient Emerald Mesh */}
       <div className="elnino-ambient-mesh" />
 
       <Navbar />
 
       {/* HERO SECTION */}
       <section id="overview" className="relative pt-32 pb-20 sm:pt-40 sm:pb-32 overflow-hidden">
-        {/* Dynamic Oceanic & Solar Thermal Background Orbs */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-tr from-cyan-500/25 via-blue-600/20 to-orange-500/25 rounded-full blur-[150px] pointer-events-none" />
-        <div className="absolute top-16 left-5 w-[420px] h-[420px] bg-cyan-500/15 rounded-full blur-[130px] pointer-events-none" />
-        <div className="absolute top-20 right-5 w-[420px] h-[420px] bg-orange-500/15 rounded-full blur-[130px] pointer-events-none" />
+        {/* Dynamic Emerald & Mint Background Glowing Orbs */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[480px] bg-gradient-to-tr from-emerald-600/25 via-teal-600/20 to-green-500/25 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-16 left-5 w-[450px] h-[450px] bg-emerald-500/18 rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute top-20 right-5 w-[450px] h-[450px] bg-teal-500/18 rounded-full blur-[130px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          {/* Top Pill with Thermal & Oceanic Theme */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-white/[0.04] border border-cyan-500/40 text-gray-200 backdrop-blur-md mb-8 hover:border-cyan-400 transition-colors shadow-lg shadow-cyan-950/40">
+          {/* Top Pill with Emerald Theme */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 backdrop-blur-md mb-8 hover:border-emerald-400 transition-colors shadow-lg shadow-emerald-950/50">
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="text-white font-medium">{EVENT_CONFIG.name}</span>
-            <span className="text-gray-500">•</span>
-            <span className="text-amber-400 font-mono font-bold">{EVENT_CONFIG.dates}</span>
-            <span className="text-gray-500">•</span>
-            <span className="text-cyan-300 font-mono">Oceanic Energy × Neural Sparks</span>
-            <ArrowRight className="w-3.5 h-3.5 text-gray-400" />
+            <span className="text-emerald-500">•</span>
+            <span className="text-emerald-300 font-mono font-bold">{EVENT_CONFIG.dates}</span>
+            <span className="text-emerald-500">•</span>
+            <span className="text-mint-neon font-mono">4 Flagship Competitions</span>
+            <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
           </div>
 
-          {/* Main Headline with El Nino Gradient */}
+          {/* Main Headline with Green Shimmer Gradient */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
-            Harness the Power of{" "}
+            Experience the Energy of{" "}
             <span className="text-elnino-gradient">
               {EVENT_CONFIG.name}
             </span>
@@ -52,21 +52,21 @@ export default function Home() {
 
           {/* Subtitle */}
           <p className="mt-5 text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Inspired by the colossal Pacific thermal phenomenon that reshapes global climate dynamics. 
+            Inspired by Earth&rsquo;s planetary energy waves and neural spark connections. 
             Join 400+ innovators on <strong>2 & 3 December</strong> across 4 arenas: Hackathon, Ideathon, Reel Making, and Science Exhibition!
           </p>
 
           {/* Event Dates & Info Badges */}
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 text-xs text-gray-200 font-mono">
-            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-cyan-500/20 backdrop-blur-md">
-              <Calendar className="w-4 h-4 text-cyan-400" />
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-md">
+              <Calendar className="w-4 h-4 text-emerald-400" />
               <span>Event Date: <strong>2 & 3 December</strong></span>
             </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-emerald-500/20 backdrop-blur-md">
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-md">
               <MapPin className="w-4 h-4 text-emerald-400" />
               <span>{EVENT_CONFIG.location}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 border border-amber-500/20 backdrop-blur-md">
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-md">
               <Trophy className="w-4 h-4 text-amber-400" />
               <span>Prizes & Trophies in All 4 Arenas</span>
             </div>
@@ -78,10 +78,10 @@ export default function Home() {
               <a
                 key={c.id}
                 href="#register"
-                className="p-4 rounded-2xl glass-panel border border-cyan-500/20 hover:border-cyan-400/60 hover:scale-[1.02] transition-all text-center block group shadow-lg shadow-black/40"
+                className="p-4 rounded-2xl glass-panel border border-emerald-500/25 hover:border-emerald-400/70 hover:scale-[1.02] transition-all text-center block group shadow-lg shadow-black/40"
               >
                 <span className="text-xs font-mono font-bold text-emerald-400 block">{c.feeLabel}</span>
-                <span className="font-bold text-sm text-white group-hover:text-cyan-300 block mt-1">{c.name}</span>
+                <span className="font-bold text-sm text-white group-hover:text-emerald-300 block mt-1">{c.name}</span>
                 <span className="text-[10px] text-gray-400 block mt-0.5">{c.badge}</span>
               </a>
             ))}
@@ -91,18 +91,18 @@ export default function Home() {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="#register"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-cyan-600 via-indigo-600 to-amber-600 hover:scale-105 active:scale-95 shadow-xl shadow-cyan-600/30 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-bold text-black bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400 hover:scale-105 active:scale-95 shadow-xl shadow-emerald-500/30 transition-all flex items-center justify-center gap-2"
             >
-              <Flame className="w-5 h-5 text-amber-300 animate-pulse" />
+              <Sparkles className="w-5 h-5 text-black" />
               <span>Register Your Team</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
 
             <Link
               href="#about-el-nino"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-semibold text-gray-300 bg-white/5 hover:bg-white/10 border border-cyan-500/30 transition-colors flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-semibold text-gray-200 bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/40 transition-colors flex items-center justify-center gap-2"
             >
-              <Waves className="w-4 h-4 text-cyan-400" />
+              <Waves className="w-4 h-4 text-emerald-400" />
               <span>The El Niño Phenomenon</span>
             </Link>
           </div>
@@ -119,12 +119,12 @@ export default function Home() {
       <ScheduleSection />
 
       {/* REGISTRATION FORM SECTION */}
-      <section id="register" className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent via-cyan-950/20 to-transparent">
+      <section id="register" className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent via-emerald-950/20 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Registration & UPI Payment</span>
+              <span>Online Registration & UPI Payment</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
               Register for <span className="text-elnino-gradient">{EVENT_CONFIG.name}</span>
