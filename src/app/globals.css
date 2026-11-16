@@ -3,77 +3,108 @@
 @tailwind utilities;
 
 :root {
-  --background: #060a14;
-  --foreground: #f3f4f6;
+  --bg-deep-abyss: #030712;
+  --bg-pacific-dark: #040d21;
+  --ocean-cyan: #06b6d4;
+  --ocean-electric: #00f0ff;
+  --thermal-orange: #f97316;
+  --thermal-amber: #f59e0b;
+  --thermal-rose: #f43f5e;
+  --synapse-violet: #8b5cf6;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: #030712;
+  color: #f3f4f6;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
-  /* Oceanic-thermal atmospheric background */
+  
+  /* Rich El Niño Oceanic-Thermal Mesh Background */
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 60%, rgba(249, 115, 22, 0.07) 0%, transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
+    /* Top Left: Deep Pacific Thermal Wave (Cyan & Electric Blue) */
+    radial-gradient(ellipse 60% 50% at 10% 15%, rgba(6, 182, 212, 0.18) 0%, rgba(3, 105, 161, 0.08) 50%, transparent 80%),
+    /* Top Right: Solar Atmospheric Heat Surge (Amber & Flame Orange) */
+    radial-gradient(ellipse 55% 45% at 90% 12%, rgba(249, 115, 22, 0.16) 0%, rgba(245, 158, 11, 0.06) 45%, transparent 75%),
+    /* Center Mid: Neural Synaptic Surge (Indigo & Electric Violet) */
+    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+    /* Bottom Left: Equatorial Ocean Current (Deep Turquoise & Teal) */
+    radial-gradient(ellipse 65% 50% at 15% 85%, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.07) 45%, transparent 80%),
+    /* Bottom Right: Volcanic / Thermal Rising Energy (Crimson & Gold) */
+    radial-gradient(ellipse 50% 55% at 85% 85%, rgba(225, 29, 72, 0.14) 0%, rgba(249, 115, 22, 0.08) 45%, transparent 75%);
   background-attachment: fixed;
+  background-size: cover;
 }
 
-/* Custom glow and backdrop effects */
+/* Subtle Animated Thermal Aura Overlay */
+.elnino-ambient-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    linear-gradient(135deg, rgba(6, 182, 212, 0.04) 0%, transparent 40%),
+    linear-gradient(225deg, rgba(249, 115, 22, 0.04) 0%, transparent 40%);
+}
+
+/* Glassmorphism tuned to Oceanic Depth */
 .glass-panel {
-  background: rgba(10, 16, 32, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(4, 13, 33, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.14);
+}
+
+.glass-panel-thermal {
+  background: rgba(18, 9, 7, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(249, 115, 22, 0.18);
 }
 
 .glass-card-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-card-hover:hover {
   transform: translateY(-4px);
-  border-color: rgba(6, 182, 212, 0.45);
-  box-shadow: 0 16px 35px -10px rgba(6, 182, 212, 0.22);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 16px 40px -10px rgba(6, 182, 212, 0.28);
 }
 
-.glow-ocean {
-  box-shadow: 0 0 45px -10px rgba(6, 182, 212, 0.35);
+/* Special Thematic Glows */
+.glow-oceanic {
+  box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.4);
 }
 
 .glow-thermal {
-  box-shadow: 0 0 45px -10px rgba(249, 115, 22, 0.3);
+  box-shadow: 0 0 50px -10px rgba(249, 115, 22, 0.35);
 }
 
-.glow-primary {
-  box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.35);
+.glow-synapse {
+  box-shadow: 0 0 45px -8px rgba(139, 92, 246, 0.35);
 }
 
-/* Animations */
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animate-spin-slow {
-  animation: spinSlow 18s linear infinite;
+/* Oceanic Thermal Gradient Text */
+.text-elnino-gradient {
+  background: linear-gradient(135deg, #00f0ff 0%, #38bdf8 25%, #fbbf24 65%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Custom scrollbars */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #060a14;
+  background: #030712;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1b263b;
+  background: linear-gradient(to bottom, #0e7490, #c2410c);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2b3d5c;
+  background: linear-gradient(to bottom, #06b6d4, #ea580c);
 }
