@@ -6,6 +6,7 @@ import {
   checkRateLimit, recordRateLimitAttempt, sanitizeInput, 
   sanitizeStudent, isDuplicateTransactionId 
 } from '@/lib/security';
+import { sendRegistrationConfirmationEmail } from '@/lib/mailer';
 
 export const dynamic = 'force-dynamic';
 
@@ -118,9 +119,15 @@ export async function POST(req: NextRequest) {
     // Track rate limit attempt
     recordRateLimitAttempt(clientIp, 'registration_submission');
 
+    // 8. Trigger Automated Confirmation Email (non-blocking)
+    const origin = req.nextUrl.origin || `https://${req.headers.get('host') || 'el-nino-synapse.vercel.app'}`;
+    sendRegistrationConfirmationEmail(saved, origin).catch((mailErr) => {
+      console.error('[Auto-Mail Background Error]:', mailErr);
+    });
+
     return NextResponse.json({
       success: true,
-      message: 'Registration successfully secured and recorded!',
+      message: 'Registration successfully secured and recorded! Confirmation email dispatched.',
       registration: saved
     }, { status: 201 });
 
