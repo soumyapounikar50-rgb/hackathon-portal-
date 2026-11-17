@@ -59,8 +59,13 @@ export default function TicketPage() {
 
   if (error || !registration) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16] px-4">
-        <div className="max-w-md w-full glass-panel p-8 rounded-3xl text-center border border-white/10">
+      <div className="min-h-screen flex items-center justify-center bg-[#01120a] px-4 relative overflow-hidden">
+        <div className="conservation-bg-layer" />
+        <div className="conservation-overlay" />
+        <div className="elnino-hologram-mesh" />
+        <div className="max-w-md w-full hologram-card p-8 rounded-3xl text-center relative z-10">
+          <span className="hud-corner-tl" />
+          <span className="hud-corner-br" />
           <h2 className="text-xl font-bold text-white mb-2">Pass Not Found</h2>
           <p className="text-sm text-gray-400 mb-6">{error || "We could not find an entry matching this ID."}</p>
           <Link
@@ -76,12 +81,18 @@ export default function TicketPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#090d16] py-12 px-4 sm:px-6 relative overflow-hidden flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#01120a] py-12 px-4 sm:px-6 relative overflow-hidden flex flex-col items-center justify-center">
+      {/* 🌿 Environmental Conservation Cinematic Wallpaper Layer */}
+      <div className="conservation-bg-layer" />
+      <div className="conservation-overlay" />
+      <div className="elnino-hologram-mesh" />
+      <div className="hologram-scanner-beam" />
+
       {/* Background glow lights */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-emerald-600/15 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Top action controls */}
-      <div className="w-full max-w-lg flex items-center justify-between mb-8 print:hidden">
+      <div className="w-full max-w-lg flex items-center justify-between mb-8 print:hidden relative z-10">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-white transition-colors"
@@ -109,7 +120,7 @@ export default function TicketPage() {
       </div>
 
       {/* TICKET CARD */}
-      <div className="w-full max-w-lg rounded-3xl overflow-hidden glass-panel border border-indigo-500/30 shadow-2xl shadow-indigo-950/40 relative">
+      <div className="w-full max-w-lg rounded-3xl overflow-hidden glass-panel border border-emerald-500/30 shadow-2xl shadow-emerald-950/40 relative z-10">
         {/* Top Header Badge */}
         <div className="bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-purple p-6 text-white relative">
           <div className="flex items-center justify-between">

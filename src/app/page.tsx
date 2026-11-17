@@ -16,6 +16,10 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[#01120a] relative overflow-hidden selection:bg-emerald-500 selection:text-black">
+      {/* 🌿 Environmental Conservation Cinematic Wallpaper Layer */}
+      <div className="conservation-bg-layer" />
+      <div className="conservation-overlay" />
+
       {/* 🌐 Hologram Coordinate Mesh & Projector Scanner Beam */}
       <div className="elnino-hologram-mesh" />
       <div className="hologram-scanner-beam" />

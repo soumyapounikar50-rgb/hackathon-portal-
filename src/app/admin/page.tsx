@@ -165,9 +165,17 @@ export default function AdminPage() {
   // LOGIN SCREEN
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#090d16] flex items-center justify-center px-4">
-        <div className="max-w-md w-full glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mx-auto mb-4 border border-indigo-500/30">
+      <div className="min-h-screen bg-[#01120a] flex items-center justify-center px-4 relative overflow-hidden">
+        <div className="conservation-bg-layer" />
+        <div className="conservation-overlay" />
+        <div className="elnino-hologram-mesh" />
+        <div className="hologram-scanner-beam" />
+
+        <div className="max-w-md w-full hologram-card p-8 rounded-3xl relative z-10 shadow-2xl">
+          <span className="hud-corner-tl" />
+          <span className="hud-corner-br" />
+
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
             <Shield className="w-6 h-6" />
           </div>
 
@@ -224,8 +232,13 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-white py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#01120a] text-white py-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="conservation-bg-layer" />
+      <div className="conservation-overlay" />
+      <div className="elnino-hologram-mesh" />
+      <div className="hologram-scanner-beam" />
+
+      <div className="max-w-7xl mx-auto space-y-8 relative z-10">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div>
