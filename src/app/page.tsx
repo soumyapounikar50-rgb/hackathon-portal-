@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import ElNinoSection from '@/components/ElNinoSection';
 import CompetitionsSection from '@/components/CompetitionsSection';
-import ScienceExhibitionSection from '@/components/ScienceExhibitionSection';
 import ScheduleSection from '@/components/ScheduleSection';
 import CoordinatorsSection from '@/components/CoordinatorsSection';
 import FAQSection from '@/components/FAQSection';
@@ -40,7 +39,7 @@ export default function Home() {
             <span className="text-emerald-500">•</span>
             <span className="text-emerald-300 font-mono font-bold">{EVENT_CONFIG.dates}</span>
             <span className="text-emerald-500">•</span>
-            <span className="text-mint-neon font-mono">3 Competitions + Science Expo</span>
+            <span className="text-mint-neon font-mono">3 Flagship Competitions</span>
             <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
           </div>
 
@@ -55,7 +54,7 @@ export default function Home() {
           {/* Subtitle */}
           <p className="mt-5 text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Inspired by Earth&rsquo;s planetary energy waves and neural spark connections. 
-            Join 400+ innovators on <strong>2 & 3 December</strong> across 3 flagship competitions: Hackathon, Ideathon, Reel Making — plus our grand campus Science Exhibition!
+            Join 400+ innovators on <strong>2 & 3 December</strong> across 3 flagship competitions: <strong>Hackathon</strong>, <strong>Ideathon</strong>, and <strong>Reel Making</strong>!
           </p>
 
           {/* Event Dates & Info Badges */}
@@ -70,21 +69,17 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/30 border border-emerald-500/30 backdrop-blur-md">
               <Trophy className="w-4 h-4 text-amber-400" />
-              <span>Prizes & Trophies in All Arenas</span>
+              <span>Prizes & Trophies in All 3 Competitions</span>
             </div>
           </div>
 
-          {/* Competitions & Expo Quick Glance */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mt-10">
+          {/* 3 Competitions Quick Glance */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto mt-10">
             {EVENT_CONFIG.competitions.map((c) => (
               <a
                 key={c.id}
-                href={c.isRegisterable === false ? "#science-exhibition" : "#register"}
-                className={`p-4 rounded-2xl glass-panel border transition-all text-center block group shadow-lg shadow-black/40 ${
-                  c.isRegisterable === false
-                    ? "border-teal-500/40 bg-teal-950/20 hover:border-teal-400 hover:scale-[1.02]"
-                    : "border-emerald-500/25 hover:border-emerald-400/70 hover:scale-[1.02]"
-                }`}
+                href="#register"
+                className="p-4 rounded-2xl glass-panel border border-emerald-500/25 hover:border-emerald-400/70 hover:scale-[1.02] transition-all text-center block group shadow-lg shadow-black/40"
               >
                 <span className="text-xs font-mono font-bold text-emerald-400 block">{c.feeLabel}</span>
                 <span className="font-bold text-sm text-white group-hover:text-emerald-300 block mt-1">{c.name}</span>
@@ -118,11 +113,8 @@ export default function Home() {
       {/* THE SCIENCE & SPIRIT OF EL NIÑO (Phenomenon & Effects) */}
       <ElNinoSection />
 
-      {/* COMPETITIONS ARENAS (HACKATHON, IDEATHON, REEL MAKING) */}
+      {/* 3 COMPETITIONS ARENAS (HACKATHON, IDEATHON, REEL MAKING) */}
       <CompetitionsSection />
-
-      {/* DEDICATED SCIENCE EXHIBITION ON-CAMPUS SHOWCASE */}
-      <ScienceExhibitionSection />
 
       {/* SCHEDULE & ROADMAP SECTION */}
       <ScheduleSection />

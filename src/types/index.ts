@@ -1,8 +1,7 @@
 export type CompetitionId = 
   | 'hackathon'
   | 'ideathon'
-  | 'reel-making'
-  | 'science-exhibition';
+  | 'reel-making';
 
 export interface StudentMember {
   name: string;
@@ -45,6 +44,4 @@ export interface CompetitionInfo {
   badge: string;
   rules: string[];
   description: string;
-  isRegisterable?: boolean; // false for exhibition-only events
-  scheduleInfo?: string;
 }

@@ -273,7 +273,7 @@ export default function AdminPage() {
             <div className="p-5 rounded-2xl glass-panel border border-white/10">
               <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">By Competition</span>
               <span className="text-xs text-gray-300 mt-1.5 block font-mono">
-                HACK: {metrics.byCompetition?.hackathon || 0} • IDEA: {metrics.byCompetition?.ideathon || 0} • REEL: {metrics.byCompetition?.['reel-making'] || 0} • EXPO: Campus Showcase
+                HACK: {metrics.byCompetition?.hackathon || 0} • IDEA: {metrics.byCompetition?.ideathon || 0} • REEL: {metrics.byCompetition?.['reel-making'] || 0}
               </span>
             </div>
           </div>

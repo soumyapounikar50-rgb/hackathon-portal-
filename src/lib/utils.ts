@@ -10,8 +10,7 @@ export function generateRegistrationId(competitionId: string): string {
   const prefixMap: Record<string, string> = {
     'hackathon': 'HACK',
     'ideathon': 'IDEA',
-    'reel-making': 'REEL',
-    'science-exhibition': 'SCI'
+    'reel-making': 'REEL'
   };
   const prefix = prefixMap[competitionId] || 'FEST';
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);

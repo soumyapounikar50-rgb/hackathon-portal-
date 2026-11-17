@@ -44,14 +44,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Science Exhibition is open campus showcase (no online portal registration)
-    if (body.competitionId === 'science-exhibition') {
-      return NextResponse.json(
-        { error: 'Science Exhibition does not require online portal registration. It is an open on-campus showcase on 2 & 3 December in the Exhibition Hall.' },
-        { status: 400 }
-      );
-    }
-
     const validCompetitions = ['hackathon', 'ideathon', 'reel-making'];
     if (!validCompetitions.includes(body.competitionId)) {
       return NextResponse.json(
@@ -176,8 +168,7 @@ export async function GET(req: NextRequest) {
       competitions: {
         hackathon: all.filter(r => r.competitionId === 'hackathon').length,
         ideathon: all.filter(r => r.competitionId === 'ideathon').length,
-        'reel-making': all.filter(r => r.competitionId === 'reel-making').length,
-        'science-exhibition': all.filter(r => r.competitionId === 'science-exhibition').length
+        'reel-making': all.filter(r => r.competitionId === 'reel-making').length
       }
     });
   } catch (error: any) {

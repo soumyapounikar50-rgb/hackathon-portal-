@@ -99,8 +99,7 @@ export async function GET(req: NextRequest) {
       byCompetition: {
         hackathon: registrations.filter(r => r.competitionId === 'hackathon').length,
         ideathon: registrations.filter(r => r.competitionId === 'ideathon').length,
-        'reel-making': registrations.filter(r => r.competitionId === 'reel-making').length,
-        'science-exhibition': registrations.filter(r => r.competitionId === 'science-exhibition').length,
+        'reel-making': registrations.filter(r => r.competitionId === 'reel-making').length
       }
     }
   });

@@ -1,11 +1,10 @@
 import { EVENT_CONFIG } from '@/lib/config';
-import { Terminal, Lightbulb, Video, Atom, Clock, Users, ArrowUpRight, Presentation, Film, Info, Sparkles, MapPin } from 'lucide-react';
+import { Terminal, Lightbulb, Video, ArrowUpRight, Sparkles } from 'lucide-react';
 
 const ICONS: Record<string, any> = {
   Terminal,
   Lightbulb,
-  Video,
-  Atom
+  Video
 };
 
 export default function CompetitionsSection() {
@@ -17,28 +16,25 @@ export default function CompetitionsSection() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>3 Competitions + Campus Science Expo</span>
+            <span>3 Flagship Competitions</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Events & <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400">Competitions</span>
+            Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400">Competition</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-gray-400">
-            Register your team for Hackathon, Ideathon, or Reel Making, or visit our open on-campus Science Exhibition on 2 & 3 December at {EVENT_CONFIG.name}.
+            Compete across our 3 distinct arenas on 2 & 3 December at {EVENT_CONFIG.name}. Separate registrations and prizes for each event.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {EVENT_CONFIG.competitions.map((comp) => {
             const IconComponent = ICONS[comp.icon] || Terminal;
-            const isExhibition = comp.isRegisterable === false;
 
             return (
               <div
                 key={comp.id}
                 id={comp.id}
-                className={`group relative p-8 rounded-3xl glass-panel glass-card-hover flex flex-col justify-between overflow-hidden border ${
-                  isExhibition ? 'border-emerald-500/40 bg-emerald-950/20 shadow-lg shadow-emerald-950/40' : 'border-white/10'
-                }`}
+                className="group relative p-8 rounded-3xl glass-panel glass-card-hover flex flex-col justify-between overflow-hidden border border-white/10"
               >
                 <div>
                   {/* Header Row */}
@@ -50,7 +46,7 @@ export default function CompetitionsSection() {
                     </div>
 
                     <div className="text-right">
-                      <span className={`text-2xl font-mono font-extrabold block ${isExhibition ? 'text-teal-300' : 'text-emerald-400'}`}>
+                      <span className="text-2xl font-mono font-extrabold block text-emerald-400">
                         {comp.feeLabel}
                       </span>
                       <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
@@ -59,13 +55,8 @@ export default function CompetitionsSection() {
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors flex items-center gap-2">
-                    <span>{comp.name}</span>
-                    {isExhibition && (
-                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-md bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                        Campus Display
-                      </span>
-                    )}
+                  <h3 className="text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                    {comp.name}
                   </h3>
                   <p className="text-xs font-mono text-gray-400 mt-1 mb-4">{comp.tagline}</p>
 
@@ -76,7 +67,7 @@ export default function CompetitionsSection() {
                   {/* Rules Pill List */}
                   <div className="space-y-2 border-t border-white/10 pt-4 mb-6">
                     <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider block">
-                      {isExhibition ? 'Exhibition Highlights:' : 'Key Guidelines:'}
+                      Key Guidelines:
                     </span>
                     <ul className="space-y-1.5 text-xs text-gray-300">
                       {comp.rules.slice(0, 3).map((r, i) => (
@@ -91,29 +82,16 @@ export default function CompetitionsSection() {
 
                 <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                   <span className="text-xs text-gray-400 font-mono">
-                    {isExhibition
-                      ? '📍 Exhibition Hall • 2 & 3 Dec'
-                      : `Team: ${comp.minMembers === comp.maxMembers ? `${comp.minMembers} Members` : `${comp.minMembers}-${comp.maxMembers} Members`}`
-                    }
+                    Team: {comp.minMembers === comp.maxMembers ? `${comp.minMembers} Members` : `${comp.minMembers}-${comp.maxMembers} Members`}
                   </span>
 
-                  {isExhibition ? (
-                    <a
-                      href="#science-exhibition"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-emerald-200 bg-emerald-950/80 hover:bg-emerald-900/90 border border-emerald-500/50 transition-colors shadow-md"
-                    >
-                      <span>Exhibition Info</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  ) : (
-                    <a
-                      href="#register"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-emerald-400 to-teal-400 hover:opacity-95 transition-all shadow-md font-mono"
-                    >
-                      <span>Register Team</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  )}
+                  <a
+                    href="#register"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-emerald-400 to-teal-400 hover:opacity-95 transition-all shadow-md font-mono"
+                  >
+                    <span>Register Team</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
             );

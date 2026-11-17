@@ -24,7 +24,7 @@ export default function Navbar() {
                 {EVENT_CONFIG.name}
               </span>
               <span className="block text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-                ● 2 & 3 Dec • 3 Competitions + Science Expo
+                ● 2 & 3 Dec • 3 Competitions
               </span>
             </div>
           </Link>
@@ -36,9 +36,6 @@ export default function Navbar() {
             </Link>
             <Link href="#competitions" className="hover:text-emerald-400 transition-colors">
               Competitions
-            </Link>
-            <Link href="#science-exhibition" className="hover:text-emerald-400 transition-colors">
-              Science Exhibition
             </Link>
             <Link href="#schedule" className="hover:text-emerald-400 transition-colors">
               Timeline (2 & 3 Dec)
@@ -95,13 +92,6 @@ export default function Navbar() {
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-emerald-300 hover:bg-emerald-950/30"
           >
             Competitions
-          </Link>
-          <Link
-            href="#science-exhibition"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-teal-300 hover:text-white hover:bg-emerald-950/30"
-          >
-            🔬 Science Exhibition
           </Link>
           <Link
             href="#schedule"

@@ -117,7 +117,6 @@ function generateEmailHTML(reg: CompetitionRegistration, domain: string): string
                     <li><strong>Hackathon:</strong> 6 Hours Sprint. Problem statement will be revealed ON TIME at kickoff.</li>
                     <li><strong>Ideathon:</strong> Strictly 3 members total, 5-7 min presentation, 7-8 slides limit.</li>
                     <li><strong>Reel Making:</strong> 2 members total, 60 seconds duration (9:16 vertical reel).</li>
-                    <li><strong>Science Exhibition:</strong> Working physical models & scientific demonstrations.</li>
                     <li>Bring your College ID Card and keep this digital pass ready on your phone.</li>
                   </ul>
                 </div>

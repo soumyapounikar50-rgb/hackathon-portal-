@@ -44,7 +44,7 @@ export default function ElNinoSection() {
       bgBorder: "border-emerald-400/40",
       badge: "Our Fest Identity",
       description: "Just as El Niño is Nature's most powerful reminder of interconnected global systems and sudden energy releases, El Nino Synapse is the neural spark where bright minds connect to build solutions for real-world complexity.",
-      impact: "Channeling raw creative disruption into working code, startup pitches, reels, and physical science models."
+      impact: "Channeling raw creative disruption into working code, startup pitches, and cinematic viral reels."
     }
   ];
 
@@ -165,7 +165,7 @@ export default function ElNinoSection() {
             </div>
             <div>
               <h4 className="text-sm font-bold text-white">Experience the Energy at El Nino Synapse</h4>
-              <p className="text-xs text-gray-300">Join 400+ innovators across Hackathon, Ideathon, Reel Making, and Science Exhibition on 2 & 3 December.</p>
+              <p className="text-xs text-gray-300">Join 400+ innovators across Hackathon, Ideathon, and Reel Making on 2 & 3 December.</p>
             </div>
           </div>
           <a

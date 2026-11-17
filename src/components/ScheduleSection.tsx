@@ -14,7 +14,7 @@ export default function ScheduleSection() {
             Schedule: <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-indigo-300 to-indigo-500">2 & 3 December</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-gray-400">
-            Full sequence of events, problem statement reveal, exhibition, and presentation slots.
+            Full sequence of events, problem statement reveal, coding sprints, and presentation slots.
           </p>
         </div>
 
