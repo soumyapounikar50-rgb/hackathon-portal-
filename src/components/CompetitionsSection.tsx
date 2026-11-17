@@ -34,45 +34,48 @@ export default function CompetitionsSection() {
               <div
                 key={comp.id}
                 id={comp.id}
-                className="group relative p-8 rounded-3xl glass-panel glass-card-hover flex flex-col justify-between overflow-hidden border border-white/10"
+                className="group relative p-8 rounded-3xl hologram-card flex flex-col justify-between overflow-hidden"
               >
+                <span className="hud-corner-tl" />
+                <span className="hud-corner-br" />
+
                 <div>
                   {/* Header Row */}
                   <div className="flex items-start justify-between mb-6">
                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${comp.accentColor} p-0.5 shadow-lg group-hover:scale-105 transition-transform`}>
-                      <div className="w-full h-full bg-[#0b0f1a] rounded-[14px] flex items-center justify-center">
-                        <IconComponent className="w-7 h-7 text-white" />
+                      <div className="w-full h-full bg-[#011a10] rounded-[14px] flex items-center justify-center">
+                        <IconComponent className="w-7 h-7 text-cyan-300" />
                       </div>
                     </div>
 
                     <div className="text-right">
-                      <span className="text-2xl font-mono font-extrabold block text-emerald-400">
+                      <span className="text-2xl font-mono font-extrabold block text-cyan-300">
                         {comp.feeLabel}
                       </span>
-                      <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-300 hologram-badge px-2.5 py-0.5 rounded-full inline-block mt-1">
                         {comp.badge}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">
                     {comp.name}
                   </h3>
-                  <p className="text-xs font-mono text-gray-400 mt-1 mb-4">{comp.tagline}</p>
+                  <p className="text-xs font-mono text-cyan-400 mt-1 mb-4">{comp.tagline}</p>
 
                   <p className="text-sm text-gray-300 leading-relaxed mb-6">
                     {comp.description}
                   </p>
 
                   {/* Rules Pill List */}
-                  <div className="space-y-2 border-t border-white/10 pt-4 mb-6">
-                    <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider block">
+                  <div className="space-y-2 border-t border-emerald-500/20 pt-4 mb-6">
+                    <span className="text-[11px] font-mono text-cyan-300 uppercase tracking-wider block">
                       Key Guidelines:
                     </span>
                     <ul className="space-y-1.5 text-xs text-gray-300">
                       {comp.rules.slice(0, 3).map((r, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <span className="text-emerald-400 mt-0.5">✔</span>
+                          <span className="text-cyan-400 mt-0.5">✦</span>
                           <span>{r}</span>
                         </li>
                       ))}
@@ -80,14 +83,14 @@ export default function CompetitionsSection() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-xs text-gray-400 font-mono">
+                <div className="pt-4 border-t border-emerald-500/20 flex items-center justify-between">
+                  <span className="text-xs text-gray-300 font-mono">
                     Team: {comp.minMembers === comp.maxMembers ? `${comp.minMembers} Members` : `${comp.minMembers}-${comp.maxMembers} Members`}
                   </span>
 
                   <a
                     href="#register"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-emerald-400 to-teal-400 hover:opacity-95 transition-all shadow-md font-mono"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:opacity-95 transition-all shadow-md font-mono"
                   >
                     <span>Register Team</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />

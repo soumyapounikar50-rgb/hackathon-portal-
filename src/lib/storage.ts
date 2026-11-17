@@ -188,3 +188,36 @@ export async function updateRegistrationStatus(id: string, status: 'confirmed' |
 
   return true;
 }
+
+export async function deleteRegistration(id: string): Promise<boolean> {
+  const all = await getAllRegistrations();
+  const filtered = all.filter(r => r.id.toLowerCase() !== id.toLowerCase());
+  if (filtered.length === all.length) return false;
+
+  memoryRegistrations = filtered;
+
+  try {
+    const filePath = getDataFilePath();
+    fs.writeFileSync(filePath, JSON.stringify(filtered, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn("File write fallback:", err);
+  }
+
+  const kv = getKVConfig();
+  if (kv) {
+    try {
+      await fetch(`${kv.url}/set/el_nino_synapse_registrations`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${kv.token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(filtered)
+      });
+    } catch (e) {
+      console.error("KV delete sync error:", e);
+    }
+  }
+
+  return true;
+}

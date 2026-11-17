@@ -289,7 +289,10 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
   }
 
   return (
-    <div className="max-w-4xl mx-auto glass-panel p-6 sm:p-10 rounded-3xl border border-white/10 relative">
+    <div className="max-w-4xl mx-auto hologram-card p-6 sm:p-10 rounded-3xl relative">
+      <span className="hud-corner-tl" />
+      <span className="hud-corner-br" />
+
       {/* COMPETITIONS SELECTOR TABS (3 REGISTERABLE COMPETITIONS) */}
       <div className="mb-8">
         <label className="text-xs font-mono uppercase tracking-widest text-emerald-400 block mb-3 text-center">

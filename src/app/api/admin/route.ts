@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllRegistrations, updateRegistrationStatus } from '@/lib/storage';
+import { getAllRegistrations, updateRegistrationStatus, deleteRegistration } from '@/lib/storage';
 import { convertRegistrationsToCSV } from '@/lib/utils';
 import { timingSafeCompare, checkRateLimit, recordRateLimitAttempt, resetRateLimit } from '@/lib/security';
 
@@ -129,5 +129,32 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ success: true, message: 'Status updated securely' });
   } catch (error: any) {
     return NextResponse.json({ error: 'Failed to update record' }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const clientIp = getClientIp(req);
+  const auth = verifyAuthorization(req, clientIp);
+
+  if (!auth.authorized) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status || 401 });
+  }
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Registration ID is required' }, { status: 400 });
+    }
+
+    const success = await deleteRegistration(id);
+    if (!success) {
+      return NextResponse.json({ error: 'Registration not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Registration deleted successfully' });
+  } catch (error: any) {
+    return NextResponse.json({ error: 'Failed to delete record' }, { status: 500 });
   }
 }

@@ -1,4 +1,4 @@
-import { Waves, Wind, Zap, Sparkles, Globe, Sun, CloudRain, Leaf } from 'lucide-react';
+import { Waves, Wind, Zap, Sparkles, Globe, Sun, CloudRain, Leaf, ShieldAlert } from 'lucide-react';
 
 export default function ElNinoSection() {
   const effects = [
@@ -6,9 +6,9 @@ export default function ElNinoSection() {
       title: "Oceanic Thermal Surge",
       subtitle: "Equatorial Pacific Warming",
       icon: Waves,
-      gradient: "from-emerald-500 to-teal-600",
+      gradient: "from-emerald-400 to-teal-500",
       accent: "text-emerald-400",
-      bgBorder: "border-emerald-500/30",
+      bgBorder: "border-emerald-500/35",
       badge: "Ocean Dynamics",
       description: "Trade winds weaken, allowing a colossal surge of warm water to migrate eastward across the central and eastern Pacific. This suppresses the cold, nutrient-rich Humboldt current and raises sea surface temperatures by up to 3°C to 5°C.",
       impact: "Triggers marine ecosystem shifts and injects tremendous thermal energy into the upper troposphere."
@@ -17,32 +17,32 @@ export default function ElNinoSection() {
       title: "Atmospheric Jet Stream Shift",
       subtitle: "Global Teleconnections",
       icon: Wind,
-      gradient: "from-teal-500 to-green-600",
-      accent: "text-teal-400",
-      bgBorder: "border-teal-500/30",
+      gradient: "from-teal-400 to-cyan-500",
+      accent: "text-cyan-400",
+      bgBorder: "border-cyan-500/35",
       badge: "Atmospheric Winds",
       description: "The massive atmospheric convection center shifts thousands of miles east, bending high-altitude subtropical jet streams. This rewires how atmospheric moisture travels across continents and oceans worldwide.",
       impact: "Alters cyclone genesis alleys, jet stream trajectories, and transcontinental storm patterns."
     },
     {
-      title: "Global Weather Extremes",
-      subtitle: "Floods, Monsoons & Droughts",
-      icon: CloudRain,
-      gradient: "from-emerald-600 to-green-700",
-      accent: "text-green-400",
-      bgBorder: "border-green-500/30",
-      badge: "Climatic Ripples",
-      description: "Generates intense torrential precipitation and flash flooding along the coastal Americas, while simultaneously provoking severe droughts and altered monsoon cycles across South Asia, Africa, and Australasia.",
-      impact: "Directly affects global agricultural yields, reservoir hydrology, and energy grids."
+      title: "Biosphere & Eco-Conservation",
+      subtitle: "Climate Resilience & Earth Protection",
+      icon: Leaf,
+      gradient: "from-emerald-500 to-green-600",
+      accent: "text-emerald-300",
+      bgBorder: "border-green-500/35",
+      badge: "Eco Conservation",
+      description: "As climate anomalies stress fragile coral reefs, rainforests, and agricultural watersheds, our focus turns to ecological restoration. We champion tech-driven conservation, renewable mitigation, and biodiversity protection.",
+      impact: "Inspires students to build green-tech and climate-resilience solutions for our shared living planet."
     },
     {
       title: "The 'Synapse' Metaphor",
       subtitle: "Disruption as a Catalyst for Innovation",
       icon: Zap,
-      gradient: "from-mint-neon to-emerald-500",
-      accent: "text-emerald-300",
+      gradient: "from-cyan-400 via-teal-300 to-emerald-400",
+      accent: "text-cyan-300",
       bgBorder: "border-emerald-400/40",
-      badge: "Our Fest Identity",
+      badge: "Fest Philosophy",
       description: "Just as El Niño is Nature's most powerful reminder of interconnected global systems and sudden energy releases, El Nino Synapse is the neural spark where bright minds connect to build solutions for real-world complexity.",
       impact: "Channeling raw creative disruption into working code, startup pitches, and cinematic viral reels."
     }
@@ -106,34 +106,37 @@ export default function ElNinoSection() {
                 <span className="text-gray-400 text-[11px] uppercase tracking-wider mt-1 block">Pacific Basin Span</span>
               </div>
               <div className="p-4 rounded-2xl bg-black/50 border border-emerald-500/20 text-center">
-                <span className="text-mint-neon font-extrabold text-2xl block">5 Continents</span>
+                <span className="text-cyan-300 font-extrabold text-2xl block">5 Continents</span>
                 <span className="text-gray-400 text-[11px] uppercase tracking-wider mt-1 block">Atmospheric Impact</span>
               </div>
               <div className="p-4 rounded-2xl bg-black/50 border border-emerald-500/20 text-center">
-                <span className="text-green-400 font-extrabold text-2xl block">4 Arenas</span>
-                <span className="text-gray-400 text-[11px] uppercase tracking-wider mt-1 block">Synapse Contests</span>
+                <span className="text-emerald-400 font-extrabold text-2xl block">3 Arenas</span>
+                <span className="text-gray-400 text-[11px] uppercase tracking-wider mt-1 block">Flagship Contests</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 4 Effects Grid */}
+        {/* 4 Effects Grid with Hologram Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {effects.map((eff, idx) => {
             const Icon = eff.icon;
             return (
               <div
                 key={idx}
-                className={`p-7 rounded-3xl glass-panel border ${eff.bgBorder} hover:border-emerald-400/60 transition-all flex flex-col justify-between group shadow-lg shadow-black/40`}
+                className={`p-7 rounded-3xl hologram-card flex flex-col justify-between group relative`}
               >
+                <span className="hud-corner-tl" />
+                <span className="hud-corner-br" />
+
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${eff.gradient} p-0.5 shadow-lg group-hover:scale-105 transition-transform`}>
-                      <div className="w-full h-full bg-[#02180f] rounded-[14px] flex items-center justify-center">
+                      <div className="w-full h-full bg-[#011a10] rounded-[14px] flex items-center justify-center">
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                     </div>
-                    <span className={`text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 ${eff.accent}`}>
+                    <span className={`text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full hologram-badge ${eff.accent}`}>
                       {eff.badge}
                     </span>
                   </div>
@@ -149,7 +152,7 @@ export default function ElNinoSection() {
                 </div>
 
                 <div className="pt-3 border-t border-emerald-500/20 text-xs text-gray-400 flex items-start gap-2">
-                  <span className={`${eff.accent} font-bold`}>✦ Result:</span>
+                  <span className={`${eff.accent} font-bold`}>✦ Key Focus:</span>
                   <span>{eff.impact}</span>
                 </div>
               </div>

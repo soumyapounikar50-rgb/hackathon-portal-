@@ -6,7 +6,7 @@ import { EVENT_CONFIG } from '@/lib/config';
 import { 
   Shield, KeyRound, Download, Search, Users, User, 
   ExternalLink, ArrowLeft, RefreshCw, Eye, CheckCircle2, 
-  IndianRupee, Image as ImageIcon, Filter, Share2, ChevronDown
+  IndianRupee, Image as ImageIcon, Filter, Share2, ChevronDown, Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -114,6 +114,34 @@ export default function AdminPage() {
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleDeleteRegistration = async (id: string, teamName: string) => {
+    if (!confirm(`Are you sure you want to permanently delete registration for "${teamName}" (${id})?`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin?key=${encodeURIComponent(passkey)}&id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${passkey}`
+        }
+      });
+
+      if (res.ok) {
+        setRegistrations(prev => prev.filter(r => r.id !== id));
+        if (selectedReg && selectedReg.id === id) {
+          setSelectedReg(null);
+        }
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to delete registration');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error deleting registration');
     }
   };
 
@@ -470,6 +498,13 @@ export default function AdminPage() {
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
                           </Link>
+                          <button
+                            onClick={() => handleDeleteRegistration(reg.id, reg.teamName)}
+                            className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors"
+                            title="Delete entry (Remove dummy/test)"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -573,6 +608,18 @@ export default function AdminPage() {
                     Reject
                   </button>
                 </div>
+              </div>
+
+              {/* Delete / Danger Action */}
+              <div className="pt-4 border-t border-rose-500/20 flex items-center justify-between">
+                <span className="text-xs text-rose-400 font-mono">Delete Record:</span>
+                <button
+                  onClick={() => handleDeleteRegistration(selectedReg.id, selectedReg.teamName)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/15 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 transition-all flex items-center gap-1.5"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete Registration (Remove Dummy/Test)</span>
+                </button>
               </div>
             </div>
           </div>
