@@ -7,7 +7,7 @@ export const EVENT_CONFIG = {
   location: "College Campus / Auditorium & Tech Labs",
   description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest on 2 & 3 December featuring 3 flagship competitions: Hackathon, Ideathon, and Reel Making. Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
   upiDetails: {
-    upiId: "elnino.synapse@okaxis",
+    upiId: "",
     payeeName: "El Nino Synapse Fest",
     phone: "+91 95185 62840",
     note: "Please mention Team Name in UPI payment note"

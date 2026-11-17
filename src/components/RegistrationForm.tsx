@@ -633,17 +633,16 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
               </div>
               <div className="text-xs space-y-1">
                 <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Official UPI Payment QR</span>
-                <span className="font-mono font-bold text-white text-sm block select-all">{EVENT_CONFIG.upiDetails.upiId}</span>
                 <span className="text-gray-300 block text-[11px]">Payee: {EVENT_CONFIG.upiDetails.payeeName}</span>
                 <span className="text-emerald-300 font-mono text-[10px] block">GPay • PhonePe • Paytm • BHIM</span>
-                <span className="text-gray-400 text-[10px] block mt-1">Scan or tap to pay fee</span>
+                <span className="text-gray-400 text-[10px] block mt-1">Scan QR code using any UPI app to pay</span>
               </div>
             </div>
 
             <div className="text-xs text-gray-300 space-y-2">
               <p className="font-semibold text-white">Payment Instructions:</p>
               <ol className="list-decimal list-inside space-y-1 text-gray-400 text-[11px]">
-                <li>Scan the QR code or send <strong>₹{compInfo.fee}/-</strong> to UPI ID: <code className="text-emerald-300 font-mono">{EVENT_CONFIG.upiDetails.upiId}</code></li>
+                <li>Scan the QR code to pay <strong>₹{compInfo.fee}/-</strong> using any UPI app.</li>
                 <li>Add your <strong>Team Name</strong> in the payment description/note.</li>
                 <li>Copy the <strong>12-digit UTR / Transaction ID</strong> and paste below.</li>
                 <li>Take a screenshot of the successful payment and upload it.</li>
