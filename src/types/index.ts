@@ -45,4 +45,6 @@ export interface CompetitionInfo {
   badge: string;
   rules: string[];
   description: string;
+  isRegisterable?: boolean; // false for exhibition-only events
+  scheduleInfo?: string;
 }

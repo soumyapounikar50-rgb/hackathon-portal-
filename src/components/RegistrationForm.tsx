@@ -19,13 +19,15 @@ const COMPETITION_ICONS: Record<string, any> = {
 };
 
 export default function RegistrationForm({ initialCompetition = 'hackathon' }: { initialCompetition?: CompetitionId }) {
-  const [selectedCompId, setSelectedCompId] = useState<CompetitionId>(initialCompetition);
+  const registerableCompetitions = EVENT_CONFIG.competitions.filter(c => c.isRegisterable !== false);
+  const safeInitial = registerableCompetitions.some(c => c.id === initialCompetition) ? initialCompetition : registerableCompetitions[0].id;
+  const [selectedCompId, setSelectedCompId] = useState<CompetitionId>(safeInitial);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successRegistration, setSuccessRegistration] = useState<CompetitionRegistration | null>(null);
 
   // Active competition info
-  const compInfo = EVENT_CONFIG.competitions.find(c => c.id === selectedCompId) || EVENT_CONFIG.competitions[0];
+  const compInfo = registerableCompetitions.find(c => c.id === selectedCompId) || registerableCompetitions[0];
 
   // Team Details
   const [teamName, setTeamName] = useState('');
@@ -292,14 +294,14 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
   return (
     <div className="max-w-4xl mx-auto glass-panel p-6 sm:p-10 rounded-3xl border border-white/10 relative">
-      {/* 4 COMPETITIONS SELECTOR TABS */}
-      <div className="mb-10">
-        <label className="text-xs font-mono uppercase tracking-widest text-indigo-400 block mb-3 text-center">
+      {/* COMPETITIONS SELECTOR TABS (3 REGISTERABLE COMPETITIONS) */}
+      <div className="mb-8">
+        <label className="text-xs font-mono uppercase tracking-widest text-emerald-400 block mb-3 text-center">
           Step 1: Select Competition to Register
         </label>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {EVENT_CONFIG.competitions.map((comp) => {
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          {registerableCompetitions.map((comp) => {
             const isSelected = comp.id === selectedCompId;
             const IconComp = COMPETITION_ICONS[comp.icon] || Terminal;
             return (
@@ -309,7 +311,7 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                 onClick={() => handleSelectCompetition(comp.id)}
                 className={`p-4 rounded-2xl text-left border transition-all relative flex flex-col justify-between ${
                   isSelected
-                    ? 'border-indigo-500 bg-indigo-500/20 shadow-lg shadow-indigo-500/20 ring-1 ring-indigo-500'
+                    ? 'border-emerald-500 bg-emerald-500/20 shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-500'
                     : 'border-white/10 bg-black/30 hover:border-white/20'
                 }`}
               >
@@ -332,6 +334,26 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
               </button>
             );
           })}
+        </div>
+
+        {/* SCIENCE EXHIBITION OPEN SHOWCASE CALLOUT */}
+        <div className="mt-4 p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-start sm:items-center gap-2.5 text-emerald-200">
+            <Atom className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
+            <div>
+              <p className="font-semibold text-white">Looking for the Science Exhibition?</p>
+              <p className="text-[11px] text-gray-300">
+                Science Exhibition is held live on campus on <strong>2 & 3 December</strong> in the Exhibition Hall as an open working model showcase — no advance online registration required!
+              </p>
+            </div>
+          </div>
+          <a
+            href="#science-exhibition"
+            className="shrink-0 px-3.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/30 font-semibold transition-all text-xs flex items-center gap-1.5 self-start sm:self-auto"
+          >
+            <span>View Exhibition Info</span>
+            <span>↓</span>
+          </a>
         </div>
       </div>
 

@@ -44,6 +44,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Science Exhibition is open campus showcase (no online portal registration)
+    if (body.competitionId === 'science-exhibition') {
+      return NextResponse.json(
+        { error: 'Science Exhibition does not require online portal registration. It is an open on-campus showcase on 2 & 3 December in the Exhibition Hall.' },
+        { status: 400 }
+      );
+    }
+
+    const validCompetitions = ['hackathon', 'ideathon', 'reel-making'];
+    if (!validCompetitions.includes(body.competitionId)) {
+      return NextResponse.json(
+        { error: 'Invalid competition selected. Please choose Hackathon, Ideathon, or Reel Making.' },
+        { status: 400 }
+      );
+    }
+
     const rawLeader = body.leader;
     if (!rawLeader.name || !rawLeader.email || !rawLeader.phone || !rawLeader.branchAndYear || !rawLeader.college) {
       return NextResponse.json(

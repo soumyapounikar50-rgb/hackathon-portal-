@@ -5,7 +5,7 @@ export const EVENT_CONFIG = {
   tagline: "Unleash Innovation, Creativity & Engineering",
   dates: "2 & 3 December",
   location: "College Campus / Auditorium & Tech Labs",
-  description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest featuring 4 power-packed competitions: Hackathon, Ideathon, Reel Making, and Science Exhibition. Compete with top minds, showcase your skills, and take home exciting prizes and trophies!",
+  description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest on 2 & 3 December featuring 3 flagship competitions: Hackathon, Ideathon, and Reel Making, alongside a grand on-campus Science Exhibition showcase! Showcase your innovations and take home exciting prizes and trophies!",
   upiDetails: {
     upiId: "elnino.synapse@okaxis",
     payeeName: "El Nino Synapse Fest",
@@ -44,6 +44,7 @@ export const EVENT_CONFIG = {
       icon: "Terminal",
       accentColor: "from-blue-600 to-indigo-600",
       badge: "6-Hour Coding Sprint",
+      isRegisterable: true,
       rules: [
         "Problem statement will be revealed ON TIME at the kickoff of the hackathon",
         "Duration: Strictly 6 Hours of non-stop building and coding",
@@ -65,6 +66,7 @@ export const EVENT_CONFIG = {
       icon: "Lightbulb",
       accentColor: "from-purple-600 to-pink-600",
       badge: "3 Members Team",
+      isRegisterable: true,
       rules: [
         "Team size: Strictly 3 members total",
         "Presentation duration: 5 to 7 minutes per team",
@@ -86,6 +88,7 @@ export const EVENT_CONFIG = {
       icon: "Video",
       accentColor: "from-rose-600 to-amber-600",
       badge: "2 Members Total",
+      isRegisterable: true,
       rules: [
         "Team size: 2 members total",
         "Duration: Strictly up to 60 seconds (Reel format 9:16)",
@@ -98,22 +101,25 @@ export const EVENT_CONFIG = {
     {
       id: "science-exhibition",
       name: "Science Exhibition",
-      tagline: "Working Models • Live Demonstration • Scientific Innovation",
-      fee: 150,
-      feeLabel: "₹150 / entry",
+      tagline: "Working Models • Live Demonstrations • Scientific Innovation",
+      fee: 0,
+      feeLabel: "Open Showcase",
       minMembers: 1,
       maxMembers: 3,
       icon: "Atom",
       accentColor: "from-emerald-600 to-teal-600",
-      badge: "1-3 Members",
+      badge: "Campus Showcase (2 & 3 Dec)",
+      isRegisterable: false,
+      scheduleInfo: "2 & 3 December • 10:30 AM onwards • Exhibition Hall",
       rules: [
-        "Team size: 1 to 3 members per exhibit",
-        "Must showcase a working physical model, experimental demo, or prototype",
-        "Setup table and power connection will be provided on campus",
-        "Every team will present their project to visiting judges and delegates",
-        "Evaluation criteria: Scientific principle, innovation, working capability, and explanation"
+        "Held live on campus in the Exhibition Hall across both days (2 & 3 December)",
+        "Showcases working physical models, robotics prototypes, automation, and scientific experiments",
+        "Open to all college students, faculty, and visiting guests — no online portal registration fee",
+        "Setup tables, power supply, and display space provided on campus",
+        "Live demonstrations and Q&A with visiting faculty juries and student delegates",
+        "Outstanding scientific models will be recognized with Special Jury Honors at the Grand Valedictory"
       ],
-      description: "Demonstrate working science models, hardware innovations, and experimental exhibits. Inspire curiosity and bring scientific concepts to life!"
+      description: "Demonstrating working science models, sustainable technology hardware, and interactive physics & robotics prototypes. Experience live innovation and scientific curiosity directly on campus!"
     }
   ] as CompetitionInfo[],
   schedule: [
@@ -140,7 +146,11 @@ export const EVENT_CONFIG = {
   faqs: [
     {
       q: "Can a student participate in multiple competitions?",
-      a: "Yes! As long as the event schedules do not overlap (e.g. Science Exhibition on Day 1 and Ideathon on Day 2), participants may register for more than one event."
+      a: "Yes! Students can register online for Hackathon, Ideathon, and Reel Making. Science Exhibition is held live as an open campus showcase across both days (2 & 3 Dec) in the Exhibition Hall!"
+    },
+    {
+      q: "Do I need to register online for the Science Exhibition?",
+      a: "No advance online registration is needed for the Science Exhibition! It is held directly in the campus Exhibition Hall on 2 & 3 December with working models and live demos. For exhibit table space allocations, contact coordinator Arpit Dambhare (94219 34932) or Yash Jadhav (95185 62840)."
     },
     {
       q: "How do we pay the registration fee?",

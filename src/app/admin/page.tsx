@@ -273,7 +273,7 @@ export default function AdminPage() {
             <div className="p-5 rounded-2xl glass-panel border border-white/10">
               <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">By Competition</span>
               <span className="text-xs text-gray-300 mt-1.5 block font-mono">
-                HACK: {metrics.byCompetition?.hackathon || 0} • IDEA: {metrics.byCompetition?.ideathon || 0} • REEL: {metrics.byCompetition?.['reel-making'] || 0} • SCI: {metrics.byCompetition?.['science-exhibition'] || 0}
+                HACK: {metrics.byCompetition?.hackathon || 0} • IDEA: {metrics.byCompetition?.ideathon || 0} • REEL: {metrics.byCompetition?.['reel-making'] || 0} • EXPO: Campus Showcase
               </span>
             </div>
           </div>
@@ -329,18 +329,6 @@ export default function AdminPage() {
                 {metrics?.byCompetition?.['reel-making'] || 0}
               </span>
             </button>
-
-            {/* SCIENCE EXHIBITION BUTTON */}
-            <button
-              onClick={() => handleExportCSV('science-exhibition')}
-              className="px-3.5 py-2 rounded-xl bg-amber-950/70 hover:bg-amber-900 border border-amber-500/50 text-amber-200 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-sm"
-              title="Download Science Exhibition participants CSV"
-            >
-              <span>🔬 Science Exhibition (₹150)</span>
-              <span className="bg-amber-500/20 px-1.5 py-0.5 rounded text-[10px] font-mono text-amber-300">
-                {metrics?.byCompetition?.['science-exhibition'] || 0}
-              </span>
-            </button>
           </div>
         </div>
 
@@ -367,11 +355,10 @@ export default function AdminPage() {
               }}
               className="px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs focus:outline-none focus:border-indigo-500 font-mono"
             >
-              <option value="all">All 4 Competitions</option>
+              <option value="all">All 3 Competitions</option>
               <option value="hackathon">Hackathon (₹300)</option>
               <option value="ideathon">Ideathon (₹200)</option>
               <option value="reel-making">Reel Making (₹150)</option>
-              <option value="science-exhibition">Science Exhibition (₹150)</option>
             </select>
           </div>
         </div>
