@@ -24,6 +24,9 @@ export default function CompetitionsSection() {
           <p className="mt-4 text-base sm:text-lg text-gray-400">
             Compete across our 3 distinct arenas on 2 & 3 December at {EVENT_CONFIG.name}. Separate registrations and prizes for each event.
           </p>
+          <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-mono font-bold text-amber-300 shadow-lg">
+            <span>⚡ ALL PROBLEM STATEMENTS & TOPICS WILL BE GIVEN ON TIME</span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">

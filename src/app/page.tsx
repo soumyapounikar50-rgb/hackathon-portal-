@@ -59,7 +59,7 @@ export default function Home() {
           {/* Subtitle */}
           <p className="mt-5 text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Harnessing planetary climate energy, environmental conservation, and futuristic technology. 
-            Join 400+ innovators on <strong>2 & 3 December</strong> across 3 flagship arenas: <strong>Hackathon</strong>, <strong>Ideathon</strong>, and <strong>Reel Making</strong>!
+            Join 400+ innovators across 3 flagship arenas: <strong>Ideathon</strong> (Day 1 — 2 Dec), <strong>Hackathon</strong> (Day 2 — 3 Dec), and <strong>Reel Making</strong> (2 & 3 Dec)!
           </p>
 
           {/* Event Dates & Info Badges */}
