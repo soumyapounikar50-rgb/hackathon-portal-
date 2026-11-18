@@ -337,10 +337,10 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
       </div>
 
       {/* COMPETITION RULES & HIGHLIGHT BANNER */}
-      <div className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-black/40 border border-indigo-500/30">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3 mb-3">
+      <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-black/40 border border-emerald-500/30 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-300">Selected Event Rules</span>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400">Selected Event Guidelines</span>
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
               <span>{compInfo.name}</span>
               <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -353,10 +353,40 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
           </span>
         </div>
 
+        {/* Timing Details Banner */}
+        {compInfo.timingDetails && (
+          <div className="p-3.5 rounded-xl bg-black/50 border border-cyan-500/30 text-xs space-y-1 font-mono">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-cyan-300 font-semibold">
+              <span>⏰ Reporting Time: {compInfo.timingDetails.reporting}</span>
+              <span className="text-emerald-300">🚀 Starts At: {compInfo.timingDetails.startsAt}</span>
+            </div>
+            <p className="text-[11px] text-gray-300 font-sans">{compInfo.timingDetails.briefing}</p>
+            <div className="text-[10px] text-amber-300/90 font-sans">
+              Departure: {compInfo.timingDetails.departure}
+            </div>
+          </div>
+        )}
+
+        {/* Important to be Noted Section */}
+        {compInfo.importantNotes && (
+          <div className="p-3.5 rounded-xl bg-emerald-950/50 border border-emerald-500/40 space-y-1.5">
+            <span className="text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider block">
+              ⚠️ Important to be noted:
+            </span>
+            <ol className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-gray-200 list-decimal list-inside font-medium">
+              {compInfo.importantNotes.map((note, idx) => (
+                <li key={idx}>
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-300">
           {compInfo.rules.map((rule, idx) => (
             <li key={idx} className="flex items-start gap-2">
-              <span className="text-indigo-400 font-bold shrink-0">✦</span>
+              <span className="text-emerald-400 font-bold shrink-0">✦</span>
               <span>{rule}</span>
             </li>
           ))}

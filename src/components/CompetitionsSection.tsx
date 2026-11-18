@@ -1,5 +1,5 @@
 import { EVENT_CONFIG } from '@/lib/config';
-import { Terminal, Lightbulb, Video, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Terminal, Lightbulb, Video, ArrowUpRight, Sparkles, Clock, AlertCircle } from 'lucide-react';
 
 const ICONS: Record<string, any> = {
   Terminal,
@@ -63,9 +63,49 @@ export default function CompetitionsSection() {
                   </h3>
                   <p className="text-xs font-mono text-cyan-400 mt-1 mb-4">{comp.tagline}</p>
 
-                  <p className="text-sm text-gray-300 leading-relaxed mb-6">
+                  <p className="text-sm text-gray-300 leading-relaxed mb-5">
                     {comp.description}
                   </p>
+
+                  {/* Reporting & Schedule Details Box */}
+                  {comp.timingDetails && (
+                    <div className="mb-4 p-3.5 rounded-2xl bg-black/50 border border-cyan-500/30 text-xs space-y-1.5 font-mono shadow-inner">
+                      <div className="flex items-center justify-between text-cyan-300">
+                        <span className="font-bold flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                          <span>Reporting Time:</span>
+                        </span>
+                        <span className="text-white font-semibold">{comp.timingDetails.reporting}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-emerald-300">
+                        <span className="font-bold">Starts At:</span>
+                        <span className="text-white font-semibold">{comp.timingDetails.startsAt}</span>
+                      </div>
+                      <p className="text-[11px] text-gray-300 font-sans leading-tight pt-1">
+                        {comp.timingDetails.briefing}
+                      </p>
+                      <div className="text-[10px] text-amber-300/90 pt-1 border-t border-white/10 font-sans">
+                        Departure: {comp.timingDetails.departure}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Important to be Noted Section */}
+                  {comp.importantNotes && (
+                    <div className="mb-5 p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/35 space-y-2">
+                      <span className="text-[11px] font-mono font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Important to be noted:</span>
+                      </span>
+                      <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside font-medium">
+                        {comp.importantNotes.map((note, nIdx) => (
+                          <li key={nIdx} className="leading-snug">
+                            <span>{note}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
 
                   {/* Rules Pill List */}
                   <div className="space-y-2 border-t border-emerald-500/20 pt-4 mb-6">
@@ -73,7 +113,7 @@ export default function CompetitionsSection() {
                       Key Guidelines:
                     </span>
                     <ul className="space-y-1.5 text-xs text-gray-300">
-                      {comp.rules.slice(0, 3).map((r, i) => (
+                      {comp.rules.slice(0, comp.importantNotes ? 3 : 4).map((r, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <span className="text-cyan-400 mt-0.5">✦</span>
                           <span>{r}</span>

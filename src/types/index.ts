@@ -44,4 +44,11 @@ export interface CompetitionInfo {
   badge: string;
   rules: string[];
   description: string;
+  timingDetails?: {
+    reporting: string;
+    startsAt: string;
+    briefing: string;
+    departure: string;
+  };
+  importantNotes?: string[];
 }
