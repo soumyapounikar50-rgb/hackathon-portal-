@@ -126,7 +126,7 @@ function generateEmailHTML(reg: CompetitionRegistration, domain: string): string
                   <p style="margin: 0 0 8px 0; font-weight: bold; color: #ffffff;">Need any assistance? Contact Student Coordinators:</p>
                   <p style="margin: 3px 0;">• <strong>Yash Jadhav</strong> (Lead Coordinator): <a href="tel:+919518562840" style="color: #34d399; text-decoration: none;">95185 62840</a></p>
                   <p style="margin: 3px 0;">• <strong>Arpit Dambhare</strong> (Technical): <a href="tel:+919421934932" style="color: #34d399; text-decoration: none;">94219 34932</a></p>
-                  <p style="margin: 3px 0;">• <strong>Yash Yadav</strong> (Registrations): <a href="tel:+918275467373" style="color: #34d399; text-decoration: none;">82754 67373</a></p>
+                  <p style="margin: 3px 0;">• <strong>Shravan Yadav</strong> (Registrations): <a href="tel:+918275467373" style="color: #34d399; text-decoration: none;">82754 67373</a></p>
                 </div>
               </td>
             </tr>

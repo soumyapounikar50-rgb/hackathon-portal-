@@ -34,7 +34,7 @@ export const EVENT_CONFIG = {
       role: "Technical Coordinator"
     },
     {
-      name: "Yash Yadav",
+      name: "Shravan Yadav",
       phone: "82754 67373",
       rawPhone: "+918275467373",
       role: "Registration & Queries Coordinator"
@@ -213,7 +213,7 @@ export const EVENT_CONFIG = {
     },
     {
       q: "Who can I contact for queries or registration assistance?",
-      a: "You can directly call our Student Coordinators: Yash Jadhav (95185 62840), Arpit Dambhare (94219 34932), or Yash Yadav (82754 67373) anytime!"
+      a: "You can directly call our Student Coordinators: Yash Jadhav (95185 62840), Arpit Dambhare (94219 34932), or Shravan Yadav (82754 67373) anytime!"
     },
     {
       q: "Will certificates be provided to all participants?",
