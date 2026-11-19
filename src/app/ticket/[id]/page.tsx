@@ -122,7 +122,7 @@ export default function TicketPage() {
       {/* TICKET CARD */}
       <div className="w-full max-w-lg rounded-3xl overflow-hidden glass-panel border border-emerald-500/30 shadow-2xl shadow-emerald-950/40 relative z-10">
         {/* Top Header Badge */}
-        <div className="bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-purple p-6 text-white relative">
+        <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-6 text-white relative">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-black/30 backdrop-blur-md flex items-center justify-center">
@@ -132,18 +132,37 @@ export default function TicketPage() {
                 <h3 className="font-extrabold tracking-tight text-lg leading-none">
                   {EVENT_CONFIG.name}
                 </h3>
-                <span className="text-[10px] font-mono tracking-widest text-indigo-200 uppercase mt-0.5 block">
+                <span className="text-[10px] font-mono tracking-widest text-emerald-100 uppercase mt-0.5 block">
                   Official Participant Pass • 2 & 3 Dec
                 </span>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="text-xs font-bold font-mono bg-emerald-500/90 text-white px-2.5 py-1 rounded-full shadow">
+              <span className="text-xs font-bold font-mono bg-black/40 text-emerald-300 border border-emerald-400/40 px-2.5 py-1 rounded-full shadow">
                 ₹{registration.fee}/- PAID
               </span>
             </div>
           </div>
+        </div>
+
+        {/* College Organizing Strip */}
+        <div className="bg-black/50 px-5 py-2.5 border-b border-emerald-500/20 flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="bg-white px-2 py-0.5 rounded shadow-sm shrink-0">
+              <img
+                src={EVENT_CONFIG.college.logo}
+                alt={EVENT_CONFIG.college.name}
+                className="h-5 w-auto object-contain"
+              />
+            </div>
+            <span className="text-[11px] text-gray-200 font-medium truncate">
+              {EVENT_CONFIG.college.name}
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-emerald-400 font-bold shrink-0">
+            DTE: 4151
+          </span>
         </div>
 
         {/* Card Body */}

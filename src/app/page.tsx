@@ -34,6 +34,34 @@ export default function Home() {
         <div className="absolute top-20 right-5 w-[450px] h-[450px] bg-cyan-500/15 rounded-full blur-[130px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          {/* Official Organizing College Banner */}
+          <div className="mb-6 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 p-2.5 sm:px-5 sm:py-2 rounded-2xl bg-black/60 border border-emerald-500/35 backdrop-blur-md shadow-2xl">
+            <a
+              href={EVENT_CONFIG.college.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white px-3 py-1.5 rounded-xl shadow-md flex items-center justify-center hover:scale-105 transition-transform"
+              title={EVENT_CONFIG.college.name}
+            >
+              <img
+                src={EVENT_CONFIG.college.logo}
+                alt={EVENT_CONFIG.college.name}
+                className="h-9 sm:h-11 w-auto object-contain"
+              />
+            </a>
+            <div className="text-center sm:text-left">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 block font-bold">
+                Organized & Hosted By
+              </span>
+              <h2 className="text-xs sm:text-sm font-extrabold text-white tracking-wide">
+                {EVENT_CONFIG.college.name}
+              </h2>
+              <span className="text-[10px] text-gray-300 block font-mono">
+                {EVENT_CONFIG.college.subtext} • Nagpur
+              </span>
+            </div>
+          </div>
+
           {/* Top Pill with Hologram Badge Style */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold hologram-badge text-emerald-200 mb-8 transition-all shadow-lg">
             <span className="flex h-2 w-2 relative">

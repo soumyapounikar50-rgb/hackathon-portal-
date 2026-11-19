@@ -175,12 +175,23 @@ export default function AdminPage() {
           <span className="hud-corner-tl" />
           <span className="hud-corner-br" />
 
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-3 border border-emerald-500/30">
             <Shield className="w-6 h-6" />
           </div>
 
-          <h2 className="text-2xl font-bold text-white text-center">{EVENT_CONFIG.name}</h2>
-          <p className="text-xs text-gray-400 text-center mt-1 mb-6">
+          <div className="bg-white px-3 py-1.5 rounded-xl shadow-md flex items-center justify-center mx-auto mb-3 max-w-[220px]">
+            <img
+              src={EVENT_CONFIG.college.logo}
+              alt={EVENT_CONFIG.college.name}
+              className="h-8 w-auto object-contain"
+            />
+          </div>
+
+          <h2 className="text-xl font-bold text-white text-center">{EVENT_CONFIG.name}</h2>
+          <p className="text-[11px] text-emerald-300 text-center font-medium mt-0.5">
+            {EVENT_CONFIG.college.name}
+          </p>
+          <p className="text-[10px] text-gray-400 text-center mt-1 mb-6 font-mono">
             Organizer Management & Payment Verification Console
           </p>
 
@@ -242,13 +253,16 @@ export default function AdminPage() {
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-indigo-400 uppercase tracking-widest mb-1">
+            <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
               <Shield className="w-4 h-4" />
-              <span>{EVENT_CONFIG.name} — 2 & 3 December</span>
+              <span>{EVENT_CONFIG.name} — 2 & 3 December • {EVENT_CONFIG.college.shortName}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Registrations & Payment Verification
             </h1>
+            <p className="text-xs text-gray-400 font-mono mt-0.5">
+              Host: {EVENT_CONFIG.college.name}
+            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">

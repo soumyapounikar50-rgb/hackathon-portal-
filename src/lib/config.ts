@@ -4,8 +4,16 @@ export const EVENT_CONFIG = {
   name: "El Nino Synapse",
   tagline: "Unleash Innovation, Creativity & Engineering",
   dates: "2 & 3 December",
-  location: "College Campus / Auditorium & Tech Labs",
-  description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest on 2 & 3 December featuring 3 flagship competitions: Hackathon, Ideathon, and Reel Making. Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
+  college: {
+    name: "Tulsiramji Gaikwad Patil College of Engineering and Technology",
+    fullName: "Tulsiramji Gaikwad-Patil College of Engineering and Technology",
+    shortName: "TGPCET",
+    subtext: "An Autonomous Institute • DTE Code: 4151",
+    website: "https://www.tgpcet.com",
+    logo: "/college-logo.png"
+  },
+  location: "Tulsiramji Gaikwad-Patil College of Engineering and Technology (TGPCET), Nagpur",
+  description: "Welcome to El Nino Synapse — the premier inter-college tech & creativity fest on 2 & 3 December organized by Tulsiramji Gaikwad-Patil College of Engineering and Technology (TGPCET). Featuring 3 flagship competitions: Ideathon (Day 1), Hackathon (Day 2), and Reel Making (Both Days). Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
   upiDetails: {
     upiId: "",
     payeeName: "El Nino Synapse Fest",

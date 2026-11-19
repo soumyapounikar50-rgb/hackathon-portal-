@@ -222,14 +222,15 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
         {/* Digital Pass Preview Card */}
         <div className="my-8 p-6 rounded-2xl bg-[#080d1a] border border-white/10 max-w-md mx-auto text-left relative overflow-hidden">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 gap-2">
             <div>
-              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest block">Event</span>
-              <span className="font-bold text-white text-base">{EVENT_CONFIG.name}</span>
+              <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Host Institution</span>
+              <span className="font-semibold text-white text-xs block leading-tight">{EVENT_CONFIG.college.name}</span>
+              <span className="text-gray-400 text-[10px] block font-mono mt-0.5">{EVENT_CONFIG.name} • 2 & 3 Dec</span>
             </div>
-            <div className="text-right">
+            <div className="text-right shrink-0">
               <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest block">Pass ID</span>
-              <span className="font-mono font-bold text-indigo-400">{successRegistration.id}</span>
+              <span className="font-mono font-bold text-emerald-400">{successRegistration.id}</span>
             </div>
           </div>
 

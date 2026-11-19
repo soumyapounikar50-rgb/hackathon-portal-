@@ -21,12 +21,35 @@ export default function Footer() {
             </p>
             <div className="text-xs text-emerald-300 font-mono space-y-1">
               <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span>{EVENT_CONFIG.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span>Dates: <strong>{EVENT_CONFIG.dates}</strong></span>
+              </div>
+            </div>
+
+            {/* College Attribution Banner */}
+            <div className="mt-5 pt-4 border-t border-emerald-500/20 flex items-center gap-3">
+              <a
+                href={EVENT_CONFIG.college.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white px-2.5 py-1.5 rounded-xl shadow-md hover:opacity-90 transition-opacity shrink-0"
+                title={EVENT_CONFIG.college.name}
+              >
+                <img
+                  src={EVENT_CONFIG.college.logo}
+                  alt={EVENT_CONFIG.college.name}
+                  className="h-8 w-auto object-contain"
+                />
+              </a>
+              <div className="text-[11px] leading-tight">
+                <span className="text-white font-semibold block">{EVENT_CONFIG.college.name}</span>
+                <span className="text-gray-400 font-mono text-[10px] block mt-0.5">
+                  {EVENT_CONFIG.college.subtext} • <a href={EVENT_CONFIG.college.website} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">www.tgpcet.com</a>
+                </span>
               </div>
             </div>
           </div>
@@ -61,7 +84,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-emerald-500/15 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-          <p>© {new Date().getFullYear()} {EVENT_CONFIG.name}. Official Inter-College Fest Portal.</p>
+          <p>© {new Date().getFullYear()} {EVENT_CONFIG.name}. Organized by {EVENT_CONFIG.college.name}.</p>
           <p>Event Dates: <strong className="text-white">{EVENT_CONFIG.dates}</strong></p>
         </div>
       </div>

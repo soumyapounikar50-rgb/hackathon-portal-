@@ -12,22 +12,41 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-emerald-500/20 bg-[#02130c]/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-green-400 p-0.5 shadow-lg shadow-emerald-950/50 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#02180f] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-emerald-400 group-hover:text-mint-neon transition-colors" />
+          {/* Logo & College Branding */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-green-400 p-0.5 shadow-lg shadow-emerald-950/50 group-hover:scale-105 transition-transform shrink-0">
+                <div className="w-full h-full bg-[#02180f] rounded-[10px] flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-emerald-400 group-hover:text-mint-neon transition-colors" />
+                </div>
               </div>
-            </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-emerald-400">
-                {EVENT_CONFIG.name}
-              </span>
-              <span className="block text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-                ● 2 & 3 Dec • 3 Competitions
-              </span>
-            </div>
-          </Link>
+              <div>
+                <span className="text-lg sm:text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-emerald-400 block leading-tight">
+                  {EVENT_CONFIG.name}
+                </span>
+                <span className="block text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-emerald-400">
+                  ● 2 & 3 Dec • 3 Competitions
+                </span>
+              </div>
+            </Link>
+
+            <div className="hidden lg:block h-7 w-[1px] bg-emerald-500/30" />
+
+            {/* College Logo Pill in Navbar */}
+            <a
+              href={EVENT_CONFIG.college.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:flex items-center gap-2 px-2 py-1 rounded-xl bg-white/95 hover:bg-white transition-all shadow-sm border border-white/20"
+              title={`${EVENT_CONFIG.college.name} (An Autonomous Institute)`}
+            >
+              <img
+                src={EVENT_CONFIG.college.logo}
+                alt={EVENT_CONFIG.college.name}
+                className="h-7 w-auto object-contain"
+              />
+            </a>
+          </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-7 text-sm font-medium text-gray-300">
@@ -79,6 +98,24 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-emerald-500/20 bg-[#02180f] px-4 pt-3 pb-6 space-y-3">
+          {/* Mobile College Banner */}
+          <a
+            href={EVENT_CONFIG.college.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-white/95 border border-white/20 mb-2"
+          >
+            <img
+              src={EVENT_CONFIG.college.logo}
+              alt={EVENT_CONFIG.college.name}
+              className="h-8 w-auto object-contain"
+            />
+            <div className="text-[11px] leading-tight text-gray-800">
+              <span className="font-bold block text-[#0d2a54]">{EVENT_CONFIG.college.name}</span>
+              <span className="text-[10px] text-gray-600 font-mono">Autonomous • Code: 4151</span>
+            </div>
+          </a>
+
           <Link
             href="#about-el-nino"
             onClick={() => setMobileMenuOpen(false)}
