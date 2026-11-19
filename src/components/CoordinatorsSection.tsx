@@ -18,20 +18,23 @@ export default function CoordinatorsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {EVENT_CONFIG.coordinators.map((c, idx) => (
             <div
               key={idx}
-              className="p-6 sm:p-7 rounded-3xl glass-panel border border-emerald-500/25 hover:border-emerald-400/60 transition-all flex flex-col justify-between group shadow-xl shadow-black/40"
+              className="p-6 sm:p-7 rounded-3xl hologram-card flex flex-col justify-between group shadow-xl relative"
             >
+              <span className="hud-corner-tl" />
+              <span className="hud-corner-br" />
+
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-0.5 shadow-lg group-hover:scale-105 transition-transform">
                     <div className="w-full h-full bg-[#02180f] rounded-[14px] flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-emerald-400" />
+                      <Phone className="w-5 h-5 text-cyan-300" />
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">
+                  <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full hologram-badge text-emerald-300">
                     Coordinator #{idx + 1}
                   </span>
                 </div>

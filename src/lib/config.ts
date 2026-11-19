@@ -38,6 +38,18 @@ export const EVENT_CONFIG = {
       phone: "82754 67373",
       rawPhone: "+918275467373",
       role: "Registration & Queries Coordinator"
+    },
+    {
+      name: "Tejas Dhanvij",
+      phone: "75071 12190",
+      rawPhone: "+917507112190",
+      role: "Student Coordinator"
+    },
+    {
+      name: "Soumya Pounikar",
+      phone: "93564 06119",
+      rawPhone: "+919356406119",
+      role: "Student Coordinator"
     }
   ],
   competitions: [
@@ -213,7 +225,7 @@ export const EVENT_CONFIG = {
     },
     {
       q: "Who can I contact for queries or registration assistance?",
-      a: "You can directly call our Student Coordinators: Yash Jadhav (95185 62840), Arpit Dambhare (94219 34932), or Shravan Yadav (82754 67373) anytime!"
+      a: "You can directly call our Student Coordinators: Yash Jadhav (95185 62840), Arpit Dambhare (94219 34932), Shravan Yadav (82754 67373), Tejas Dhanvij (75071 12190), or Soumya Pounikar (93564 06119) anytime!"
     },
     {
       q: "Will certificates be provided to all participants?",
