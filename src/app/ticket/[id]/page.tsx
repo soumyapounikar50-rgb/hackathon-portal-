@@ -263,7 +263,7 @@ export default function TicketPage() {
 
         {/* Card Footer Tear-off simulated line */}
         <div className="bg-[#070b14] px-6 py-3 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400 font-mono">
-          <span>EL NINO SYNAPSE // 2 & 3 DEC</span>
+          <span>EL NIÑO AWARENESS PROGRAM // 2 & 3 DEC</span>
           <span className="text-emerald-400 flex items-center gap-1">
             <Sparkles className="w-3 h-3" />
             ADMIT TEAM

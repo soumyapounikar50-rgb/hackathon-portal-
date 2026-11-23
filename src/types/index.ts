@@ -51,4 +51,5 @@ export interface CompetitionInfo {
     departure: string;
   };
   importantNotes?: string[];
+  isOutOfTheBox?: boolean;
 }

@@ -412,7 +412,7 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
             required
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
-            placeholder="e.g. Synapse Pioneers, Team Alpha, Quantum Coders"
+            placeholder="e.g. Eco Innovators, Team Alpha, Quantum Coders"
             className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500"
           />
         </div>

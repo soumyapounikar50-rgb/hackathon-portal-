@@ -64,7 +64,7 @@ export default function CoordinatorsSection() {
 
                 {/* WHATSAPP CHAT BUTTON */}
                 <a
-                  href={`https://wa.me/${c.rawPhone.replace('+', '')}?text=Hi%20${encodeURIComponent(c.name)},%20I%20have%20a%20query%20regarding%20El%20Nino%20Synapse%20registration.`}
+                  href={`https://wa.me/${c.rawPhone.replace('+', '')}?text=Hi%20${encodeURIComponent(c.name)},%20I%20have%20a%20query%20regarding%20El%20Ni%C3%B1o%20Awareness%20Program%20registration.`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/30 flex items-center justify-center gap-2 transition-colors"

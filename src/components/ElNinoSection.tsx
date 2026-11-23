@@ -36,15 +36,15 @@ export default function ElNinoSection() {
       impact: "Inspires students to build green-tech and climate-resilience solutions for our shared living planet."
     },
     {
-      title: "The 'Synapse' Metaphor",
-      subtitle: "Disruption as a Catalyst for Innovation",
+      title: "Climate & Environmental Action",
+      subtitle: "Empowering Youth for Planet Resilience",
       icon: Zap,
       gradient: "from-cyan-400 via-teal-300 to-emerald-400",
       accent: "text-cyan-300",
       bgBorder: "border-emerald-400/40",
-      badge: "Fest Philosophy",
-      description: "Just as El Niño is Nature's most powerful reminder of interconnected global systems and sudden energy releases, El Nino Synapse is the neural spark where bright minds connect to build solutions for real-world complexity.",
-      impact: "Channeling raw creative disruption into working code, startup pitches, and cinematic viral reels."
+      badge: "Program Mission",
+      description: "Just as El Niño is Nature's most powerful reminder of interconnected global systems and sudden energy releases, the El Niño Awareness Program is the platform where bright minds connect to build solutions for real-world environmental complexity.",
+      impact: "Channeling raw innovation and creativity into working code, startup pitches, and cinematic awareness reels."
     }
   ];
 
@@ -78,21 +78,20 @@ export default function ElNinoSection() {
           </p>
         </div>
 
-        {/* Narrative Banner: Connecting El Nino with Synapse */}
+        {/* Narrative Banner: Connecting El Nino with Awareness & Action */}
         <div className="mb-14 p-6 sm:p-8 rounded-3xl glass-panel border border-emerald-500/35 bg-gradient-to-r from-emerald-950/50 via-teal-950/30 to-black/50 relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
               <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
                 <Globe className="w-4 h-4" />
-                <span>Planetary Mechanics Meets Neural Power</span>
+                <span>Planetary Mechanics Meets Youth Action</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                When Earth Energy Ignites Neural Synapses
+                When Earth Dynamics Ignite Climate Solutions
               </h3>
               <p className="text-sm text-gray-300 leading-relaxed">
                 In meteorology, <em>El Niño</em> disrupts regular thermodynamic equilibriums to forge new planetary pathways. 
-                In neuroscience, a <em>Synapse</em> is the junction across which electric impulses leap to form thought, cognition, and breakthrough. 
-                <strong> El Nino Synapse</strong> represents this exact collision: a supercharged festival where raw young talent disrupts the routine and sparks new paradigms in technology and science!
+                The <strong>El Niño Awareness Program</strong> transforms this environmental reality into proactive empowerment: a premier inter-college forum where students harness technology, innovative thinking, and creative storytelling to address climate consciousness and sustainable change!
               </p>
             </div>
 
@@ -167,7 +166,7 @@ export default function ElNinoSection() {
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">Experience the Energy at El Nino Synapse</h4>
+              <h4 className="text-sm font-bold text-white">Experience the Energy at El Niño Awareness Program</h4>
               <p className="text-xs text-gray-300">Join 400+ innovators across Hackathon, Ideathon, and Reel Making on 2 & 3 December.</p>
             </div>
           </div>
