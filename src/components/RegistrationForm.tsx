@@ -222,11 +222,20 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
         {/* Digital Pass Preview Card */}
         <div className="my-8 p-6 rounded-2xl bg-[#080d1a] border border-white/10 max-w-md mx-auto text-left relative overflow-hidden">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 gap-2">
-            <div>
-              <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Host Institution</span>
-              <span className="font-semibold text-white text-xs block leading-tight">{EVENT_CONFIG.college.name}</span>
-              <span className="text-gray-400 text-[10px] block font-mono mt-0.5">{EVENT_CONFIG.name} • 2 & 3 Dec</span>
+          <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="bg-white px-2 py-1 rounded-lg shrink-0">
+                <img
+                  src={EVENT_CONFIG.college.logo}
+                  alt={EVENT_CONFIG.college.name}
+                  className="h-6 w-auto object-contain"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Host Institution</span>
+                <span className="font-semibold text-white text-xs block leading-tight">{EVENT_CONFIG.college.name}</span>
+                <span className="text-gray-400 text-[10px] block font-mono mt-0.5">{EVENT_CONFIG.name} • 2 & 3 Dec</span>
+              </div>
             </div>
             <div className="text-right shrink-0">
               <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest block">Pass ID</span>

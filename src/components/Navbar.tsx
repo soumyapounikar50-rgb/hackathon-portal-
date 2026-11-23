@@ -13,39 +13,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo & College Branding */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-green-400 p-0.5 shadow-lg shadow-emerald-950/50 group-hover:scale-105 transition-transform shrink-0">
-                <div className="w-full h-full bg-[#02180f] rounded-[10px] flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-emerald-400 group-hover:text-mint-neon transition-colors" />
-                </div>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+              {/* Official College Logo Badge */}
+              <div className="bg-white px-2 sm:px-2.5 py-1 rounded-xl shadow-md border border-white/20 group-hover:scale-105 transition-transform flex items-center justify-center shrink-0">
+                <img
+                  src={EVENT_CONFIG.college.logo}
+                  alt={EVENT_CONFIG.college.name}
+                  className="h-7 sm:h-8 w-auto object-contain"
+                />
               </div>
               <div>
-                <span className="text-lg sm:text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-emerald-400 block leading-tight">
+                <span className="text-base sm:text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-emerald-400 block leading-tight">
                   {EVENT_CONFIG.name}
                 </span>
-                <span className="block text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-emerald-400">
-                  ● 2 & 3 Dec • 3 Competitions
+                <span className="block text-[9px] sm:text-[10px] font-mono text-emerald-300 font-semibold truncate max-w-[210px] sm:max-w-xs">
+                  {EVENT_CONFIG.college.name}
                 </span>
               </div>
             </Link>
-
-            <div className="hidden lg:block h-7 w-[1px] bg-emerald-500/30" />
-
-            {/* College Logo Pill in Navbar */}
-            <a
-              href={EVENT_CONFIG.college.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-2 py-1 rounded-xl bg-white/95 hover:bg-white transition-all shadow-sm border border-white/20"
-              title={`${EVENT_CONFIG.college.name} (An Autonomous Institute)`}
-            >
-              <img
-                src={EVENT_CONFIG.college.logo}
-                alt={EVENT_CONFIG.college.name}
-                className="h-7 w-auto object-contain"
-              />
-            </a>
           </div>
 
           {/* Desktop Nav Links */}

@@ -5,15 +5,15 @@ export const EVENT_CONFIG = {
   tagline: "Unleash Innovation, Creativity & Environmental Action",
   dates: "2 & 3 December",
   college: {
-    name: "Tulsiramji Gaikwad Patil College of Engineering and Technology",
-    fullName: "Tulsiramji Gaikwad-Patil College of Engineering and Technology",
+    name: "Tulsiramji Gaikwad-Patil College of Engineering & Technology",
+    fullName: "Tulsiramji Gaikwad-Patil College of Engineering & Technology (An Autonomous Institute)",
     shortName: "TGPCET",
     subtext: "An Autonomous Institute • DTE Code: 4151",
     website: "https://www.tgpcet.com",
     logo: "/college-logo.png"
   },
-  location: "Tulsiramji Gaikwad-Patil College of Engineering and Technology (TGPCET), Nagpur",
-  description: "Welcome to El Niño Awareness Program — the premier inter-college tech & creativity fest on 2 & 3 December organized by Tulsiramji Gaikwad-Patil College of Engineering and Technology (TGPCET). Featuring 3 flagship competitions: Hackathon (Day 1), Ideathon (Day 2), and Reel Making (Out of the Box • Both Days). Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
+  location: "Tulsiramji Gaikwad-Patil College of Engineering & Technology (TGPCET), Nagpur",
+  description: "Welcome to El Niño Awareness Program — the premier inter-college tech & creativity fest on 2 & 3 December organized by Tulsiramji Gaikwad-Patil College of Engineering & Technology (TGPCET). Featuring 3 flagship competitions: Hackathon (Day 1), Ideathon (Day 2), and Reel Making (Out of the Box • Both Days). Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
   upiDetails: {
     upiId: "",
     payeeName: "El Niño Awareness Program",
