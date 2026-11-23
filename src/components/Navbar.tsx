@@ -15,12 +15,12 @@ export default function Navbar() {
           {/* Logo & College Branding */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
-              {/* Official College Logo Badge */}
-              <div className="bg-white px-2 sm:px-2.5 py-1 rounded-xl shadow-md border border-white/20 group-hover:scale-105 transition-transform flex items-center justify-center shrink-0">
+              {/* Official College Logo Badge - Adopts Dark Background */}
+              <div className="p-1 sm:p-1.5 rounded-xl bg-black/40 border border-emerald-500/30 backdrop-blur-md group-hover:border-emerald-400/60 group-hover:scale-105 transition-all flex items-center justify-center shrink-0 shadow-lg">
                 <img
                   src={EVENT_CONFIG.college.logo}
                   alt={EVENT_CONFIG.college.name}
-                  className="h-7 sm:h-8 w-auto object-contain"
+                  className="h-7 sm:h-8 w-auto object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
                 />
               </div>
               <div>
@@ -84,21 +84,21 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-emerald-500/20 bg-[#02180f] px-4 pt-3 pb-6 space-y-3">
-          {/* Mobile College Banner */}
+          {/* Mobile College Banner - Adopts Dark Background */}
           <a
             href={EVENT_CONFIG.college.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-white/95 border border-white/20 mb-2"
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-black/50 border border-emerald-500/30 mb-2"
           >
             <img
               src={EVENT_CONFIG.college.logo}
               alt={EVENT_CONFIG.college.name}
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             />
-            <div className="text-[11px] leading-tight text-gray-800">
-              <span className="font-bold block text-[#0d2a54]">{EVENT_CONFIG.college.name}</span>
-              <span className="text-[10px] text-gray-600 font-mono">Autonomous • Code: 4151</span>
+            <div className="text-[11px] leading-tight text-gray-200">
+              <span className="font-bold block text-white">{EVENT_CONFIG.college.name}</span>
+              <span className="text-[10px] text-emerald-400 font-mono">Autonomous • Code: 4151</span>
             </div>
           </a>
 

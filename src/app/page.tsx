@@ -34,19 +34,19 @@ export default function Home() {
         <div className="absolute top-20 right-5 w-[450px] h-[450px] bg-cyan-500/15 rounded-full blur-[130px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          {/* Official Organizing College Banner */}
-          <div className="mb-6 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 p-2.5 sm:px-5 sm:py-2 rounded-2xl bg-black/60 border border-emerald-500/35 backdrop-blur-md shadow-2xl">
+          {/* Official Organizing College Banner - Seamless Background Blend */}
+          <div className="mb-6 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 p-2.5 sm:px-5 sm:py-2.5 rounded-2xl bg-black/60 border border-emerald-500/35 backdrop-blur-md shadow-2xl">
             <a
               href={EVENT_CONFIG.college.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white px-3 py-1.5 rounded-xl shadow-md flex items-center justify-center hover:scale-105 transition-transform"
+              className="px-3 py-1.5 rounded-xl bg-black/40 border border-emerald-500/30 flex items-center justify-center hover:scale-105 hover:border-emerald-400/50 transition-all shadow-md"
               title={EVENT_CONFIG.college.name}
             >
               <img
                 src={EVENT_CONFIG.college.logo}
                 alt={EVENT_CONFIG.college.name}
-                className="h-9 sm:h-11 w-auto object-contain"
+                className="h-10 sm:h-12 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
               />
             </a>
             <div className="text-center sm:text-left">

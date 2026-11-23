@@ -224,11 +224,11 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         <div className="my-8 p-6 rounded-2xl bg-[#080d1a] border border-white/10 max-w-md mx-auto text-left relative overflow-hidden">
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4 gap-3">
             <div className="flex items-center gap-2.5">
-              <div className="bg-white px-2 py-1 rounded-lg shrink-0">
+              <div className="p-1 rounded-lg bg-black/50 border border-emerald-500/30 shrink-0">
                 <img
                   src={EVENT_CONFIG.college.logo}
                   alt={EVENT_CONFIG.college.name}
-                  className="h-6 w-auto object-contain"
+                  className="h-6 w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 />
               </div>
               <div>

@@ -179,11 +179,11 @@ export default function AdminPage() {
             <Shield className="w-6 h-6" />
           </div>
 
-          <div className="bg-white px-3 py-1.5 rounded-xl shadow-md flex items-center justify-center mx-auto mb-3 max-w-[220px]">
+          <div className="p-2 rounded-xl bg-black/50 border border-emerald-500/30 shadow-lg flex items-center justify-center mx-auto mb-3 max-w-[240px]">
             <img
               src={EVENT_CONFIG.college.logo}
               alt={EVENT_CONFIG.college.name}
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             />
           </div>
 

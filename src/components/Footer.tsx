@@ -30,19 +30,19 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* College Attribution Banner */}
+            {/* College Attribution Banner - Adopts Dark Background */}
             <div className="mt-5 pt-4 border-t border-emerald-500/20 flex items-center gap-3">
               <a
                 href={EVENT_CONFIG.college.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white px-2.5 py-1.5 rounded-xl shadow-md hover:opacity-90 transition-opacity shrink-0"
+                className="px-2.5 py-1.5 rounded-xl bg-black/40 border border-emerald-500/30 hover:border-emerald-400/50 transition-all shrink-0 shadow-md"
                 title={EVENT_CONFIG.college.name}
               >
                 <img
                   src={EVENT_CONFIG.college.logo}
                   alt={EVENT_CONFIG.college.name}
-                  className="h-8 w-auto object-contain"
+                  className="h-9 w-auto object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
                 />
               </a>
               <div className="text-[11px] leading-tight">

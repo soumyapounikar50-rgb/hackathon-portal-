@@ -149,11 +149,11 @@ export default function TicketPage() {
         {/* College Organizing Strip */}
         <div className="bg-black/50 px-5 py-2.5 border-b border-emerald-500/20 flex items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="bg-white px-2 py-0.5 rounded shadow-sm shrink-0">
+            <div className="p-1 rounded-lg bg-black/40 border border-emerald-500/30 shrink-0">
               <img
                 src={EVENT_CONFIG.college.logo}
                 alt={EVENT_CONFIG.college.name}
-                className="h-5 w-auto object-contain"
+                className="h-6 w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               />
             </div>
             <span className="text-[11px] text-gray-200 font-medium truncate">
