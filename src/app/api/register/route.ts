@@ -92,12 +92,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 5. Screenshot Payload Verification (Max 4MB, Valid Data URI)
+    // 5. Screenshot Payload Verification (Strict 500 KB Limit, Valid Data URI)
     let sanitizedScreenshot: string | undefined = undefined;
     if (body.payment?.screenshotUrl) {
       const screenshot = String(body.payment.screenshotUrl);
-      if (screenshot.length > 5 * 1024 * 1024) {
-        return NextResponse.json({ error: 'Screenshot file size exceeds the 5MB limit.' }, { status: 413 });
+      // 500 KB binary = ~683 KB Base64 string length
+      const MAX_SCREENSHOT_BASE64_LEN = 700 * 1024;
+      if (screenshot.length > MAX_SCREENSHOT_BASE64_LEN) {
+        return NextResponse.json(
+          { error: 'Screenshot file size exceeds the strict 500 KB limit. Please upload a compressed screenshot under 500 KB.' }, 
+          { status: 413 }
+        );
       }
       if (!screenshot.startsWith('data:image/')) {
         return NextResponse.json({ error: 'Invalid screenshot file format. Only images are allowed.' }, { status: 400 });

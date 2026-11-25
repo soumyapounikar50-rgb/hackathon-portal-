@@ -67,51 +67,70 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
   // Payment Details
   const [transactionId, setTransactionId] = useState('');
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
+  const [screenshotSizeKb, setScreenshotSizeKb] = useState<number | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [compressingImage, setCompressingImage] = useState(false);
 
-  // Client-side image compression: converts high-res smartphone photos (3MB-10MB)
-  // down to ~120KB-250KB crystal-clear JPEGs, preventing Vercel 4.5MB payload limits (Request Entity Too Large).
+  // Client-side image compression: converts photos down to strictly <= 500 KB crystal-clear JPEGs,
+  // ensuring fast uploads and compliance with the 500 KB limit.
   const compressImage = (file: File): Promise<string> => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
         const img = new Image();
         img.onload = () => {
-          const MAX_DIM = 1200;
-          let width = img.width;
-          let height = img.height;
+          // Strict 500 KB limit in base64 (~682 KB in base64 string length)
+          const MAX_BASE64_LEN = Math.floor(500 * 1024 * 1.33);
 
-          if (width > height) {
-            if (width > MAX_DIM) {
-              height = Math.round((height * MAX_DIM) / width);
-              width = MAX_DIM;
+          const tryCompress = (dim: number, quality: number): string => {
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > dim) {
+                height = Math.round((height * dim) / width);
+                width = dim;
+              }
+            } else {
+              if (height > dim) {
+                width = Math.round((width * dim) / height);
+                height = dim;
+              }
             }
-          } else {
-            if (height > MAX_DIM) {
-              width = Math.round((width * MAX_DIM) / height);
-              height = MAX_DIM;
-            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, width);
+            canvas.height = Math.max(1, height);
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return '';
+
+            // White background (in case user uploads a PNG with transparency)
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+
+            return canvas.toDataURL('image/jpeg', quality);
+          };
+
+          // Pass 1: standard 1000px max dimension @ 0.75 quality (crisp text, typically ~70-120 KB)
+          let dataUrl = tryCompress(1000, 0.75);
+
+          // Pass 2: if still over 500 KB, reduce to 800px @ 0.65 quality
+          if (dataUrl.length > MAX_BASE64_LEN) {
+            dataUrl = tryCompress(800, 0.65);
           }
 
-          const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          if (!ctx) {
-            resolve(event.target?.result as string);
-            return;
+          // Pass 3: if still over 500 KB, reduce to 640px @ 0.50 quality
+          if (dataUrl.length > MAX_BASE64_LEN) {
+            dataUrl = tryCompress(640, 0.50);
           }
-          ctx.drawImage(img, 0, 0, width, height);
 
-          // Compress to JPEG with 0.8 quality
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
-          resolve(compressedDataUrl);
+          resolve(dataUrl || (event.target?.result as string));
         };
-        img.onerror = () => resolve(event.target?.result as string);
+        img.onerror = () => reject(new Error('Failed to parse image for compression'));
         img.src = event.target?.result as string;
       };
-      reader.onerror = () => resolve('');
+      reader.onerror = () => reject(new Error('Failed to read image file'));
       reader.readAsDataURL(file);
     });
   };
@@ -153,10 +172,9 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         return;
       }
 
-      // Hard Limit: Max 5 MB
-      const MAX_FILE_SIZE = 5 * 1024 * 1024;
-      if (file.size > MAX_FILE_SIZE) {
-        setErrorMsg(`Screenshot file exceeds the 5MB limit (${(file.size / (1024 * 1024)).toFixed(1)} MB). Please select an image under 5MB.`);
+      // Quick guard against extreme files (>15MB) to avoid freezing mobile browsers
+      if (file.size > 15 * 1024 * 1024) {
+        setErrorMsg(`Selected file is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Please select a screenshot under 15 MB.`);
         return;
       }
 
@@ -164,14 +182,21 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
       setErrorMsg(null);
       try {
         const compressedBase64 = await compressImage(file);
+        // Calculate approximate size in KB
+        const sizeInKb = Math.round((compressedBase64.length * 3) / (4 * 1024));
+
+        if (sizeInKb > 500) {
+          setErrorMsg(`Screenshot could not be compressed under 500 KB (current size: ${sizeInKb} KB). Please crop or take a direct screenshot.`);
+          setScreenshotPreview(null);
+          setScreenshotSizeKb(null);
+          return;
+        }
+
         setScreenshotPreview(compressedBase64);
+        setScreenshotSizeKb(sizeInKb);
       } catch (err) {
-        console.error("Compression fallback:", err);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setScreenshotPreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+        console.error("Compression error:", err);
+        setErrorMsg("Unable to process the image. Please upload a standard JPG or PNG screenshot.");
       } finally {
         setCompressingImage(false);
       }
@@ -374,6 +399,7 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
               setMembers(getInitialMembers(selectedCompId));
               setTransactionId('');
               setScreenshotPreview(null);
+              setScreenshotSizeKb(null);
             }}
             className="px-6 py-3 rounded-xl text-sm font-semibold text-gray-300 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
           >
@@ -814,7 +840,7 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                   Payment Screenshot (Receipt) <span className="text-rose-400">*</span>
                 </label>
                 <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 px-2 py-0.5 rounded-full shadow-sm">
-                  Limit: Max 5 MB
+                  Limit: Max 500 KB
                 </span>
               </div>
               <div className="relative">
@@ -827,7 +853,7 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                 />
               </div>
               <p className="text-[10px] text-gray-400 font-mono mt-1">
-                Accepted: JPG, PNG, WEBP (Max 5MB) • Automatically optimized for quick upload
+                Accepted: JPG, PNG, WEBP (Max 500 KB) • Auto-compressed for rapid submission
               </p>
             </div>
           </div>
@@ -837,25 +863,40 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
               <div className="w-4 h-4 rounded-full border-2 border-emerald-400 border-t-transparent animate-spin shrink-0" />
               <div className="text-xs">
                 <span className="text-emerald-300 font-semibold block">Optimizing receipt image...</span>
-                <span className="text-gray-400 text-[10px]">Compressing for lightning-fast submission</span>
+                <span className="text-gray-400 text-[10px]">Compressing to strictly under 500 KB</span>
               </div>
             </div>
           )}
 
           {!compressingImage && screenshotPreview && (
-            <div className="p-3 rounded-xl bg-black/40 border border-emerald-500/30 flex items-center gap-3">
-              <img
-                src={screenshotPreview}
-                alt="Payment Screenshot Preview"
-                className="w-16 h-16 object-cover rounded-lg border border-emerald-500/20"
-              />
-              <div className="text-xs">
-                <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Payment Screenshot Attached & Optimized</span>
-                </span>
-                <span className="text-gray-400 text-[11px] block mt-0.5">Ready for organizer verification</span>
+            <div className="p-3 rounded-xl bg-black/40 border border-emerald-500/30 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <img
+                  src={screenshotPreview}
+                  alt="Payment Screenshot Preview"
+                  className="w-16 h-16 object-cover rounded-lg border border-emerald-500/20"
+                />
+                <div className="text-xs">
+                  <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Payment Screenshot Attached</span>
+                  </span>
+                  <span className="text-gray-300 text-[11px] block mt-0.5 font-mono">
+                    Size: {screenshotSizeKb ? `${screenshotSizeKb} KB` : '< 500 KB'} <span className="text-emerald-400 font-semibold">(Under 500 KB limit)</span>
+                  </span>
+                  <span className="text-gray-400 text-[10px] block">Verified ready for verification</span>
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setScreenshotPreview(null);
+                  setScreenshotSizeKb(null);
+                }}
+                className="text-xs px-2.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 transition-colors shrink-0"
+              >
+                Change
+              </button>
             </div>
           )}
         </div>
