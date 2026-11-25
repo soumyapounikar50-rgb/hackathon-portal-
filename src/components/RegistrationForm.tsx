@@ -251,6 +251,17 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
       setSuccessRegistration(data.registration);
 
+      // Persist to local client backup for instant verification and admin sync
+      try {
+        if (typeof window !== 'undefined' && data.registration) {
+          const currentLocal = JSON.parse(localStorage.getItem('portal_all_registrations') || '[]');
+          const filtered = currentLocal.filter((r: any) => r.id !== data.registration.id);
+          localStorage.setItem('portal_all_registrations', JSON.stringify([data.registration, ...filtered]));
+        }
+      } catch (storageErr) {
+        console.warn("Local registration backup error:", storageErr);
+      }
+
       try {
         confetti({
           particleCount: 120,

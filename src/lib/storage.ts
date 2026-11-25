@@ -13,7 +13,7 @@ function getDataFilePath(): string {
   return path.join(process.cwd(), 'data', 'el_nino_registrations.json');
 }
 
-function getKVConfig(): { url: string; token: string } | null {
+export function getKVConfig(): { url: string; token: string } | null {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   if (url && token) {

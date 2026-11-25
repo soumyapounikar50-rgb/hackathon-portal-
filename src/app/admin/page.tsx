@@ -44,8 +44,47 @@ export default function AdminPage() {
       }
 
       const data = await res.json();
-      setRegistrations(data.registrations || []);
-      setMetrics(data.metrics || null);
+      let mergedRegs: CompetitionRegistration[] = data.registrations || [];
+
+      // Automatically check and merge client-side device backup from localStorage
+      if (typeof window !== 'undefined') {
+        try {
+          const localList: CompetitionRegistration[] = JSON.parse(localStorage.getItem('portal_all_registrations') || '[]');
+          const missingLocals = localList.filter(lr => !mergedRegs.some(mr => mr.id === lr.id));
+          if (missingLocals.length > 0) {
+            mergedRegs = [...missingLocals, ...mergedRegs];
+            // Background sync newly found local registrations to the server lambda
+            fetch('/api/admin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${key}`
+              },
+              body: JSON.stringify({ action: 'sync', registrations: missingLocals })
+            }).catch(e => console.warn('Background sync error:', e));
+          }
+        } catch (localErr) {
+          console.warn('Local merge error:', localErr);
+        }
+      }
+
+      setRegistrations(mergedRegs);
+      
+      // Recalculate metrics if local items were merged
+      const totalStudents = mergedRegs.reduce((acc, r) => acc + 1 + (r.members ? r.members.length : 0), 0);
+      const totalFee = mergedRegs.reduce((acc, r) => acc + (r.fee || 0), 0);
+      setMetrics({
+        ...(data.metrics || {}),
+        totalRegistrations: mergedRegs.length,
+        totalStudents,
+        totalFeeCollected: totalFee,
+        byCompetition: {
+          hackathon: mergedRegs.filter(r => r.competitionId === 'hackathon').length,
+          ideathon: mergedRegs.filter(r => r.competitionId === 'ideathon').length,
+          'reel-making': mergedRegs.filter(r => r.competitionId === 'reel-making').length
+        }
+      });
+
       setIsAuthenticated(true);
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('hack_admin_key', key);
@@ -300,6 +339,41 @@ export default function AdminPage() {
             </button>
           </div>
         </div>
+
+        {/* CLOUD STORAGE STATUS NOTICE */}
+        {metrics && !metrics.isCloudStorageConnected && (
+          <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="flex items-start gap-3">
+              <span className="text-amber-400 text-lg">💡</span>
+              <div>
+                <span className="font-bold text-amber-300 block text-xs">
+                  Serverless Ephemeral Mode (Local Device Sync Active)
+                </span>
+                <span className="text-gray-300 text-[11px] leading-relaxed block mt-0.5">
+                  Registrations submitted on your device are automatically synced below. To ensure student registrations across all outside phones permanently persist in real-time, connect free <strong>Vercel KV</strong> in 1 click (Vercel Dashboard → Storage → Create KV).
+                </span>
+              </div>
+            </div>
+            <a
+              href="https://vercel.com/docs/storage/vercel-kv/quickstart"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 font-mono text-[11px] font-semibold transition-colors flex items-center gap-1"
+            >
+              <span>Connect Vercel KV</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        )}
+
+        {metrics && metrics.isCloudStorageConnected && (
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs font-mono">
+            <div className="flex items-center gap-2 text-emerald-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>🟢 Vercel KV Cloud Database Connected • Real-Time Cross-Device Sync Active</span>
+            </div>
+          </div>
+        )}
 
         {/* METRICS ROW */}
         {metrics && (

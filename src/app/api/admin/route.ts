@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllRegistrations, updateRegistrationStatus, deleteRegistration } from '@/lib/storage';
+import { getAllRegistrations, updateRegistrationStatus, deleteRegistration, saveRegistration, getKVConfig } from '@/lib/storage';
 import { convertRegistrationsToCSV } from '@/lib/utils';
 import { timingSafeCompare, checkRateLimit, recordRateLimitAttempt, resetRateLimit } from '@/lib/security';
 
@@ -96,6 +96,7 @@ export async function GET(req: NextRequest) {
       totalRegistrations: registrations.length,
       totalStudents,
       totalFeeCollected,
+      isCloudStorageConnected: Boolean(getKVConfig()),
       byCompetition: {
         hackathon: registrations.filter(r => r.competitionId === 'hackathon').length,
         ideathon: registrations.filter(r => r.competitionId === 'ideathon').length,
@@ -103,6 +104,37 @@ export async function GET(req: NextRequest) {
       }
     }
   });
+}
+
+export async function POST(req: NextRequest) {
+  const clientIp = getClientIp(req);
+  const auth = verifyAuthorization(req, clientIp);
+
+  if (!auth.authorized) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status || 401 });
+  }
+
+  try {
+    const body = await req.json();
+    if (body.action === 'sync' && Array.isArray(body.registrations)) {
+      for (const reg of body.registrations) {
+        if (reg && reg.id && reg.teamName) {
+          await saveRegistration(reg);
+        }
+      }
+      const all = await getAllRegistrations();
+      return NextResponse.json({
+        success: true,
+        message: 'Registrations synchronized successfully',
+        count: all.length,
+        registrations: all
+      });
+    }
+
+    return NextResponse.json({ error: 'Invalid action payload' }, { status: 400 });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Sync failed: ' + err.message }, { status: 500 });
+  }
 }
 
 export async function PATCH(req: NextRequest) {

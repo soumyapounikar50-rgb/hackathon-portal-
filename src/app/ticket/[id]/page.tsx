@@ -27,6 +27,17 @@ export default function TicketPage() {
         setRegistration(data.registration);
       })
       .catch((err) => {
+        // Fallback to client storage
+        try {
+          if (typeof window !== 'undefined') {
+            const local = JSON.parse(localStorage.getItem('portal_all_registrations') || '[]');
+            const found = local.find((r: any) => r.id === params.id);
+            if (found) {
+              setRegistration(found);
+              return;
+            }
+          }
+        } catch {}
         setError(err.message || "Failed to load ticket.");
       })
       .finally(() => {
