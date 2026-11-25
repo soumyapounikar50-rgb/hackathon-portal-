@@ -52,6 +52,30 @@ async function syncToCloud(registrations: CompetitionRegistration[]): Promise<vo
   }
 }
 
+export async function saveReceiptImage(id: string, base64Data: string): Promise<void> {
+  const redis = getRedis();
+  if (redis) {
+    try {
+      await redis.set(`receipt:${id}`, base64Data);
+    } catch (e) {
+      console.error(`Cloud Redis receipt:${id} write error:`, e);
+    }
+  }
+}
+
+export async function getReceiptImage(id: string): Promise<string | null> {
+  const redis = getRedis();
+  if (redis) {
+    try {
+      const data = await redis.get<string>(`receipt:${id}`);
+      if (data) return data;
+    } catch (e) {
+      console.error(`Cloud Redis receipt:${id} read error:`, e);
+    }
+  }
+  return null;
+}
+
 /**
  * Load all registrations.
  * Checks Upstash Redis / Vercel KV first (permanent cross-deployment cloud database),
@@ -65,6 +89,20 @@ export async function getAllRegistrations(): Promise<CompetitionRegistration[]> 
     try {
       const data = await redis.get<CompetitionRegistration[]>('el_nino_registrations');
       if (Array.isArray(data)) {
+        // Automatically optimize any raw Base64 screenshots into clean short URLs in Upstash
+        let needsSync = false;
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://hackathon-portal-pi.vercel.app';
+        for (const reg of data) {
+          if (reg.payment?.screenshotUrl && reg.payment.screenshotUrl.startsWith('data:image/')) {
+            await saveReceiptImage(reg.id, reg.payment.screenshotUrl);
+            reg.payment.screenshotUrl = `${appUrl}/api/receipt/${reg.id}`;
+            needsSync = true;
+          }
+        }
+        if (needsSync) {
+          await redis.set('el_nino_registrations', data);
+        }
+
         memoryRegistrations = data;
         return data;
       }
@@ -96,6 +134,13 @@ export async function getAllRegistrations(): Promise<CompetitionRegistration[]> 
  * Persists permanently to Upstash Redis, /tmp disk, and triggers Cloud Webhook (Google Sheets / Discord).
  */
 export async function saveRegistration(registration: CompetitionRegistration): Promise<CompetitionRegistration> {
+  // If screenshot is raw Base64, save to receipt:<id> in Redis and store clean URL in Upstash
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://hackathon-portal-pi.vercel.app';
+  if (registration.payment?.screenshotUrl && registration.payment.screenshotUrl.startsWith('data:image/')) {
+    await saveReceiptImage(registration.id, registration.payment.screenshotUrl);
+    registration.payment.screenshotUrl = `${appUrl}/api/receipt/${registration.id}`;
+  }
+
   const current = await getAllRegistrations();
   const updated = [registration, ...current.filter(r => r.id !== registration.id)];
   memoryRegistrations = updated;

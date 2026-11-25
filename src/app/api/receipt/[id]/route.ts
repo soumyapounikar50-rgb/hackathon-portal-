@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getRegistrationById } from '@/lib/storage';
+import { getRegistrationById, getReceiptImage } from '@/lib/storage';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,12 +13,21 @@ export async function GET(
       return new NextResponse('Missing registration ID', { status: 400 });
     }
 
-    const reg = await getRegistrationById(id);
-    if (!reg || !reg.payment?.screenshotUrl) {
+    // 1. Fetch from dedicated receipt:<id> key in Redis
+    let dataUrl = await getReceiptImage(id);
+
+    // 2. Fallback to registration object in case it was stored as Base64
+    if (!dataUrl) {
+      const reg = await getRegistrationById(id);
+      if (reg && reg.payment?.screenshotUrl && reg.payment.screenshotUrl.startsWith('data:image/')) {
+        dataUrl = reg.payment.screenshotUrl;
+      }
+    }
+
+    if (!dataUrl) {
       return new NextResponse('Receipt image not found for this registration', { status: 404 });
     }
 
-    const dataUrl = reg.payment.screenshotUrl;
     // Expected format: data:image/jpeg;base64,... or data:image/png;base64,...
     const matches = dataUrl.match(/^data:([A-Za-z0-9\-+\/]+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
