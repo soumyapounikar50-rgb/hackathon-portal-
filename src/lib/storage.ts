@@ -1,10 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { CompetitionRegistration } from '../types';
+import { Redis } from '@upstash/redis';
 
 const SEED_REGISTRATIONS: CompetitionRegistration[] = [];
 
 let memoryRegistrations: CompetitionRegistration[] = [];
+let redisClient: Redis | null = null;
 
 function getDataFilePath(): string {
   if (process.env.VERCEL) {
@@ -14,52 +16,60 @@ function getDataFilePath(): string {
 }
 
 export function getKVConfig(): { url: string; token: string } | null {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
   if (url && token) {
     return { url, token };
   }
   return null;
 }
 
+function getRedis(): Redis | null {
+  if (redisClient) return redisClient;
+  const cfg = getKVConfig();
+  if (cfg) {
+    try {
+      redisClient = new Redis({
+        url: cfg.url,
+        token: cfg.token
+      });
+      return redisClient;
+    } catch (e) {
+      console.warn("Failed to initialize Upstash Redis client:", e);
+    }
+  }
+  return null;
+}
+
+async function syncToCloud(registrations: CompetitionRegistration[]): Promise<void> {
+  const redis = getRedis();
+  if (redis) {
+    try {
+      await redis.set('el_nino_registrations', registrations);
+    } catch (e) {
+      console.error("Cloud Redis write error:", e);
+    }
+  }
+}
+
 /**
  * Load all registrations.
- * Checks Vercel KV / Upstash Redis first (if connected via Vercel Storage),
+ * Checks Upstash Redis / Vercel KV first (permanent cross-deployment cloud database),
  * then falls back to /tmp or local data file, and memory cache.
  */
 export async function getAllRegistrations(): Promise<CompetitionRegistration[]> {
-  const kv = getKVConfig();
+  const redis = getRedis();
 
-  // 1. Try Vercel KV / Upstash Redis for permanent cross-deployment storage
-  if (kv) {
+  // 1. Try Upstash Redis / Vercel KV for permanent cloud storage
+  if (redis) {
     try {
-      const res = await fetch(`${kv.url}/get/el_nino_synapse_registrations`, {
-        headers: {
-          Authorization: `Bearer ${kv.token}`
-        },
-        cache: 'no-store'
-      });
-
-      if (res.ok) {
-        const json = await res.json();
-        let parsed: CompetitionRegistration[] | null = null;
-        if (typeof json.result === 'string') {
-          try {
-            parsed = JSON.parse(json.result);
-          } catch (e) {
-            parsed = null;
-          }
-        } else if (Array.isArray(json.result)) {
-          parsed = json.result;
-        }
-
-        if (Array.isArray(parsed)) {
-          memoryRegistrations = parsed;
-          return parsed;
-        }
+      const data = await redis.get<CompetitionRegistration[]>('el_nino_registrations');
+      if (Array.isArray(data)) {
+        memoryRegistrations = data;
+        return data;
       }
-    } catch (kvErr) {
-      console.warn("KV fetch fallback to disk/memory:", kvErr);
+    } catch (redisErr) {
+      console.warn("Redis fetch fallback to disk/memory:", redisErr);
     }
   }
 
@@ -83,7 +93,7 @@ export async function getAllRegistrations(): Promise<CompetitionRegistration[]> 
 
 /**
  * Save new registration.
- * Persists permanently to Vercel KV, /tmp disk, and triggers Cloud Webhook (Google Sheets / Discord).
+ * Persists permanently to Upstash Redis, /tmp disk, and triggers Cloud Webhook (Google Sheets / Discord).
  */
 export async function saveRegistration(registration: CompetitionRegistration): Promise<CompetitionRegistration> {
   const current = await getAllRegistrations();
@@ -102,22 +112,8 @@ export async function saveRegistration(registration: CompetitionRegistration): P
     console.warn("Could not write registration to disk:", err);
   }
 
-  // 2. Persist permanently to Vercel KV / Upstash Redis
-  const kv = getKVConfig();
-  if (kv) {
-    try {
-      await fetch(`${kv.url}/set/el_nino_synapse_registrations`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${kv.token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updated)
-      });
-    } catch (e) {
-      console.error("KV save error:", e);
-    }
-  }
+  // 2. Persist permanently to Cloud Redis (Upstash / Vercel KV)
+  await syncToCloud(updated);
 
   // 3. Permanent Cloud Webhook (e.g. Google Sheets, Discord, Zapier)
   if (process.env.REGISTRATION_WEBHOOK_URL) {
@@ -170,22 +166,7 @@ export async function updateRegistrationStatus(id: string, status: 'confirmed' |
     console.warn("File write fallback:", err);
   }
 
-  const kv = getKVConfig();
-  if (kv) {
-    try {
-      await fetch(`${kv.url}/set/el_nino_synapse_registrations`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${kv.token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(all)
-      });
-    } catch (e) {
-      console.error("KV status update error:", e);
-    }
-  }
-
+  await syncToCloud(all);
   return true;
 }
 
@@ -203,21 +184,6 @@ export async function deleteRegistration(id: string): Promise<boolean> {
     console.warn("File write fallback:", err);
   }
 
-  const kv = getKVConfig();
-  if (kv) {
-    try {
-      await fetch(`${kv.url}/set/el_nino_synapse_registrations`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${kv.token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(filtered)
-      });
-    } catch (e) {
-      console.error("KV delete sync error:", e);
-    }
-  }
-
+  await syncToCloud(filtered);
   return true;
 }
