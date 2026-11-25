@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
     if (body.payment?.screenshotUrl) {
       const screenshot = String(body.payment.screenshotUrl);
       if (screenshot.length > 5 * 1024 * 1024) {
-        return NextResponse.json({ error: 'Screenshot file size exceeds the 4MB limit.' }, { status: 413 });
+        return NextResponse.json({ error: 'Screenshot file size exceeds the 5MB limit.' }, { status: 413 });
       }
       if (!screenshot.startsWith('data:image/')) {
         return NextResponse.json({ error: 'Invalid screenshot file format. Only images are allowed.' }, { status: 400 });

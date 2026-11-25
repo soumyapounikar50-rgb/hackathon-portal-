@@ -152,6 +152,14 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         setErrorMsg("Please upload a valid image file (PNG, JPG, JPEG, WEBP).");
         return;
       }
+
+      // Hard Limit: Max 5 MB
+      const MAX_FILE_SIZE = 5 * 1024 * 1024;
+      if (file.size > MAX_FILE_SIZE) {
+        setErrorMsg(`Screenshot file exceeds the 5MB limit (${(file.size / (1024 * 1024)).toFixed(1)} MB). Please select an image under 5MB.`);
+        return;
+      }
+
       setCompressingImage(true);
       setErrorMsg(null);
       try {
@@ -801,18 +809,26 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
-                Payment Screenshot (Receipt) <span className="text-rose-400">*</span>
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider">
+                  Payment Screenshot (Receipt) <span className="text-rose-400">*</span>
+                </label>
+                <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-950/70 border border-cyan-500/40 px-2 py-0.5 rounded-full shadow-sm">
+                  Limit: Max 5 MB
+                </span>
+              </div>
               <div className="relative">
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
                   required={!screenshotPreview}
                   onChange={handleScreenshotUpload}
                   className="w-full text-xs text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 cursor-pointer"
                 />
               </div>
+              <p className="text-[10px] text-gray-400 font-mono mt-1">
+                Accepted: JPG, PNG, WEBP (Max 5MB) • Automatically optimized for quick upload
+              </p>
             </div>
           </div>
 
