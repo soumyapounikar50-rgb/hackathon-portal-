@@ -68,6 +68,53 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
   const [transactionId, setTransactionId] = useState('');
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [compressingImage, setCompressingImage] = useState(false);
+
+  // Client-side image compression: converts high-res smartphone photos (3MB-10MB)
+  // down to ~120KB-250KB crystal-clear JPEGs, preventing Vercel 4.5MB payload limits (Request Entity Too Large).
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX_DIM = 1200;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_DIM) {
+              height = Math.round((height * MAX_DIM) / width);
+              width = MAX_DIM;
+            }
+          } else {
+            if (height > MAX_DIM) {
+              width = Math.round((width * MAX_DIM) / height);
+              height = MAX_DIM;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(event.target?.result as string);
+            return;
+          }
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress to JPEG with 0.8 quality
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          resolve(compressedDataUrl);
+        };
+        img.onerror = () => resolve(event.target?.result as string);
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+    });
+  };
 
   // Switch competition handler
   const handleSelectCompetition = (id: CompetitionId) => {
@@ -98,18 +145,28 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
     setMembers(members.filter((_, i) => i !== index));
   };
 
-  const handleScreenshotUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleScreenshotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setErrorMsg("Screenshot size should be less than 5MB");
+      if (!file.type.startsWith('image/')) {
+        setErrorMsg("Please upload a valid image file (PNG, JPG, JPEG, WEBP).");
         return;
       }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setScreenshotPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setCompressingImage(true);
+      setErrorMsg(null);
+      try {
+        const compressedBase64 = await compressImage(file);
+        setScreenshotPreview(compressedBase64);
+      } catch (err) {
+        console.error("Compression fallback:", err);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setScreenshotPreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } finally {
+        setCompressingImage(false);
+      }
     }
   };
 
@@ -176,7 +233,17 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         body: JSON.stringify(payload)
       });
 
-      const data = await res.json();
+      let data: any = {};
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const rawText = await res.text();
+        if (res.status === 413 || rawText.includes('Request Entity Too Large') || rawText.includes('Payload Too Large')) {
+          throw new Error('Screenshot file is too large for upload. Please select a smaller image or compressed screenshot.');
+        }
+        throw new Error(rawText.slice(0, 150) || `Server error (HTTP ${res.status}). Please try again.`);
+      }
 
       if (!res.ok) {
         throw new Error(data.error || 'Failed to submit registration');
@@ -738,19 +805,29 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
             </div>
           </div>
 
-          {screenshotPreview && (
-            <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-3">
+          {compressingImage && (
+            <div className="p-3.5 rounded-xl bg-black/50 border border-emerald-500/30 flex items-center gap-3 animate-pulse">
+              <div className="w-4 h-4 rounded-full border-2 border-emerald-400 border-t-transparent animate-spin shrink-0" />
+              <div className="text-xs">
+                <span className="text-emerald-300 font-semibold block">Optimizing receipt image...</span>
+                <span className="text-gray-400 text-[10px]">Compressing for lightning-fast submission</span>
+              </div>
+            </div>
+          )}
+
+          {!compressingImage && screenshotPreview && (
+            <div className="p-3 rounded-xl bg-black/40 border border-emerald-500/30 flex items-center gap-3">
               <img
                 src={screenshotPreview}
                 alt="Payment Screenshot Preview"
-                className="w-16 h-16 object-cover rounded-lg border border-white/10"
+                className="w-16 h-16 object-cover rounded-lg border border-emerald-500/20"
               />
               <div className="text-xs">
                 <span className="text-emerald-400 font-semibold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Payment Screenshot Attached</span>
+                  <span>Payment Screenshot Attached & Optimized</span>
                 </span>
-                <span className="text-gray-400 text-[11px] block mt-0.5">Ready for verification</span>
+                <span className="text-gray-400 text-[11px] block mt-0.5">Ready for organizer verification</span>
               </div>
             </div>
           )}
@@ -776,10 +853,15 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         <div>
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || compressingImage}
             className="w-full py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-purple hover:opacity-95 shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {submitting ? (
+            {compressingImage ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>Optimizing Screenshot...</span>
+              </>
+            ) : submitting ? (
               <>
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 <span>Registering & Generating Pass...</span>

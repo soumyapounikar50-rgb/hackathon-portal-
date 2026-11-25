@@ -34,7 +34,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
+    let body: any;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid or oversized payload received. Please upload a compressed screenshot image.' },
+        { status: 400 }
+      );
+    }
 
     // 2. Mandatory Fields Check
     if (!body.competitionId || !body.teamName || !body.leader) {
