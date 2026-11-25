@@ -46,6 +46,7 @@ export function convertRegistrationsToCSV(registrations: CompetitionRegistration
     "Member 4 College",
     "Payment Method",
     "UTR / Transaction ID",
+    "Receipt Image Link",
     "Status",
     "Registered At"
   ];
@@ -93,6 +94,7 @@ export function convertRegistrationsToCSV(registrations: CompetitionRegistration
       // Payment
       escapeCSV(reg.payment.method.toUpperCase()),
       escapeCSV(reg.payment.transactionId),
+      escapeCSV(reg.payment.screenshotUrl ? `https://hackathon-portal-pi.vercel.app/api/receipt/${reg.id}` : 'No Screenshot'),
       escapeCSV(reg.status),
       escapeCSV(reg.createdAt)
     ].join(',');
