@@ -167,7 +167,7 @@ export default function ElNinoSection() {
             </div>
             <div>
               <h4 className="text-sm font-bold text-white">Experience the Energy at El Niño Awareness Program</h4>
-              <p className="text-xs text-gray-300">Join 400+ innovators across Hackathon, Ideathon, and Reel Making on 2 & 3 December.</p>
+              <p className="text-xs text-gray-300">Hackathon, Ideathon, and Reel Making on 2 & 3 December.</p>
             </div>
           </div>
           <a
