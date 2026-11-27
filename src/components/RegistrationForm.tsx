@@ -759,19 +759,21 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
 
           {/* QR Code and UPI ID box */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-            <div className="p-4 rounded-xl bg-black/50 border border-emerald-500/20 flex items-center gap-4">
-              <div className="w-28 h-28 rounded-xl bg-white p-2 shrink-0 flex items-center justify-center shadow-lg overflow-hidden relative group">
+            <div className="p-4 rounded-xl bg-black/50 border border-emerald-500/20 flex flex-col sm:flex-row items-center gap-4">
+              <div className="w-32 h-32 rounded-xl bg-white p-1.5 shrink-0 flex items-center justify-center shadow-lg overflow-hidden relative group cursor-pointer"
+                onClick={() => window.open('/qr-code.png', '_blank')}
+                title="Click to view QR code full size"
+              >
                 <img
                   src="/qr-code.png"
-                  alt="UPI Payment QR Code"
-                  className="w-full h-full object-contain"
+                  alt="UPI Payment QR Code - Bank of India (R AND D CONSULTANCY)"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform"
                   onError={(e) => {
-                    // Try .svg or .jpg before showing icon fallback
                     const target = e.target as HTMLImageElement;
                     if (target.src.endsWith('/qr-code.png')) {
-                      target.src = '/qr-code.svg';
-                    } else if (target.src.endsWith('/qr-code.svg')) {
                       target.src = '/qr-code.jpg';
+                    } else if (target.src.endsWith('/qr-code.jpg')) {
+                      target.src = '/qr-code.svg';
                     } else {
                       target.style.display = 'none';
                       const fallback = target.nextElementSibling as HTMLElement;
@@ -783,11 +785,19 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                   <QrCode className="w-full h-full text-black" />
                 </div>
               </div>
-              <div className="text-xs space-y-1">
-                <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Official UPI Payment QR</span>
-                <span className="text-gray-300 block text-[11px]">Payee: {EVENT_CONFIG.upiDetails.payeeName}</span>
-                <span className="text-emerald-300 font-mono text-[10px] block">GPay • PhonePe • Paytm • BHIM</span>
-                <span className="text-gray-400 text-[10px] block mt-1">Scan QR code using any UPI app to pay</span>
+              <div className="text-xs space-y-1.5 w-full">
+                <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Official Bank of India UPI QR</span>
+                <span className="text-white block font-semibold text-xs tracking-wide">{EVENT_CONFIG.upiDetails.payeeName}</span>
+                {EVENT_CONFIG.upiDetails.upiId && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-gray-400 font-mono">UPI ID:</span>
+                    <span className="text-[11px] font-mono text-emerald-300 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded select-all cursor-pointer font-bold hover:border-emerald-400 transition-colors" title="Click to copy UPI ID">
+                      {EVENT_CONFIG.upiDetails.upiId}
+                    </span>
+                  </div>
+                )}
+                <span className="text-gray-400 text-[10px] block font-mono">GPay • PhonePe • Paytm • BHIM • BOI</span>
+                <span className="text-emerald-400/80 text-[10px] block">🔍 Click QR image to view full screen</span>
               </div>
             </div>
 

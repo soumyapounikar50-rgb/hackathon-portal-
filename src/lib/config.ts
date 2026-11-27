@@ -15,8 +15,9 @@ export const EVENT_CONFIG = {
   location: "Tulsiramji Gaikwad-Patil College of Engineering & Technology (TGPCET), Nagpur",
   description: "Welcome to El Niño Awareness Program — the premier inter-college tech & creativity fest on 2 & 3 December organized by Tulsiramji Gaikwad-Patil College of Engineering & Technology (TGPCET). Featuring 3 flagship competitions: Hackathon (Day 1), Ideathon (Day 2), and Reel Making (Out of the Box • Both Days). Showcase your innovation, technical skills, and creativity to take home exciting cash prizes, trophies, and certificates!",
   upiDetails: {
-    upiId: "",
-    payeeName: "El Niño Awareness Program",
+    upiId: "boim-875651790461@boi",
+    payeeName: "R AND D CONSULTANCY",
+    bankName: "Bank of India",
     phone: "+91 95185 62840",
     note: "Please mention Team Name in UPI payment note"
   },
