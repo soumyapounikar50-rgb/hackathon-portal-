@@ -84,14 +84,8 @@ export default function Home() {
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="mt-5 text-base sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Harnessing planetary climate energy, environmental conservation, and futuristic technology. 
-            Join 400+ innovators across 3 flagship arenas: <strong>Hackathon</strong> (Day 1 — 2 Dec), <strong>Ideathon</strong> (Day 2 — 3 Dec), and <strong>Reel Making</strong> (Out-of-the-Box • Both Days — 2 & 3 Dec)!
-          </p>
-
           {/* Event Dates & Info Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-6 text-xs text-gray-200 font-mono">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mt-8 text-xs text-gray-200 font-mono">
             <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-950/40 border border-emerald-500/35 backdrop-blur-md shadow-sm">
               <Calendar className="w-4 h-4 text-emerald-400" />
               <span>Event Date: <strong>2 & 3 December</strong></span>
