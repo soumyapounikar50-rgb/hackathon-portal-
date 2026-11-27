@@ -17,7 +17,7 @@ export default function ScheduleSection() {
             Day 1 (2 Dec): Hackathon & Reel Making • Day 2 (3 Dec): Ideathon & Reel Making (Screening & Awards).
           </p>
           <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-mono font-bold text-amber-300 shadow-lg">
-            <span>⚡ ALL PROBLEM STATEMENTS & TOPICS WILL BE GIVEN ON TIME</span>
+            <span>⚡ Ideathon Topics: Released 5 Days Before on WhatsApp • Hackathon: At 10 AM Kickoff</span>
           </div>
         </div>
 

@@ -114,8 +114,8 @@ function generateEmailHTML(reg: CompetitionRegistration, domain: string): string
                   <h4 style="margin: 0 0 6px 0; font-size: 13px; color: #34d399; text-transform: uppercase;">Important Guidelines:</h4>
                   <ul style="margin: 0; padding-left: 20px; font-size: 12px; line-height: 1.6; color: #d1d5db;">
                     <li><strong>Dates:</strong> 2 & 3 December. Please report to the campus registration desk by 08:30 AM.</li>
-                    <li><strong>Hackathon:</strong> 6 Hours Sprint. Problem statement will be revealed ON TIME at kickoff.</li>
-                    <li><strong>Ideathon:</strong> Strictly 3 members total, 5-7 min presentation, 7-8 slides limit.</li>
+                    <li><strong>Hackathon:</strong> 6 Hours Sprint. Problem statement will be revealed live at 10:00 AM kickoff on Day 1.</li>
+                    <li><strong>Ideathon:</strong> Problem statements will be released 5 days before the event on WhatsApp. 3 members total, 5-7 min pitch, 7-8 slides limit.</li>
                     <li><strong>Reel Making:</strong> 2 members total, 60 seconds duration (9:16 vertical reel).</li>
                     <li>Bring your College ID Card and keep this digital pass ready on your phone.</li>
                   </ul>

@@ -96,7 +96,7 @@ export const EVENT_CONFIG = {
     {
       id: "ideathon",
       name: "Ideathon",
-      tagline: "Day 2 (3 Dec) • 5-7 Min Pitch • 7-8 Slides • 3 Members",
+      tagline: "Day 2 (3 Dec) • Topics Released 5 Days Before on WhatsApp • 3 Members",
       fee: 200,
       feeLabel: "₹200 / team",
       minMembers: 3,
@@ -106,28 +106,28 @@ export const EVENT_CONFIG = {
       badge: "Day 2 (3 Dec)",
       timingDetails: {
         reporting: "9:00 to 9:30 AM",
-        startsAt: "11:00 AM (Event Opening at 10:00 AM)",
+        startsAt: "11:00 AM (Pitching Starts)",
         briefing: "Evaluation till 2:00 PM | Prize Distribution till 3:00 PM",
         departure: "Departure as per on-time given schedule"
       },
       importantNotes: [
-        "PPT slide limit 7 to 8",
-        "Ideathon pitching time 5 to 7 minutes",
-        "Proper explanation of the idea",
-        "All problem statements, topics will be given on time"
+        "Problem statements will be released 5 days before on WhatsApp",
+        "PPT slide limit: 7 to 8 slides strictly",
+        "Ideathon pitching time: 5 to 7 minutes per team",
+        "Proper explanation of the idea, problem statement, solution & execution"
       ],
       rules: [
         "Event Day: Day 2 — 3rd of December",
         "Reporting time: 9:00 to 9:30 AM",
-        "Event opening: 10:00 AM | Start from 11:00 AM",
+        "Event opening: 10:00 AM | Pitching starts from 11:00 AM",
         "Evaluation till 2:00 PM | Prize Distribution till 3:00 PM",
+        "📢 Problem statements will be released 5 days before the event on WhatsApp to all registered teams",
         "PPT slide limit: 7 to 8 slides strictly",
         "Ideathon pitching time: 5 to 7 minutes per team",
         "Proper explanation of the idea, problem statement, solution & execution",
-        "ALL PROBLEM STATEMENTS, TOPICS WILL BE GIVEN ON TIME",
         "Team size: 3 members total (₹200 per team)"
       ],
-      description: "Pitch your revolutionary idea on Day 2 (3 December). Event opening at 10:00 AM, pitching starts from 11:00 AM. 5 to 7 minutes pitch with a 7 to 8 slides PPT limit. Evaluation till 2:00 PM and Prize Distribution till 3:00 PM!"
+      description: "Pitch your revolutionary idea on Day 2 (3 December). Problem statements will be released 5 days before the event on WhatsApp to all registered teams! Prepare a 7 to 8 slides PPT for a 5 to 7 minute pitch. Evaluation till 2:00 PM and Prize Distribution till 3:00 PM!"
     },
     {
       id: "reel-making",
@@ -217,7 +217,7 @@ export const EVENT_CONFIG = {
     },
     {
       q: "Are problem statements provided in advance?",
-      a: "No. ALL PROBLEM STATEMENTS AND TOPICS WILL BE GIVEN ON TIME live at the venue."
+      a: "For Ideathon: Yes! Problem statements and topics will be released 5 days before the event on WhatsApp to all registered teams so you have ample time to prepare your 7-8 slide presentation. For Hackathon: The problem statement will be revealed live on Day 1 (2 Dec) at 10:00 AM sharp at kickoff."
     },
     {
       q: "How do we pay the registration fee?",

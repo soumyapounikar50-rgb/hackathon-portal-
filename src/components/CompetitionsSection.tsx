@@ -28,7 +28,7 @@ export default function CompetitionsSection() {
             Compete across our flagship arenas at <strong className="text-white">{EVENT_CONFIG.name}</strong>. Day 1 is dedicated to the Hackathon, Day 2 hosts the Ideathon, and Reel Making runs Out-of-the-Box across both days!
           </p>
           <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-mono font-bold text-amber-300 shadow-lg">
-            <span>⚡ ALL PROBLEM STATEMENTS & TOPICS WILL BE GIVEN ON TIME</span>
+            <span>⚡ Ideathon Topics: Released 5 Days Before on WhatsApp • Hackathon: At 10 AM Kickoff</span>
           </div>
         </div>
 
