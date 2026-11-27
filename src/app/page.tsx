@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import { EVENT_CONFIG } from '@/lib/config';
 import { 
   ArrowRight, Sparkles, Flame, Calendar, MapPin, 
-  Trophy, Waves, Leaf, Compass 
+  Trophy, Waves, Leaf, Compass, Clock 
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -167,6 +167,10 @@ export default function Home() {
             <p className="mt-4 text-base sm:text-lg text-gray-300">
               Select your competition (Hackathon, Ideathon, or Reel Making), enter student details, and submit your UPI payment receipt.
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-500/15 border border-rose-500/40 text-xs font-mono font-bold text-rose-300 shadow-lg">
+              <Clock className="w-4 h-4 text-rose-400 animate-pulse" />
+              <span>CLOSING DEADLINE: 1st December at 12:00 PM (Noon) Sharp</span>
+            </div>
           </div>
 
           <RegistrationForm />

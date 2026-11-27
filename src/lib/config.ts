@@ -4,6 +4,8 @@ export const EVENT_CONFIG = {
   name: "El Niño Awareness Program",
   tagline: "Unleash Innovation, Creativity & Environmental Action",
   dates: "2 & 3 December",
+  registrationDeadline: "1st December 2026, 12:00 PM (Noon)",
+  registrationDeadlineISO: "2026-12-01T12:00:00+05:30",
   college: {
     name: "Tulsiramji Gaikwad-Patil College of Engineering & Technology",
     fullName: "Tulsiramji Gaikwad-Patil College of Engineering & Technology (An Autonomous Institute)",
@@ -214,6 +216,10 @@ export const EVENT_CONFIG = {
     {
       q: "Can a student participate in multiple competitions?",
       a: "Yes! Since Hackathon is conducted on Day 1 (2 Dec) and Ideathon on Day 2 (3 Dec), students are welcome to participate in both competitions!"
+    },
+    {
+      q: "What is the last date & time to register?",
+      a: "All registrations for Hackathon, Ideathon, and Reel Making will strictly close on 1st December at 12:00 PM (Noon) Sharp. No online submissions will be accepted after this cutoff time."
     },
     {
       q: "Are problem statements provided in advance?",

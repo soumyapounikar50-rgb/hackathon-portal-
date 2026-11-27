@@ -19,7 +19,10 @@ const COMPETITION_ICONS: Record<string, any> = {
   Atom
 };
 
+const REGISTRATION_DEADLINE_MS = new Date('2026-12-01T12:00:00+05:30').getTime();
+
 export default function RegistrationForm({ initialCompetition = 'hackathon' }: { initialCompetition?: CompetitionId }) {
+  const isRegistrationClosed = Date.now() >= REGISTRATION_DEADLINE_MS;
   const competitions = EVENT_CONFIG.competitions;
   const safeInitial = competitions.some(c => c.id === initialCompetition) ? initialCompetition : 'hackathon';
   const [selectedCompId, setSelectedCompId] = useState<CompetitionId>(safeInitial);
@@ -209,6 +212,11 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+
+    if (isRegistrationClosed) {
+      setErrorMsg("Registrations officially closed on 1st December at 12:00 PM (Noon).");
+      return;
+    }
 
     // Validation Leader
     if (!teamName.trim()) {
@@ -417,6 +425,34 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
     <div className="max-w-4xl mx-auto hologram-card p-6 sm:p-10 rounded-3xl relative">
       <span className="hud-corner-tl" />
       <span className="hud-corner-br" />
+
+      {/* REGISTRATION DEADLINE ALERT / CLOSED BANNER */}
+      {isRegistrationClosed ? (
+        <div className="mb-8 p-6 rounded-2xl bg-rose-950/70 border border-rose-500/50 text-center space-y-2">
+          <div className="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/40">
+            <Clock className="w-5 h-5" />
+          </div>
+          <h3 className="text-base font-bold text-white">Registrations Are Officially Closed</h3>
+          <p className="text-xs text-rose-200">
+            All registrations for Hackathon, Ideathon, and Reel Making closed on <strong>1st December at 12:00 PM (Noon)</strong>.
+          </p>
+          <p className="text-[11px] text-gray-400">
+            For spot registration inquiries or assistance, please reach out to our student coordinators below.
+          </p>
+        </div>
+      ) : (
+        <div className="mb-8 p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-black/50 to-rose-950/60 border border-amber-500/40 flex items-center justify-between flex-wrap gap-2 text-xs shadow-lg">
+          <div className="flex items-center gap-2.5 text-amber-200 font-mono">
+            <Clock className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />
+            <span>
+              ⏰ <strong>Closing Deadline:</strong> All registrations close on <span className="text-white font-bold underline decoration-amber-400">1st December at 12:00 PM (Noon)</span> Sharp!
+            </span>
+          </div>
+          <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold shrink-0">
+            Register Soon
+          </span>
+        </div>
+      )}
 
       {/* COMPETITIONS SELECTOR TABS (3 REGISTERABLE COMPETITIONS) */}
       <div className="mb-8">
@@ -1026,10 +1062,12 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
         <div>
           <button
             type="submit"
-            disabled={submitting || compressingImage}
+            disabled={submitting || compressingImage || isRegistrationClosed}
             className="w-full py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-purple hover:opacity-95 shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {compressingImage ? (
+            {isRegistrationClosed ? (
+              <span>Registrations Closed (Cutoff: 1 Dec, 12:00 PM)</span>
+            ) : compressingImage ? (
               <>
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 <span>Optimizing Screenshot...</span>

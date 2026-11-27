@@ -34,6 +34,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Deadline Cutoff: All registrations strictly close on 1st December 2026 at 12:00 PM (Noon) IST
+    const REGISTRATION_DEADLINE_MS = new Date('2026-12-01T12:00:00+05:30').getTime();
+    if (Date.now() >= REGISTRATION_DEADLINE_MS) {
+      return NextResponse.json(
+        { error: 'All registrations are officially closed. The deadline was 1st December at 12:00 PM (Noon).' },
+        { status: 403 }
+      );
+    }
+
     let body: any;
     try {
       body = await req.json();
