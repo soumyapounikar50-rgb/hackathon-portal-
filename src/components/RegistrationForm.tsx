@@ -7,7 +7,8 @@ import confetti from 'canvas-confetti';
 import { 
   Terminal, Lightbulb, Video, Atom, Users, User, 
   CheckCircle2, AlertCircle, Plus, Trash2, ArrowRight, 
-  QrCode, Ticket, Upload, ShieldCheck, IndianRupee, Clock, Presentation, Film
+  QrCode, Ticket, Upload, ShieldCheck, IndianRupee, Clock, Presentation, Film,
+  X, ZoomIn
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -70,6 +71,8 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
   const [screenshotSizeKb, setScreenshotSizeKb] = useState<number | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [compressingImage, setCompressingImage] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
+  const [copiedUpi, setCopiedUpi] = useState(false);
 
   // Client-side image compression: converts photos down to strictly <= 500 KB crystal-clear JPEGs,
   // ensuring fast uploads and compliance with the 500 KB limit.
@@ -760,9 +763,10 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
           {/* QR Code and UPI ID box */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div className="p-4 rounded-xl bg-black/50 border border-emerald-500/20 flex flex-col sm:flex-row items-center gap-4">
-              <div className="w-32 h-32 rounded-xl bg-white p-1.5 shrink-0 flex items-center justify-center shadow-lg overflow-hidden relative group cursor-pointer"
-                onClick={() => window.open('/qr-code.png', '_blank')}
-                title="Click to view QR code full size"
+              <div 
+                className="w-32 h-32 rounded-2xl bg-white p-2 shrink-0 flex items-center justify-center shadow-lg overflow-hidden relative group cursor-pointer hover:ring-2 hover:ring-emerald-400 transition-all"
+                onClick={() => setShowQrModal(true)}
+                title="Click to zoom in on QR code"
               >
                 <img
                   src="/qr-code.png"
@@ -784,6 +788,10 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                 <div className="w-full h-full items-center justify-center hidden">
                   <QrCode className="w-full h-full text-black" />
                 </div>
+                {/* Zoom overlay hint */}
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <ZoomIn className="w-6 h-6 text-white drop-shadow-md" />
+                </div>
               </div>
               <div className="text-xs space-y-1.5 w-full">
                 <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Official Bank of India UPI QR</span>
@@ -791,15 +799,102 @@ export default function RegistrationForm({ initialCompetition = 'hackathon' }: {
                 {EVENT_CONFIG.upiDetails.upiId && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-[10px] text-gray-400 font-mono">UPI ID:</span>
-                    <span className="text-[11px] font-mono text-emerald-300 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded select-all cursor-pointer font-bold hover:border-emerald-400 transition-colors" title="Click to copy UPI ID">
-                      {EVENT_CONFIG.upiDetails.upiId}
+                    <span 
+                      onClick={() => {
+                        navigator.clipboard.writeText(EVENT_CONFIG.upiDetails.upiId);
+                        setCopiedUpi(true);
+                        setTimeout(() => setCopiedUpi(false), 2000);
+                      }}
+                      className="text-[11px] font-mono text-emerald-300 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded select-all cursor-pointer font-bold hover:border-emerald-400 transition-colors" 
+                      title="Click to copy UPI ID"
+                    >
+                      {EVENT_CONFIG.upiDetails.upiId} {copiedUpi ? "✓" : ""}
                     </span>
                   </div>
                 )}
                 <span className="text-gray-400 text-[10px] block font-mono">GPay • PhonePe • Paytm • BHIM • BOI</span>
-                <span className="text-emerald-400/80 text-[10px] block">🔍 Click QR image to view full screen</span>
+                <button
+                  type="button"
+                  onClick={() => setShowQrModal(true)}
+                  className="text-emerald-400 hover:text-emerald-300 text-[10px] inline-flex items-center gap-1 font-mono transition-colors pt-0.5"
+                >
+                  <ZoomIn className="w-3 h-3" />
+                  <span>Click to zoom QR on screen</span>
+                </button>
               </div>
             </div>
+
+            {/* IN-PAGE QR CODE ZOOM MODAL (FOCUSED ON QR ONLY, NO IMAGE BACKGROUND) */}
+            {showQrModal && (
+              <div 
+                className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-150"
+                onClick={() => setShowQrModal(false)}
+              >
+                <div 
+                  className="relative bg-zinc-950 border border-emerald-500/40 rounded-3xl p-6 sm:p-7 max-w-sm w-full text-center shadow-2xl shadow-emerald-950/70 flex flex-col items-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowQrModal(false)}
+                    className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition-colors"
+                    title="Close"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+
+                  {/* Header */}
+                  <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-widest block mb-1">
+                    Official Bank of India UPI QR
+                  </span>
+                  <h3 className="text-sm font-bold text-white mb-4">
+                    {EVENT_CONFIG.upiDetails.payeeName}
+                  </h3>
+
+                  {/* Pure QR Box (Zoomed on QR only, pure white card, zero extra background) */}
+                  <div className="w-64 h-64 sm:w-72 sm:h-72 bg-white rounded-2xl p-4 shadow-2xl flex items-center justify-center border-4 border-emerald-500/40">
+                    <img
+                      src="/qr-code.png"
+                      alt="Bank of India UPI Payment QR Code"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+
+                  {/* Amount and UPI ID chip */}
+                  <div className="mt-4 w-full space-y-2">
+                    <div className="flex items-center justify-between px-4 py-2 rounded-xl bg-black/50 border border-white/10 text-xs">
+                      <span className="text-gray-400">Payable Fee:</span>
+                      <span className="font-mono font-bold text-emerald-400 text-sm">₹{compInfo.fee}/-</span>
+                    </div>
+
+                    {EVENT_CONFIG.upiDetails.upiId && (
+                      <div 
+                        onClick={() => {
+                          navigator.clipboard.writeText(EVENT_CONFIG.upiDetails.upiId);
+                          setCopiedUpi(true);
+                          setTimeout(() => setCopiedUpi(false), 2000);
+                        }}
+                        className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-emerald-950/60 border border-emerald-500/30 text-xs cursor-pointer hover:bg-emerald-900/60 transition-colors"
+                        title="Click to copy UPI ID"
+                      >
+                        <span className="text-gray-300 text-[11px] font-mono">UPI ID:</span>
+                        <span className="font-mono text-emerald-300 font-bold text-[11px]">
+                          {EVENT_CONFIG.upiDetails.upiId}
+                        </span>
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">
+                          {copiedUpi ? "Copied!" : "Copy"}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="text-[11px] text-gray-400 mt-3 font-mono">
+                    Scan directly from your phone camera or UPI app
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="text-xs text-gray-300 space-y-2">
               <p className="font-semibold text-white">Payment Instructions:</p>
